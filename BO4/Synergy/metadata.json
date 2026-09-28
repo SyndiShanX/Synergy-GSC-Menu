@@ -1,0 +1,628 @@
+{
+    "name": "Synergy",
+    "data": [
+        {
+            "type": "scriptparsetree",
+            "name": "scripts/synergy.gsc",
+            "path": "synergy.gscc"
+        },
+        {
+            "type": "scriptparsetree",
+            "name": "scripts/synergy.csc",
+            "path": "synergy.cscc",
+            "hooks": [
+                "scripts/zm_common/load.csc",
+                "scripts/mp_common/load.csc"
+            ]
+        },
+        {
+            "type": "scriptparsetree",
+            "name": "scripts/synergy_zm.gsc",
+            "path": "synergy_zm.gscc",
+            "hooks": [
+                "scripts/zm_common/load.gsc"
+            ]
+        },
+        {
+            "type": "scriptparsetree",
+            "name": "scripts/synergy_zm.csc",
+            "path": "synergy_zm.cscc",
+            "hooks": [
+                "scripts/zm_common/load.csc"
+            ]
+        },
+        {
+            "type": "scriptparsetree",
+            "name": "scripts/synergy_mp.gsc",
+            "path": "synergy_mp.gscc",
+            "hooks": [
+                "scripts/mp_common/load.gsc"
+            ]
+        },
+        {
+            "type": "luafile",
+            "name": "ui/synergy",
+            "path": "synergy.luac",
+            "hooks_post": [
+                "x64:2b23cf5ef446c848",
+                "x64:57d27ab8e2f7a9d0"
+            ]
+        },
+        {
+            "type": "hashes",
+            "path": "hashes.txt",
+            "format": "serious_compiler",
+            "ignore_error": true
+        }
+    ],
+    "cache": [
+        {
+            "type": "eventstring",
+            "name": "synergy_menu",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_element_1",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_element_2",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_element_3",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_element_4",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_element_5",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_element_6",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_toggle_1",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_toggle_2",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_toggle_3",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_toggle_4",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_toggle_5",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_toggle_6",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_toggle_7",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_toggle_8",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_toggle_9",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_1",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_2",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_3",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_4",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_5",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_6",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_7",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_8",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_9",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_title",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_description",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_option_1",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_option_2",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_option_3",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_option_4",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_option_5",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_option_6",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_option_7",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_option_8",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_option_9",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_text_1",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_text_2",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_text_3",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_text_4",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_text_5",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_text_6",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_text_7",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_text_8",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_slider_text_9",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_submenu_icon_1",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_submenu_icon_2",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_submenu_icon_3",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_submenu_icon_4",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_submenu_icon_5",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_submenu_icon_6",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_submenu_icon_7",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_submenu_icon_8",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_submenu_icon_9",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_element_7",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_element_8",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_extra_text_1",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_extra_text_2",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_extra_text_3",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_extra_text_4",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_extra_text_5",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_extra_text_6",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_extra_text_7",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        }
+    ],
+    "enabled": true
+}

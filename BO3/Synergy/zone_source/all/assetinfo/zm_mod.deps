@@ -1,0 +1,9 @@
+version,3421953,593
+scriptparsetree,scripts/zm/gametypes/_clientids.gsc
+	file,D:\SteamLibrary\steamapps\common\Call of Duty - Black Ops 3 Mod Tools\mods\synergy\scripts\zm\gametypes\_clientids.gsc,1789938772,
+	file,D:\SteamLibrary\steamapps\common\Call of Duty - Black Ops 3 Mod Tools\share\raw\scripts\shared\shared.gsh,1773795838,
+texturecombo,zm_mod
+assetlist,zm_mod
+	file,D:\SteamLibrary\steamapps\common\Call of Duty - Black Ops 3 Mod Tools\share\raw\gamedata\playeranim\playeranimtypes.txt,1773795599,
+	file,D:\SteamLibrary\steamapps\common\Call of Duty - Black Ops 3 Mod Tools\mods\synergy\zone_source\zm_mod.zone,1487198042,405e355b,744fcf24,aa7a8222,53d1c655
+errorcount,0

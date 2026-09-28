@@ -1,0 +1,34 @@
+{
+    "name": "Gun Game",
+    "data": [
+        {
+            "type": "scriptparsetree",
+            "name": "scripts/synergy.gsc",
+            "path": "synergy.gscc"
+        },
+        {
+            "type": "scriptparsetree",
+            "name": "scripts/gun_game.gsc",
+            "path": "gun_game.gscc",
+            "hooks": [
+                "scripts/zm_common/load.gsc"
+            ]
+        },
+        {
+            "type": "luafile",
+            "name": "ui/synergy",
+            "path": "synergy.luac",
+            "hooks_post": [
+                "x64:2b23cf5ef446c848",
+                "x64:57d27ab8e2f7a9d0"
+            ]
+        },
+        {
+            "type": "hashes",
+            "path": "hashes.txt",
+            "format": "serious_compiler",
+            "ignore_error": true
+        }
+    ],
+    "enabled": true
+}
