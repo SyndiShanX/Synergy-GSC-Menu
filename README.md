@@ -21,7 +21,6 @@ If you have any Issues/Suggestions, please Submit them in [Issues](https://githu
 - [World War II](https://github.com/SyndiShanX/Synergy-GSC-Menu/tree/main/WWII) (ZM - S2x)
 - [Black Ops 4](https://github.com/SyndiShanX/Synergy-GSC-Menu/tree/main/BO4) (ZM/MP - Project BO4/Shield)
 
-
 ## Credits
 
 The menu is based on M203 by [Xeirh](https://github.com/Xeirh)
@@ -31,3 +30,7 @@ The menu is based on M203 by [Xeirh](https://github.com/Xeirh)
   * `Extinct` Ideas, suggestions, constructive criticism
   * `ItsFebiven` Some ideas and suggestions
   * `Joel` Suggestions
+
+#### Supporting
+
+Feel free to Donate to my [Ko-Fi](https://ko-fi.com/SyndiShanX) if you would like to support the Development of these Menus

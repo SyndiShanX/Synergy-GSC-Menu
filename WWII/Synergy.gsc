@@ -1368,9 +1368,6 @@ menu_option() {
 					self.saved_offset[self.current_menu] = self.scrolling_offset;
 					self.saved_trigger[self.current_menu] = self.previous_trigger;
 					self.equip_attachment_in_progress = false;
-					self new_menu();
-					self menu_option();
-					set_options();
 				}
 			}
 
