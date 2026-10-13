@@ -1,6 +1,7 @@
 #include maps\mp\gametypes\_hud_util;
 #include maps\mp\_utility;
 #include common_scripts\utility;
+#include maps\mp\gametypes\_class;
 
 init() {
 	setDvar("sv_cheats", 1);
@@ -12,6 +13,8 @@ init() {
 
 	level.originalCallbackPlayerDamage = level.callbackPlayerDamage; //doktorSAS - Retropack
 	level.callbackPlayerDamage = ::player_damage_callback; // Retropack
+
+	replacefunc(maps\mp\gametypes\_class::_id_A9ED, ::_id_A9ED_stub);
 }
 
 player_connect() {
@@ -2218,7 +2221,7 @@ pack_weapon(target) {
 		weapon = strtok(weapon, "_")[0];
 	}
 
-	self.pack_weapon = 1;
+	self.pack_weapon = true;
 	give_weapon(weapon);
 }
 
@@ -2227,33 +2230,13 @@ unpack_weapon(target) {
 		target = self;
 	}
 
-	if(isSubStr(target getCurrentWeapon(), "+")) {
-		weapon_split = strtok(target getCurrentWeapon(), "+");
-		weapon = weapon_split[0];
-		weapon_attachments = get_equipped_attachments(target, weapon);
-	} else {
-		weapon = target getCurrentWeapon();
-		weapon_attachments = "";
-	}
-
+	weapon = target getCurrentWeapon();
 
 	if(isSubStr(weapon, "_")) {
-		weapon_packed = strtok(weapon, "_")[0];
-	} else {
-		weapon_packed = weapon;
+		weapon = strtok(weapon, "_")[0];
 	}
 
-
-	weapon_packed = weapon_packed + "_zm" + weapon_attachments;
-	if(check_weapons(weapon_packed)) {
-		target take_weapon(target getCurrentWeapon());
-		target giveWeapon(weapon_packed);
-
-
-		target switchToWeapon(weapon_packed);
-	} else {
-		target switchToWeapon(weapon);
-	}
+	give_weapon(weapon);
 }
 
 get_max_weapons() {
@@ -2283,16 +2266,33 @@ give_equipment(weapon) {
 	self setWeaponAmmoClip(weapon, 8);
 }
 
-give_weapon(weapon, is_finished_weapon) {
+give_weapon(weapon, is_finished_weapon, keep_ammo) {
 	backup_weapon = self getCurrentWeapon();
-	if(((isDefined(self.give_packed_weapon) && self.give_packed_weapon == 1) || (isDefined(self.pack_weapon) && self.pack_weapon == 1)) && !(isDefined(is_finished_weapon) && is_finished_weapon == true)) {
-		if(!is_packed(weapon)) {
-			weapon = weapon + "_pap";
-		}
+
+	if(isDefined(keep_ammo) && keep_ammo == true) {
+		stock = self getWeaponAmmoStock(backup_weapon);
+		clip = self getWeaponAmmoClip(backup_weapon);
+	} else {
+		stock = undefined;
+		clip = undefined;
 	}
 
 	if(!(isDefined(is_finished_weapon) && is_finished_weapon == true)) {
 		weapon = weapon + "_zm";
+	}
+
+	weapon_kit_hashed = maps\mp\zombies\zombie_weapon_kits_shared::getweaponkitmp(self, _id_0547::_id_9475(_id_0547::_id_AAF9(weapon)) + "_mp");
+	weapon_kit = _id_0548::_id_454B(self, _id_0547::_id_9475(_func_311(weapon_kit_hashed._id_A9F8)) + "_zm");
+	weapon_kit_pap = _id_0586::_id_078B(_id_0547::_id_9475(_func_311(weapon_kit_hashed._id_A9F8)) + "_zm");
+
+	if(!(isDefined(is_finished_weapon) && is_finished_weapon == true)) {
+		weapon = weapon_kit;
+	}
+
+	if(((isDefined(self.give_packed_weapon) && self.give_packed_weapon == 1) || (isDefined(self.pack_weapon) && self.pack_weapon == true)) && !(isDefined(is_finished_weapon) && is_finished_weapon == true)) {
+		if(!is_packed(weapon)) {
+			weapon = weapon_kit_pap;
+		}
 	}
 
 	if(!self hasWeapon(weapon)) {
@@ -2321,9 +2321,15 @@ give_weapon(weapon, is_finished_weapon) {
 		self switchToWeaponImmediate(weapon);
 	}
 
-	self.pack_weapon = 0;
+	self.pack_weapon = false;
 	wait 0.5;
-	self giveStartAmmo(weapon);
+
+	if(isDefined(keep_ammo) && keep_ammo == true && isDefined(stock)) {
+		self setWeaponAmmoStock(weapon, stock);
+		self setWeaponAmmoClip(weapon, clip);
+	} else {
+		self giveStartAmmo(weapon);
+	}
 
 	while(self getCurrentWeapon() == "none") {
 		if(!isDefined(self.fail_counter)) {
@@ -2359,23 +2365,12 @@ check_weapons(weapon) {
 	return self getCurrentWeapon() != weapon && self getWeaponListPrimaries()[1] != weapon && self getWeaponListPrimaries()[2] != weapon;
 }
 
-equip_camo(camo) {
-	camo = int(camo);
-
-	weapon = self getCurrentWeapon();
-
-	stock = self getWeaponAmmoStock(weapon);
-	clip = self getWeaponAmmoClip(weapon);
-
-	if(isSubStr(self getCurrentWeapon(), "+")) {
-		weapon_split = strtok(self getCurrentWeapon(), "+");
-		weapon_attachments = get_equipped_attachments(self, self getCurrentWeapon());
-		weapon = weapon_split[0];
-	} else {
-		weapon = self getCurrentWeapon();
-		weapon_attachments = "";
+equip_camo(camo, target) {
+	if(!isDefined(target)) {
+		target = self;
 	}
 
+	camo = int(camo);
 
 	if(camo < 10) {
 		camo = "00" + camo;
@@ -2383,19 +2378,24 @@ equip_camo(camo) {
 		camo = "0" + camo;
 	}
 
+	level.override_camo = "camo" + camo;
 
-	weapon_painted = weapon + weapon_attachments + "+camo" + camo;
-	if(check_weapons(weapon_painted)) {
-		self take_weapon(self getCurrentWeapon());
-		self give_weapon(weapon_painted, true);
+	weapon = target getCurrentWeapon();
 
-		self switchToWeapon(weapon_painted);
-	} else {
-		self switchToWeapon(weapon);
+	if(isSubStr(weapon, "_")) {
+		weapon = strtok(weapon, "_")[0];
 	}
 
-	self setWeaponAmmoStock(weapon, stock);
-	self setWeaponAmmoClip(weapon, clip);
+	give_weapon(weapon, undefined, true);
+}
+
+_id_A9ED_stub(var_0, var_1) {
+	if(isDefined(level.override_camo)) {
+		camo = level.override_camo;
+	} else {
+		camo = _id_A9EC(_id_4446(var_0), getcamo2indexfromguid(var_1));
+	}
+	return camo;
 }
 
 take_weapon() {

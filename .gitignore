@@ -2,7 +2,7 @@
 *.bat
 *.jpg
 *.pdn
-*.gscc
+*.gsc
 *.cscc
 *.luac
 *.blitzignore

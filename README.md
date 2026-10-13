@@ -20,6 +20,7 @@ If you have any Issues/Suggestions, please Submit them in [Issues](https://githu
 - [HorizonMW](https://github.com/SyndiShanX/Synergy-GSC-Menu/tree/main/HMW) (MP - HorizonMW)
 - [World War II](https://github.com/SyndiShanX/Synergy-GSC-Menu/tree/main/WWII) (ZM - S2x)
 - [Black Ops 4](https://github.com/SyndiShanX/Synergy-GSC-Menu/tree/main/BO4) (ZM/MP - Project BO4/Shield)
+- [Modern Warfare III](https://github.com/SyndiShanX/Synergy-GSC-Menu/tree/main/MWIII) (ZM - Lumen)
 
 ## Credits
 
