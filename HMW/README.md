@@ -8,7 +8,7 @@ A Multiplayer GSC Mod Menu that uses [HorizonMW](https://horizonmw.org/)
 
 ### Requirements: [HorizonMW](https://horizonmw.org/)
 
-### Installation:
+## Installation:
 
 #### Private Match:
 

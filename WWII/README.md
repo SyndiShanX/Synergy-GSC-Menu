@@ -8,6 +8,8 @@ A World War II Zombies GSC Mod Menu that uses [S2x](https://github.com/Brentdeve
 
 ### Requirements: [S2x](https://github.com/Brentdevent/S2x)
 
+## Installation:
+
 #### Zombies:
 
 * Download [Synergy.gsc](https://syndishanx.github.io/Synergy-GSC-Menu/WWII/Synergy.gsc)

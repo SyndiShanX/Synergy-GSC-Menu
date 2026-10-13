@@ -8,6 +8,8 @@ A Modern Warfare III Zombies GSC Mod Menu that uses the [Lumen MWIII Client](htt
 
 ### Requirements: [Lumen MWIII Client](https://discord.gg/projectlumen)
 
+## Installation:
+
 #### Zombies:
 
 * Download [Synergy.gscc](https://syndishanx.github.io/Synergy-GSC-Menu/MWIII/Synergy.gscc)

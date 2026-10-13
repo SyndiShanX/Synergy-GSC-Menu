@@ -8,6 +8,8 @@ A Modern Warfare Remastered Multiplayer GSC Mod Menu that uses [H1-Mod](https://
 
 ### Requirements: [H1-Mod](https://github.com/auroramod/h1-mod)
 
+## Installation:
+
 #### Multiplayer:
 
 * Download [Synergy.gsc](https://syndishanx.github.io/Synergy-GSC-Menu/H1/Synergy.gsc)

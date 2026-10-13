@@ -12,6 +12,8 @@ The First Free Infinite Warfare Zombies GSC Mod Menu that uses [IW7-Mod](https:/
 
 ### Requirements: [IW7-Mod](https://github.com/auroramod/iw7-mod)
 
+## Installation:
+
 #### Zombies:
 
 * Download [Synergy.gsc](https://syndishanx.github.io/Synergy-GSC-Menu/IW/Synergy.gsc)
