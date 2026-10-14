@@ -142,7 +142,11 @@ function create_menu() {
 
 	self thread [[&input_manager]]();
 
-	wait 5;
+	if(utility::flag_exist("ob_systems_init_complete")) {
+		level utility::flag_wait("ob_systems_init_complete");
+	}
+
+	wait 10;
 
 	self.menu["border"] = self create_shader("white", "left", "middle", ((self.x_offset + 320) - 1), (self.y_offset - 1), 226, 122, self.color_theme, 1, 1);
 	self.menu["background"] = self create_shader("white", "left", "middle", (self.x_offset + 320), self.y_offset, 224, 121, (0.075, 0.075, 0.075), 1, 2);
@@ -181,7 +185,7 @@ function create_menu() {
 
 	self.controls_menu_open = true;
 
-	wait 8;
+	wait 30;
 
 	if(self.controls_menu_open) {
 		close_controls_menu();
