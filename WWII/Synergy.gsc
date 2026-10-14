@@ -2491,10 +2491,10 @@ freeze_zombies() {
 }
 
 get_remaining_zombies() {
-	check_remaining_zombies();
 	for(;;) {
 		level.remaining_zombies = 0;
 		level.zombies_to_spawn_zeroed = false;
+		check_remaining_zombies();
     level waittill("zombie_wave_started");
   }
 }
@@ -2507,8 +2507,9 @@ check_remaining_zombies() {
 	}
 	level.zombies_to_spawn++;
 	level.zombies_to_spawn_zeroed = false;
+	level.remaining_zombies = 1;
 
-	for(;;) {
+	while(level.remaining_zombies > 0) {
 		if(level.zombies_to_spawn != 0 && !level.zombies_to_spawn_zeroed) {
 			level.zombies_to_spawn = level._id_AC12 maps\mp\_utility::_id_5DCB();
 		} else {
@@ -2530,7 +2531,7 @@ check_remaining_zombies() {
 		}
 
     level.remaining_zombies = level.zombies_to_spawn + spawned_zombies + zombies_to_respawn + var_2;
-    wait 2.5;
+    wait 0.5;
   }
 }
 
