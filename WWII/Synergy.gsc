@@ -15,6 +15,7 @@ init() {
 	level.callbackPlayerDamage = ::player_damage_callback; // Retropack
 
 	replacefunc(maps\mp\gametypes\_class::_id_A9ED, ::_id_A9ED_stub);
+	replacefunc(_id_0561::_id_A201, ::consumable_override_stub);
 }
 
 player_connect() {
@@ -2000,6 +2001,31 @@ take_perkaholic() {
 set_perk_limit(value) {
 	level._id_5F5A = 1;
 	self setClientOmnvar("zm_blitz_items_limit", value);
+}
+
+// Consumable Options
+
+consumable_override_stub(var_0) {
+  if(!_id_0561::_id_4B5F(var_0)) {
+    return;
+  }
+  var_1 = self._id_259F[var_0].name;
+
+  if([[level._id_25A0[var_1]._id_1F7F]](var_1)) {
+    //self._id_259F[var_0]._id_20F0--;
+    _id_0561::_id_25A2(var_0);
+    _id_0561::_id_A126(var_0);
+    self thread[[level._id_25A0[var_1]._id_A20E]](var_0);
+
+    if(isDefined(level.zmb_events_consumables_notify)) {
+      level notify(level.zmb_events_consumables_notify);
+    }
+
+    level._id_400E[level._id_400E.size] = ["assassin_set 4 -1", self];
+    level._id_400E[level._id_400E.size] = ["bat_elite_set 4 -1", self];
+    self._id_A97F = level._id_A980;
+    self notify("can_use_consumable");
+  }
 }
 
 // Weapon Options
