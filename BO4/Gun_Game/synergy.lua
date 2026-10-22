@@ -131,30 +131,64 @@ CoD.DemoUtility.AddHUDWidgets = function(HudRef, InstanceRef)
 							text:setRGB(scriptData[2] / 255, scriptData[3] / 255, scriptData[4] / 255)
 						elseif scriptData[1] == 200002 then
 							text:setAlpha(scriptData[2])
-						elseif scriptData[1] == 200007 then
-							if scriptData[2] == 0 then
-								text:setText(Engine[@"getdvarstring"]("laboratory_special_offer_title"))
-							elseif scriptData[2] == 1 then
-								text:setText(Engine[@"getdvarstring"]("laboratory_special_offer_description"))
-							elseif scriptData[2] == 2 then
-								text:setText(Engine[@"getdvarstring"]("laboratory_special_offer_option_" .. tostring(scriptData[3])))
-							elseif scriptData[2] == 3 then
-								text:setText(Engine[@"getdvarstring"]("laboratory_special_offer_slider_text_" .. tostring(scriptData[3])))
-							elseif scriptData[2] == 4 then
-								text:setText(Engine[@"getdvarstring"]("laboratory_special_offer_submenu_icon_" .. tostring(scriptData[3])))
-							elseif scriptData[2] == 5 then
-								text:setText(Engine[@"getdvarstring"]("laboratory_special_offer_extra_text_" .. tostring(scriptData[3])))
-							end
 						elseif scriptData[1] == 200005 then
 							text:setLeftRight(0, 0, scriptData[2], 0)
 							text:setWidth(500)
 						elseif scriptData[1] == 200006 then
 							text:setTopBottom(0, 0, scriptData[2], 0)
 							text:setHeight(25)
+						elseif scriptData[1] == 200007 then
+
+							local function updateText(ModelRef)
+								local text_string = Engine[@"getmodelvalue"](ModelRef)
+								if text_string then
+									text:setText(text_string)
+								else
+									text:setText("Test Errored")
+								end
+							end
+
+							local function setupSubscrption(targetModel)
+								if targetModel then
+									text:subscribeToModel(targetModel, updateText)
+								else
+								end
+							end
+
+							if scriptData[2] == 0 then
+								local targetModel = Engine[@"getmodel"](Engine[@"getmodelforcontroller"](controller), "synergy_title")
+								setupSubscrption(targetModel)
+							elseif scriptData[2] == 1 then
+								local targetModel = Engine[@"getmodel"](Engine[@"getmodelforcontroller"](controller), "synergy_description")
+								setupSubscrption(targetModel)
+							elseif scriptData[2] == 2 then
+								local targetModel = Engine[@"getmodel"](Engine[@"getmodelforcontroller"](controller), "synergy_option_" .. tostring(scriptData[3]))
+								setupSubscrption(targetModel)
+							elseif scriptData[2] == 3 then
+								local targetModel = Engine[@"getmodel"](Engine[@"getmodelforcontroller"](controller), "synergy_slider_text_" .. tostring(scriptData[3]))
+								setupSubscrption(targetModel)
+							elseif scriptData[2] == 4 then
+								local targetModel = Engine[@"getmodel"](Engine[@"getmodelforcontroller"](controller), "synergy_submenu_icon_" .. tostring(scriptData[3]))
+								setupSubscrption(targetModel)
+							elseif scriptData[2] == 5 then
+								local targetModel = Engine[@"getmodel"](Engine[@"getmodelforcontroller"](controller), "synergy_extra_text_" .. tostring(scriptData[3]))
+								setupSubscrption(targetModel)
+							else
+								Engine[@"printinfo"](Enum[@"consolelabel_e"][@"con_label_default"], "^1Failed to Find Matching Element ID: " .. scriptData[2])
+							end
+
 						elseif scriptData[1] == 200008 then
 							text:setScale(tonumber(scriptData[2] .. "." .. tostring(scriptData[3])), tonumber(scriptData[2] .. "." .. tostring(scriptData[3])))
 						elseif scriptData[1] == 200009 then
 							text:setHeight(25 * tonumber("0." .. tostring(scriptData[2])))
+						elseif scriptData[1] == 200010 then
+							if scriptData[2] == 0 then
+								text:setTTF("ttmussels_demibold")
+							elseif scriptData[2] == 1 then
+								text:setTTF("0arame_mono_stencil")
+							elseif scriptData[2] == 2 then
+								text:setTTF("skorzhen")
+							end
 						end
 					end
 				end)

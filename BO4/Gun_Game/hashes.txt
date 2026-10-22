@@ -1,4 +1,5 @@
 0x9284135D, init
+0x13B6CD07, global_initial_variables
 0xEC264B2E, initial_variables
 0x15544841, initialize_menu
 0xFB500CD3, input_manager
@@ -43,9 +44,12 @@
 0xBF384607, menu_option
 0x22FDD3A8, start_normal_game
 0xEBB653EB, start_game
+0x89C68C96, start_gun_game
 0x20CDAA9F, track_progress
 0x279297CC, check_weapon
 0x997A26F9, increment_points
+0x9B3D26FC, track_nuke_points
+0x9859FE31, track_barrier_points
 0x4FF72F46, watch_points_spent
 0xC9F765FF, track_points
 0x24DE1FF7, increment_kills
@@ -59,10 +63,12 @@
 0x6B616C01, increment_pack_level
 0xDC2D810D, pack_weapons
 0x1ADBA75E, update_weapon
+0xDB4BD907, purchase_silver_bullets
+0xEBF3625F, give_silver_bullets
+0x85F85C7E, give_perkaholic
 0xED855E11, third_person
 0x143B1119, set_progression_method
 0xC9575D65, set_point_increment
 0x81EF3CC7, set_kill_increment
-0x81B284E5, get_zombies
 0x5F4E093D, set_zombie_speed
 0x772907D2, update_zombie_speed
