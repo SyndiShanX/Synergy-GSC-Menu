@@ -337,45 +337,45 @@ menu_option() { //bf384607
 		case "Give Mastercrafts":
 			self synergy::set_title(menu);
 
-			self synergy::add_array("ICR-7 Variant", undefined, &give_mastercraft_weapon, "icr_mastercrafts", array("Blinding Glory", "Summon", "Gearhead"), undefined, "ar_accurate_t8");
-			self synergy::add_array("Maddox RFB Variant", undefined, &give_mastercraft_weapon, "maddox_mastercrafts", array("Carbon Cobra", "$treet"), undefined, "ar_fastfire_t8");
-			self synergy::add_array("KN-57 Variant", undefined, &give_mastercraft_weapon, "kn_mastercrafts", array("MkII", "Kuromaku", "Fabergé K"), undefined, "ar_modular_t8");
-			self synergy::add_array("Rampart 17 Variant", undefined, &give_mastercraft_weapon, "rampart_mastercrafts", array("MkII", "Afterburner"), undefined, "ar_damage_t8");
+			self synergy::add_array("ICR-7 Variant", undefined, &give_mastercraft_weapon, "icr_mastercrafts", array("Blinding Glory", "Summon", "Gearhead"), true, undefined, "ar_accurate_t8");
+			self synergy::add_array("Maddox RFB Variant", undefined, &give_mastercraft_weapon, "maddox_mastercrafts", array("Carbon Cobra", "$treet"), true, undefined, "ar_fastfire_t8");
+			self synergy::add_array("KN-57 Variant", undefined, &give_mastercraft_weapon, "kn_mastercrafts", array("MkII", "Kuromaku", "Fabergé K"), true, undefined, "ar_modular_t8");
+			self synergy::add_array("Rampart 17 Variant", undefined, &give_mastercraft_weapon, "rampart_mastercrafts", array("MkII", "Afterburner"), true, undefined, "ar_damage_t8");
 			self synergy::add_option("VAPR-XKG - Vampire Hunter", undefined, &give_mastercraft_weapon, undefined, 2, "ar_stealth_t8");
-			self synergy::add_array("Swat RFT Variant", undefined, &give_mastercraft_weapon, "swat_mastercrafts", array("MkII", "Temple of Boom"), undefined, "ar_standard_t8");
+			self synergy::add_array("Swat RFT Variant", undefined, &give_mastercraft_weapon, "swat_mastercrafts", array("MkII", "Temple of Boom"), true, undefined, "ar_standard_t8");
 			self synergy::add_option("Peacekeeper - MkII", undefined, &give_mastercraft_weapon, undefined, 1, "ar_peacekeeper_t8");
 
-			self synergy::add_array("MX9 Variant", undefined, &give_mastercraft_weapon, "mx_mastercrafts", array("MkII Patriot", "Soldier of Fortune"), undefined, "smg_standard_t8");
-			self synergy::add_array("Spitfire Variant", undefined, &give_mastercraft_weapon, "spitfire_mastercrafts", array("Deep Voyage", "MkII"), undefined, "smg_fastfire_t8", 1);
-			self synergy::add_array("Saug 9mm Variant", undefined, &give_mastercraft_weapon, "saug_mastercrafts", array("Great Lion", "MkII"), undefined, "smg_handling_t8", 1);
-			self synergy::add_array("GKS Variant", undefined, &give_mastercraft_weapon, "gks_mastercrafts", array("MkII - Damascus", "Tactical Unicorn", "Black Plague"), undefined, "smg_accurate_t8");
-			self synergy::add_array("Cordite Variant", undefined, &give_mastercraft_weapon, "cordite_mastercrafts", array("Zero G", "MkII"), undefined, "smg_capacity_t8", 1);
-			self synergy::add_array("Daemon 3XB Variant", undefined, &give_mastercraft_weapon, "daemon_mastercrafts", array("MkII", "Imaginator"), undefined, "smg_fastburst_t8");
+			self synergy::add_array("MX9 Variant", undefined, &give_mastercraft_weapon, "mx_mastercrafts", array("MkII Patriot", "Soldier of Fortune"), true, undefined, "smg_standard_t8");
+			self synergy::add_array("Spitfire Variant", undefined, &give_mastercraft_weapon, "spitfire_mastercrafts", array("Deep Voyage", "MkII"), true, undefined, "smg_fastfire_t8", 1);
+			self synergy::add_array("Saug 9mm Variant", undefined, &give_mastercraft_weapon, "saug_mastercrafts", array("Great Lion", "MkII"), true, undefined, "smg_handling_t8", 1);
+			self synergy::add_array("GKS Variant", undefined, &give_mastercraft_weapon, "gks_mastercrafts", array("MkII - Damascus", "Tactical Unicorn", "Black Plague"), true, undefined, "smg_accurate_t8");
+			self synergy::add_array("Cordite Variant", undefined, &give_mastercraft_weapon, "cordite_mastercrafts", array("Zero G", "MkII"), true, undefined, "smg_capacity_t8", 1);
+			self synergy::add_array("Daemon 3XB Variant", undefined, &give_mastercraft_weapon, "daemon_mastercrafts", array("MkII", "Imaginator"), true, undefined, "smg_fastburst_t8");
 			self synergy::add_option("Switchblade X9 - MkII", undefined, &give_mastercraft_weapon, undefined, 1, "smg_folding_t8");
 
-			self synergy::add_array("Swordfish Variant", undefined, &give_mastercraft_weapon, "swordfish_mastercrafts", array("Ahab's Revenge", "MkII"), undefined, "tr_longburst_t8", 1);
-			self synergy::add_array("ABR 223 Variant", undefined, &give_mastercraft_weapon, "abr_mastercrafts", array("Fighter Ace", "MkII"), undefined, "tr_midburst_t8", 1);
-			self synergy::add_array("S6 Stingray Variant", undefined, &give_mastercraft_weapon, "stingray_mastercrafts", array("Predator", "MkII"), undefined, "tr_flechette_t8");
+			self synergy::add_array("Swordfish Variant", undefined, &give_mastercraft_weapon, "swordfish_mastercrafts", array("Ahab's Revenge", "MkII"), true, undefined, "tr_longburst_t8", 1);
+			self synergy::add_array("ABR 223 Variant", undefined, &give_mastercraft_weapon, "abr_mastercrafts", array("Fighter Ace", "MkII"), true, undefined, "tr_midburst_t8", 1);
+			self synergy::add_array("S6 Stingray Variant", undefined, &give_mastercraft_weapon, "stingray_mastercrafts", array("Predator", "MkII"), true, undefined, "tr_flechette_t8");
 
-			self synergy::add_array("Titan Variant", undefined, &give_mastercraft_weapon, "titan_mastercrafts", array("MkII - Sandstorm", "Black Knight"), undefined, "lmg_standard_t8");
+			self synergy::add_array("Titan Variant", undefined, &give_mastercraft_weapon, "titan_mastercrafts", array("MkII - Sandstorm", "Black Knight"), true, undefined, "lmg_standard_t8");
 			self synergy::add_option("Hades - Venom Cocktail", undefined, &give_mastercraft_weapon, undefined, 1, "lmg_spray_t8");
-			self synergy::add_array("VKM 750 Variant", undefined, &give_mastercraft_weapon, "vkm_mastercrafts", array("Magic Carpet Ride", "MkII"), undefined, "lmg_heavy_t8", 1);
+			self synergy::add_array("VKM 750 Variant", undefined, &give_mastercraft_weapon, "vkm_mastercrafts", array("Magic Carpet Ride", "MkII"), true, undefined, "lmg_heavy_t8", 1);
 			self synergy::add_option("Tigershark - MkII", undefined, &give_mastercraft_weapon, undefined, 1, "lmg_stealth_t8");
 
 			self synergy::add_option("SDM - Lost Patrol", undefined, &give_mastercraft_weapon, undefined, 2, "sniper_powersemi_t8");
-			self synergy::add_array("Paladin HB50 Variant", undefined, &give_mastercraft_weapon, "paladin_mastercrafts", array("Unknown", "Valkyrie", "MkII"), undefined, "sniper_powerbolt_t8");
-			self synergy::add_array("Koshka Variant", undefined, &give_mastercraft_weapon, "koshka_mastercrafts", array("MkII", "Wundergewehr 115"), undefined, "sniper_quickscope_t8");
+			self synergy::add_array("Paladin HB50 Variant", undefined, &give_mastercraft_weapon, "paladin_mastercrafts", array("Unknown", "Valkyrie", "MkII"), true, undefined, "sniper_powerbolt_t8");
+			self synergy::add_array("Koshka Variant", undefined, &give_mastercraft_weapon, "koshka_mastercrafts", array("MkII", "Wundergewehr 115"), true, undefined, "sniper_quickscope_t8");
 			self synergy::add_option("Outlaw - High Noon", undefined, &give_mastercraft_weapon, undefined, 2, "sniper_fastrechamber_t8");
 			self synergy::add_option("Vendetta - MkII", undefined, &give_mastercraft_weapon, undefined, 1, "sniper_mini14_t8");
 
-			self synergy::add_array("SG12 Variant", undefined, &give_mastercraft_weapon, "sg_mastercrafts", array("MkII - Killcano", "Boombox"), undefined, "shotgun_semiauto_t8");
-			self synergy::add_array("MOG 12 Variant", undefined, &give_mastercraft_weapon, "mog_mastercrafts", array("Enforcer", "MkII"), undefined, "shotgun_pump_t8", 1);
-			self synergy::add_array("Rampage Variant", undefined, &give_mastercraft_weapon, "rampage_mastercrafts", array("MkII", "Desecrator"), undefined, "shotgun_fullauto_t8");
+			self synergy::add_array("SG12 Variant", undefined, &give_mastercraft_weapon, "sg_mastercrafts", array("MkII - Killcano", "Boombox"), true, undefined, "shotgun_semiauto_t8");
+			self synergy::add_array("MOG 12 Variant", undefined, &give_mastercraft_weapon, "mog_mastercrafts", array("Enforcer", "MkII"), true, undefined, "shotgun_pump_t8", 1);
+			self synergy::add_array("Rampage Variant", undefined, &give_mastercraft_weapon, "rampage_mastercrafts", array("MkII", "Desecrator"), true, undefined, "shotgun_fullauto_t8");
 
-			self synergy::add_array("Mozu Variant", undefined, &give_mastercraft_weapon, "mozu_mastercrafts", array("Replicant", "MkII"), undefined, "pistol_revolver_t8", 1);
-			self synergy::add_array("Strife Variant", undefined, &give_mastercraft_weapon, "strife_mastercrafts", array("MkII - Divinity", "Divine Justice"), undefined, "pistol_standard_t8");
+			self synergy::add_array("Mozu Variant", undefined, &give_mastercraft_weapon, "mozu_mastercrafts", array("Replicant", "MkII"), true, undefined, "pistol_revolver_t8", 1);
+			self synergy::add_array("Strife Variant", undefined, &give_mastercraft_weapon, "strife_mastercrafts", array("MkII - Divinity", "Divine Justice"), true, undefined, "pistol_standard_t8");
 			self synergy::add_option("RK 7 Garrison - Odin's Song", undefined, &give_mastercraft_weapon, undefined, 2, "pistol_burst_t8");
-			self synergy::add_array("KAP 45 Variant", undefined, &give_mastercraft_weapon, "kap_mastercrafts", array("MkII", "Game Over"), undefined, "pistol_fullauto_t8");
+			self synergy::add_array("KAP 45 Variant", undefined, &give_mastercraft_weapon, "kap_mastercrafts", array("MkII", "Game Over"), true, undefined, "pistol_fullauto_t8");
 
 			break;
 		case "Give Weapons":

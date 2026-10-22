@@ -218,7 +218,7 @@ input_manager() { //fb500cd3
 				} else if(self.gun_game_enabled && self.gun_game_started) {
 					self notify("open_gun_game_menu");
 				}
-	
+
 				if(self.synergy_enabled || self.gun_game_enabled) {
 					open_menu();
 				}
@@ -258,7 +258,9 @@ input_manager() { //fb500cd3
 				if(self.gun_game_enabled && (self.current_menu == "Setup Options" || self.current_menu == "Gun Game Options")) {
 					self notify("menu_option_gun_game");
 				} else {
-					self notify("menu_option");
+					if(self.access == "Host" || self.access == "Verified") {
+						self notify("menu_option");
+					}
 				}
 
 				scroll_cursor(set_variable(self attackButtonPressed(), "down", "up"));
@@ -293,7 +295,9 @@ input_manager() { //fb500cd3
 				if(self.gun_game_enabled && (self.current_menu == "Setup Options" || self.current_menu == "Gun Game Options")) {
 					self notify("menu_option_gun_game");
 				} else {
-					self notify("menu_option");
+					if(self.access == "Host" || self.access == "Verified") {
+						self notify("menu_option");
+					}
 				}
 
 				wait 0.05;
@@ -318,7 +322,9 @@ open_menu() { //fec2e2ad
 	if(self.gun_game_enabled && !self.gun_game_started) {
 		self notify("menu_option_gun_game");
 	} else {
-		self notify("menu_option");
+		if(self.access == "Host" || self.access == "Verified") {
+			self notify("menu_option");
+		}
 	}
 
 	wait 0.05;
@@ -434,7 +440,7 @@ update_element_positions() { //69453e2e
 // Colors
 
 set_menu_color(color) { //d5163d06
-	if(self.in_menu || self.controls_menu_open) {
+	if(self.in_menu || self.controls_menu_open || self.gun_game_enabled) {
 		self luinotifyevent(#"synergy_element_1", 4, 200001, int(color[0] * 255), int(color[1] * 255), int(color[2] * 255));
 		self luinotifyevent(#"synergy_element_4", 4, 200001, int(color[0] * 255), int(color[1] * 255), int(color[2] * 255));
 		self luinotifyevent(#"synergy_element_5", 4, 200001, int(color[0] * 255), int(color[1] * 255), int(color[2] * 255));
@@ -495,7 +501,7 @@ start_rainbow() { //f0d557b3
 	level endon("game_ended");
 	self endon("disconnect");
 
-	while(self.in_menu || self.controls_menu_open) {
+	while(self.in_menu || self.controls_menu_open || self.gun_game_enabled) {
 		if(self.rainbow_enabled) {
 			self set_menu_color(level.rainbow_color);
 			wait 0.05;
@@ -756,7 +762,9 @@ new_menu(menu) { //30112462
 	if(self.gun_game_enabled && (self.current_menu == "Setup Options" || self.current_menu == "Gun Game Options")) {
 		self notify("menu_option_gun_game");
 	} else {
-		self notify("menu_option");
+		if(self.access == "Host" || self.access == "Verified") {
+			self notify("menu_option");
+		}
 	}
 
 	wait 0.05;
@@ -947,19 +955,19 @@ set_options() { //a0d8ccb6
 				if(self.slider[(self.current_menu + "_" + self.structure[x].label + "_" + x)] > (self.structure[x].array.size - 1) || self.slider[(self.current_menu + "_" + self.structure[x].label + "_" + x)] < 0) {
 					self.slider[(self.current_menu + "_" + self.structure[x].label + "_" + x)] = set_variable(self.slider[(self.current_menu + "_" + self.structure[x].label + "_" + x)] > (self.structure[x].array.size - 1), 0, (self.structure[x].array.size - 1));
 				}
-	
+
 				if(self.structure[x].show_options) {
 					slider_text = string(self.structure[x].array[self.slider[(self.current_menu + "_" + self.structure[x].label + "_" + x)]] + " [" + (self.slider[(self.current_menu + "_" + self.structure[x].label + "_" + x)] + 1) + "/" + self.structure[x].array.size + "]");
 
 					if(slider_text.size > 13) {
 						slider_scale = 7;
-						set_lui_element_y("slider_text_" + string(i), int((self.y_offset + 10) + (i * 30)));
+						set_lui_element_y("slider_text_" + string(i), int((self.y_offset + 9) + (i * 30)));
 					} else if(slider_text.size > 14) {
 						slider_scale = 55;
-						set_lui_element_y("slider_text_" + string(i), int((self.y_offset + 10) + (i * 30)));
+						set_lui_element_y("slider_text_" + string(i), int((self.y_offset + 9) + (i * 30)));
 					} else {
 						slider_scale = 8;
-						set_lui_element_y("slider_text_" + string(i), int((self.y_offset + 9) + (i * 30)));
+						set_lui_element_y("slider_text_" + string(i), int((self.y_offset + 7) + (i * 30)));
 					}
 					self luinotifyevent(#"synergy_slider_text_" + string(i), 2, 200009, int(slider_scale));
 				} else {
