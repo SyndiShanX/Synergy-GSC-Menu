@@ -1228,12 +1228,15 @@ menu_option() {
 			self add_toggle("No Target", "Zombies won't Target You", ::no_target, self.no_target);
 
 			self add_toggle("Zombie Counter", undefined, ::zombie_counter, self.zombie_counter);
+			self add_array("Set Round Increment", undefined, ::set_round_increment, [1, 10, 20, 30, 40, 50]);
+			self add_increment("Set Round", undefined, ::set_round, 1, 1, 255, self.round_increment);
 
 			self add_option("Kill All Zombies", undefined, ::kill_all_zombies);
 			self add_option("Teleport Zombies to Crosshair", undefined, ::teleport_zombies);
 
 			self add_toggle("One Shot Zombies", undefined, ::one_shot_zombies, self.one_shot_zombies);
 			self add_toggle("Freeze Zombies", undefined, ::freeze_zombies, self.freeze_zombies);
+			self add_toggle("Disable Spawns", undefined, ::disable_spawns, self.disable_spawns);
 
 			self add_increment("Set Round Health Cap", "Cap Zombies Health to Specified Round", ::set_zombie_health_cap, 1, 1, 255, 1);
 			self add_option("Reset Zombie Health Cap", "Set Health Cap back to Normal", ::reset_zombie_health_cap);
@@ -2444,7 +2447,7 @@ open_doors() { // Psalm 91
 // Zombie Options
 
 get_zombies() {
-	return _id_053C::_id_4F88();
+	return _id_0547::_id_408F();
 }
 
 no_target() {
@@ -2462,9 +2465,41 @@ no_target() {
 	}
 }
 
+set_round_increment(value) {
+	self.round_increment = value;
+}
+
+set_round(value) {
+	level thread kill_remaining_zombies();
+	
+	level waittill("zombie_wave_ended");
+	level notify("zombies_skip_round_intermission");
+	
+	level.stop_killing = true;
+	
+	level._id_A980 = (value - 2);
+	maps\mp\gametypes\zombies::_id_A1A0();
+}
+
+kill_remaining_zombies() {
+	level.stop_killing = false;
+	
+	while(!level.stop_killing) {
+		foreach(zombie in get_zombies()) {
+			zombie suicide();
+		}
+		
+		level._id_AC12._id_005C = 0;
+		level._id_ABEC._id_005C = 0;
+		level._id_ABED._id_005C = 0;
+		
+		wait 0.1;
+	}
+}
+
 kill_all_zombies() {
 	foreach(zombie in get_zombies()) {
-		zombie doDamage(zombie.health + 999, zombie.origin);
+		zombie suicide();
 	}
 }
 
@@ -2623,6 +2658,17 @@ zombie_health_cap_loop(round, health_cap) {
 			}
 		}
 		wait 1;
+	}
+}
+
+disable_spawns() {
+	self.disable_spawns = !return_toggle(self.disable_spawns);
+	if(self.disable_spawns) {
+		iPrintString("Disable Zombie Spawns [^2ON^7]");
+		level._id_ABE2 = 1;
+	} else {
+		iPrintString("Disable Zombie Spawns [^1OFF^7]");
+		level._id_ABE2 = 0;
 	}
 }
 
