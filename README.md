@@ -8,6 +8,8 @@ If you use any Code from my Menus, your Menu also has to be Open-Source as per t
 
 If you have any Issues/Suggestions, please Submit them in [Issues](https://github.com/SyndiShanX/Synergy-GSC-Menu/issues)
 
+Feel free to join my [Discord](https://discord.com/invite/grjBktEUCy)
+
 ## Games
 
 - [Modern Warfare 2](https://github.com/SyndiShanX/Synergy-GSC-Menu/tree/main/MW2) (MP - IW4x)
