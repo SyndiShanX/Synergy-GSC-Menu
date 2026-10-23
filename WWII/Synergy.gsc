@@ -1722,7 +1722,7 @@ add_points(value) {
 }
 
 take_points(value) {
-	self maps\mp\gametypes\zombies::_id_90F5(value);
+	self maps\mp\gametypes\zombies::spendmoney(value);
 }
 
 // Fun Options
@@ -2026,7 +2026,7 @@ consumable_override_stub(var_0) {
 
     level._id_400E[level._id_400E.size] = ["assassin_set 4 -1", self];
     level._id_400E[level._id_400E.size] = ["bat_elite_set 4 -1", self];
-    self._id_A97F = level._id_A980;
+    self._id_A97F = level.wavecounter;
     self notify("can_use_consumable");
   }
 }
@@ -2439,7 +2439,7 @@ drop_weapon() {
 // Map Options
 
 open_doors() { // Psalm 91
-	foreach(door in level._id_AC1D) {
+	foreach(door in level.zombiedoors) {
 		door notify("open");
 	}
 }
@@ -2454,13 +2454,13 @@ no_target() {
 	self.no_target = !return_toggle(self.no_target);
 	if(self.no_target) {
 		iPrintString("No Target [^2ON^7]");
-		self._id_AC5C = 1;
-		self._id_AC5B = 1;
+		self.zombiesignoremecount = 1;
+		self.zombiesignoreme = 1;
 		self notify("zombiesIgnoreMeChanged", 1);
 	} else {
 		iPrintString("No Target [^1OFF^7]");
-		self._id_AC5C = 0;
-		self._id_AC5B = 0;
+		self.zombiesignoremecount = 0;
+		self.zombiesignoreme = 0;
 		self notify("zombiesIgnoreMeChanged", 0);
 	}
 }
@@ -2471,28 +2471,28 @@ set_round_increment(value) {
 
 set_round(value) {
 	level thread kill_remaining_zombies();
-	
+
 	level waittill("zombie_wave_ended");
 	level notify("zombies_skip_round_intermission");
-	
+
 	level.stop_killing = true;
-	
-	level._id_A980 = (value - 2);
+
+	level.wavecounter = (value - 2);
 	maps\mp\gametypes\zombies::_id_A1A0();
 }
 
 kill_remaining_zombies() {
 	level.stop_killing = false;
-	
+
 	while(!level.stop_killing) {
 		foreach(zombie in get_zombies()) {
 			zombie suicide();
 		}
-		
+
 		level._id_AC12._id_005C = 0;
 		level._id_ABEC._id_005C = 0;
 		level._id_ABED._id_005C = 0;
-		
+
 		wait 0.1;
 	}
 }
@@ -2711,15 +2711,15 @@ outline_zombies_loop() {
 // Account Options
 
 set_prestige(value) { // Lazy Dev
-	self setPlayerData(_id_46AE(), "prestigeLevel", value);
+	self setPlayerData(getstatsgroup_ranked(), "prestigeLevel", value);
 }
 
 set_rank(value) { // Lazy Dev
 	if(value > 55) {
-		self setPlayerData(_id_46AE(), "totalXP", int(tablelookup("mp/cp_ranktable.csv", 0, (value - 2), 7)));
-		self setPlayerData(_id_46AE(), "prestigeLevel", 10);
+		self setPlayerData(getstatsgroup_ranked(), "totalXP", int(tablelookup("mp/cp_ranktable.csv", 0, (value - 2), 7)));
+		self setPlayerData(getstatsgroup_ranked(), "prestigeLevel", 10);
 	} else {
-		self setPlayerData(_id_46AE(), "totalXP", int(tablelookup("mp/cp_ranktable.csv", 0, (value - 2), 7)));
+		self setPlayerData(getstatsgroup_ranked(), "totalXP", int(tablelookup("mp/cp_ranktable.csv", 0, (value - 2), 7)));
 	}
 }
 
@@ -2746,8 +2746,8 @@ unlock_all() { // CF4_99
 			finalTier   = tierId + 1;
 		}
 
-		self setPlayerData(_id_46AE(), "challengeProgress", challengeRef, finalTarget);
-		self setPlayerData(_id_46AE(), "challengeState", challengeRef, finalTier);
+		self setPlayerData(getstatsgroup_ranked(), "challengeProgress", challengeRef, finalTarget);
+		self setPlayerData(getstatsgroup_ranked(), "challengeState", challengeRef, finalTier);
 		wait 0.01;
 	}
 
