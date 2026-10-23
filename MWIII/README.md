@@ -19,5 +19,4 @@ A Modern Warfare III Zombies GSC Mod Menu that uses the [Lumen MWIII Client](htt
 ##### Known Issues:
 
 * Perks can be Applied Multiple Times
-* Controls Pop up too early so they are hidden by the Infil Cutscene
 * You can't open/interact with the Menu if your Aiming Input Device is set to Controller
