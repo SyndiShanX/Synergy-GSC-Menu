@@ -2781,7 +2781,7 @@ function open_doors() {
 	foreach(type in types) {
 		zombie_doors = getEntArray(type, "targetname");
 		foreach(door in zombie_doors) {
-			if(type == "zombie_debris") {
+			if(type == "zombie_debris" || "zombie_airlock_buy") {
 	      door.zombie_cost = 0;
 	      door notify("trigger", self);
 	    } else if(door._door_open != true) {
