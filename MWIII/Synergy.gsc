@@ -1,25 +1,29 @@
 #include scripts\common\system;
 #include scripts\common\utility;
+#include scripts\common\powerups;
+#include scripts\engine\trace;
 #include scripts\engine\utility;
 #include scripts\mp\hud_util;
-#include scripts\cp_mp\weapon;
 #include scripts\mp\gamescore;
-#include scripts\ob\points;
-#include scripts\common\powerups;
-#include scripts\mp\utility\perk;
-#include scripts\cp_mp\zombie_perks;
-#include scripts\engine\trace;
-#include script_6bffae1b97f70547; //ammo_mod
-#include scripts\mp\gametypes\br_pickups;
-#include scripts\cp_mp\pack_a_punch;
-#include scripts\cp_mp\armor;
 #include scripts\mp\equipment;
 #include scripts\mp\hud_message;
+#include scripts\mp\gametypes\br_pickups;
+#include scripts\mp\perks\perkpackage;
+#include scripts\mp\utility\perk;
+#include scripts\cp_mp\pack_a_punch;
+#include scripts\cp_mp\armor;
+#include scripts\cp_mp\weapon;
+#include scripts\cp_mp\zombie_perks;
+#include scripts\cp_mp\loot\common_item;
+#include scripts\cp_mp\utility\inventory_utility;
+#include scripts\cp_mp\utility\weapon_utility;
+#include scripts\ob\points;
+#include script_6bffae1b97f70547; //ammo_mod
 
 #namespace synergy;
 
 function private autoexec __init__system__() {
-	system::register( #"synergy", undefined, &init, undefined );
+	system::register(#"synergy", undefined, &init, undefined);
 }
 
 function init() {
@@ -85,8 +89,8 @@ function initial_variables() {
 
 	// Weapons
 
-	self.syn["weapons"]["category"][0] = ["assault_rifles", "battle_rifles", "sub_machine_guns", "shotguns", "light_machine_guns", "marksman_rifles", "sniper_rifles", "pistols", "launchers", "equipment", "extras"];
-	self.syn["weapons"]["category"][1] = ["Assault Rifles", "Battle Rifles", "Sub Machine Guns", "Shotguns", "Light Machine Guns", "Marksman Rifles", "Sniper Rifles", "Pistols", "Launchers", "Equipment", "Extras"];
+	self.syn["weapons"]["category"][0] = ["assault_rifles", "battle_rifles", "sub_machine_guns", "shotguns", "light_machine_guns", "marksman_rifles", "sniper_rifles", "pistols", "launchers", "melee", "equipment", "extras"];
+	self.syn["weapons"]["category"][1] = ["Assault Rifles", "Battle Rifles", "Sub Machine Guns", "Shotguns", "Light Machine Guns", "Marksman Rifles", "Sniper Rifles", "Pistols", "Launchers", "Melee", "Equipment", "Extras"];
 
 	self.syn["weapons"]["assault_rifles"][0] =     ["jup_jp44_ar_stango44_mp", "jup_jp34_ar_balpha27_mp", "jup_jp02_ar_bromeo805_mp", "jup_jp25_ar_talpha95_mp", "jup_jp36_ar_anov94_mp", "jup_jp05_ar_foxtrot2000_mp", "jup_jp01_ar_golf36_mp", "jup_jp19_ar_acharlie_mp", "jup_jp08_ar_qbravo97_mp", "jup_cp06_ar_falpha_mp", "iw9_ar_scharlie_mp", "iw9_ar_mike4_mp", "iw9_ar_augolf_mp", "iw9_ar_akilo_mp", "iw9_ar_mcharlie_mp", "iw9_ar_mcbravo_mp", "iw9_ar_acharlie300_mp", "iw9_ar_helima_mp", "iw9_ar_fecho_mp", "iw9_ar_ralpha_mp", "iw9_ar_malima_mp", "iw9_ar_kilo53_mp", "iw9_ar_mike16_mp", "iw9_ar_akilo74_mp", "iw9_ar_akilo105_mp"];
 	self.syn["weapons"]["battle_rifles"][0] =      ["jup_jp40_br_hcharlie36_mp", "jup_jp03_br_aromeo200_mp", "jup_cp08_br_xmike5_mp", "jup_jp19_br_acharlie450_mp", "jup_jp02_br_bromeo2_mp", "iw9_ar_golf3_mp", "iw9_br_ngsierra_mp", "iw9_br_msecho_mp", "iw9_ar_schotel_mp", "iw9_br_soscar14_mp"];
@@ -97,7 +101,7 @@ function initial_variables() {
 	self.syn["weapons"]["sniper_rifles"][0] =      ["jup_jp35_sn_moscar_mp", "jup_jp10_sn_cdelta50_mp", "jup_jp17_sn_hsierra_mp", "jup_jp36_sn_boscar_mp", "jup_jp13_sn_svictor_mp", "iw9_sn_mromeo_mp", "iw9_sn_limax_mp", "iw9_sn_alpha50_mp", "iw9_sn_india_mp", "iw9_sn_walpha_mp", "iw9_dm_la700_mp", "iw9_dm_xmike2010_mp"];
 	self.syn["weapons"]["pistols"][0] =            ["jup_cp24_pi_glima21_mp", "jup_jp12_pi_mike93_mp", "jup_jp14_pi_rsierra12_mp", "jup_jp07_pi_uzulum_mp", "iw9_pi_papa220_mp", "iw9_pi_decho_mp", "iw9_pi_golf17_mp", "iw9_pi_swhiskey_mp", "iw9_pi_tango9_mp", "iw9_pi_dechoauto_mp", "iw9_pi_mike2011_mp", "iw9_pi_golf18_mp"];
 	self.syn["weapons"]["launchers"][0] =          ["jup_jp31_dm_compound_mp", "jup_jp26_la_mike32_mp", "jup_jp22_la_dromeo_mp", "iw9_la_gromeo_mp", "iw9_la_juliet_mp", "iw9_la_rpapa7_mp", "iw9_la_kgolf_mp"];
-	self.syn["weapons"]["melee"][0] =              ["iw9_me_riotshield_mp", "jup_jp23_me_spear_mp", "jup_jp23_me_shotel_mp", "jup_jp23_me_kalpha_mp", "jup_jp23_me_pdango_mp", "jup_jp23_me_knife_mp", "iw9_me_tonfa_mp", "iw9_me_knife_mp", "jup_jp23_me_swhiskey_mp", "iw9_me_sword01_mp", "iw9_me_kamas_mp", "iw9_me_pickaxe_mp"];
+	self.syn["weapons"]["melee"][0] =              ["iw9_me_riotshield_mp", "jup_jp23_me_spear_mp", "jup_jp23_me_shotel_mp", "jup_jp23_me_kalpha_mp", "jup_jp23_me_pdango_mp", "jup_jp23_me_knife_mp", "iw9_me_tonfa_mp", "iw9_me_knife_mp", "jup_jp23_me_swhiskey_mp", "iw9_me_sword01_mp", "iw9_me_kamas_mp", "iw9_me_pickaxe_mp", "iw9_me_buzzsaw_mp", "jup_me_glassshiv", "iw9_drown"];
 	self.syn["weapons"]["lethals"][0] =            ["frag", "claymore", "throwing_knife", "thermite", "thermobaric_grenade", "at_mine", "bunkerbuster", "semtex", "c4" , "breacher_drone", "molotov", "aether_blade", "snowball", "rock"];
 	self.syn["weapons"]["tacticals"][0] =          ["concussion", "battlerage", "smoke", "butterfly_mine", "decoy", "flash", "snapshot_grenade", "shockstick", "adrenaline", "gas_grenade", "tracker_grenade", "emp", "blackhole_bomb", "monkey_bomb", "tac_cover", "tracker_mine", "trophy", "hb_sensor", "tac_insert", "deployed_decoy", "munitionsbox", "armorbox", "utilitybox", "blastshieldbox", "hauntedbox", "binoculars", "thermal_phone", "inhibitor", "decon_station", "mutant_emp_ball", "iodine_pills", "geigercounter", "aethercounter"];
 	self.syn["weapons"]["extras"][0] =             ["jup_la_humangun_mp", "jup_pi_raygun_mp", "jup_ar_dg2_mp", "jup_la_plasmagun_mp", "iw9_pi_stimpistol_mp"];
@@ -111,10 +115,15 @@ function initial_variables() {
 	self.syn["weapons"]["sniper_rifles"][1] =      ["MORS", "XRK Stalker", "Katt-AMR", "Longbow", "KV Inhibitor", "MCPR-300", "Signal 50", "Victus XMR", "FJX Imperium", "Carrack .300", "LA-B 330", "SP-X 80"];
 	self.syn["weapons"]["pistols"][1] =            ["COR-45", "Renetti", "TYR", "WSP Stinger", "P890", ".50 GS", "X12", "Basilisk", "FTAC Siege", "GS Magna", "9mm Daemon", "X13 Auto"];
 	self.syn["weapons"]["launchers"][1] =          ["Torque 35", "RGL-80", "Stormender", "PILA", "JOKR", "RPG-7", "Strela-P"];
-	self.syn["weapons"]["melee"][1] =              ["Riot Shield", "Spear", "Sledgehammer", "Karambit", "Gladiator", "Gutter Knife", "Tonfa", "Combat Knife", "Soulrender", "Dual Kodachis", "Dual Kamas", "Pickaxe"];
+	self.syn["weapons"]["melee"][1] =              ["Riot Shield", "Spear", "Sledgehammer", "Karambit", "Gladiator", "Gutter Knife", "Tonfa", "Combat Knife", "Soulrender", "Dual Kodachis", "Dual Kamas", "Pickaxe", "Buzzsaw", "Glass Shiv", "Fists"];
 	self.syn["weapons"]["lethals"][1] =            ["Frag Grenade", "Claymore", "Throwing Knife", "Thermite", "Thermobaric Grenade", "Proximity Mine", "Drill Charge", "Sticky Grenade", "C4", "Breacher Drone", "Molotov", "Aether Blade", "Snowball", "Rock"];
 	self.syn["weapons"]["tacticals"][1] =          ["Stun Grenade", "Battle Rage", "Smoke Grenade", "Scatter Mine", "Decoy Grenade", "Flash Grenade", "Snapshot Grenade", "Shock Stick", "Stim", "Tear Gas", "EMD Grenade", "EMP Grenade", "Kazamir", "Monkey Bomb", "Deployable Cover", "Suppression Mine", "Trophy System", "Heartbeast Sensor", "Tactical insertion", "Inflatable Decoy", "Munitions Box", "Armor Box", "Equipment Box", "Blast Shield Armor Box", "Haunted Box", "Binoculars", "Thermal Phone", "Inhibitor", "Decon Station", "Mutant EMP Ball", "Iodine Pills", "Geiger Counter", "Aether Counter"];
-	self.syn["weapons"]["extras"][1] =             ["V-R11", "Raygun", "Wunderwaffe DG-2", "Scorcher", "Revive Pistol"];
+	self.syn["weapons"]["extras"][1] =             ["V-R11", "Ray Gun", "Wunderwaffe DG-2", "Scorcher", "Revive Pistol"];
+
+	// Bullets
+
+	self.syn["bullets"][0] = ["chopper_gunner_proj_dmz", "hellstorm_cluster_bomb_proj_mp", "gunship_hellfire_mp", "iw9_la_rpapa7_mp"];
+	self.syn["bullets"][1] = ["Chopper Gunner Missile", "Cluster Bomb Missile", "Gunship Missile", "RPG-7 Rocket"];
 
 	// Killstreaks
 
@@ -135,6 +144,16 @@ function initial_variables() {
 
 	self.syn["perks"][0] = ["specialty_quickrevive", "specialty_deadshot", "specialty_juggernog", "specialty_speedcola", "specialty_staminup", "specialty_tombstone", "specialty_death_perception", "specialty_elemental_pop", "specialty_phd_flopper"];
 	self.syn["perks"][1] = ["Quick Revive", "Deadshot", "Juggernog", "Speed Cola", "Stamin-Up", "Tombstone", "Death Perception", "Elemental Pop", "PhD Flopper"];
+
+	// Acquisitions
+
+	self.syn["acquisitions"][0] = ["ob_jup_item_perk_quickrevive", "ob_jup_item_perk_deadshot", "ob_jup_item_perk_juggernog", "ob_jup_item_perk_speedcola", "ob_jup_item_perk_staminup", "ob_jup_item_perk_tombstone", "ob_jup_item_perk_death_perception", "ob_jup_item_perk_elemental_pop", "ob_jup_item_perk_phd_flopper", "ob_jup_item_aether_tool", "ob_jup_item_aether_tool_2", "ob_jup_item_aether_tool_3", "ob_jup_item_aether_tool_4", "ob_jup_item_aether_crystal", "ob_jup_item_aether_crystal_2", "ob_jup_item_aether_crystal_3", "ob_jup_item_ammomod_brainrot", "ob_jup_item_ammomod_deadwire", "ob_jup_item_ammomod_cryofreeze", "ob_jup_item_ammomod_napalmburst", "ob_jup_item_ammomod_shatterblast", "ob_jup_item_weaponcase_raygun", "ob_jup_item_weaponcase_plasmagun", "ob_jup_item_weaponcase_vr11", "ob_jup_item_weaponcase_dg2", "ob_jup_item_weaponcase_aetherblade", "ob_jup_item_warlord_maestro_mod", "ob_jup_item_disciple_bottle", "ob_jup_item_dog_whistle", "ob_jup_item_golden_armor_plate", "ob_jup_item_warlord_chemist_mask", "ob_jup_item_grenade_bandolier", "ob_jup_item_golden_ammo", "ob_jup_item_warlord_afo_beret", "ob_jup_item_backpack_medium", "ob_jup_item_backpack_large", "ob_jup_item_revive_self_revive", "ob_jup_item_gasmask", "ob_jup_item_gasmask_durable", "ob_jup_item_armor_plate", "ob_jup_item_plate_carrier_2", "ob_jup_item_plate_carrier_3", "ob_jup_item_key_human_stronghold", "ob_jup_item_tactical_monkey_bomb", "ob_jup_item_tactical_blackhole_bomb", "ob_jup_item_thermal_phone", "ob_jup_item_generic_valuable_turret_trap_circuit", "ob_jup_item_killstreak_sentrygun", "ob_jup_item_killstreak_cluster_spike", "ob_jup_item_killstreak_precision_airstrike", "ob_jup_item_killstreak_juggernaut", "ob_jup_item_killstreak_clusterstrike"];
+	self.syn["acquisitions"][1] = ["Quick Revive", "Deadshot", "Juggernog", "Speed Cola", "Stamin-Up", "Tombstone", "Death Perception", "Elemental Pop", "PhD Flopper", "Uncommon Aether Tool", "Rare Aether Tool", "Epic Aether Tool", "Legendary Aether Tool", "Raw Aetherium Crystal", "Refined Aetherium Crystal", "Flawless Aetherium Crystal", "Brain Rot", "Dead Wire", "Cryofreeze", "Napalm Burst", "Shatter Blast", "Ray Gun", "Scorcher", "V-R11", "Wunderwaffe DG-2", "Aether Blade case", "Dead Wire Detonators", "Disciple Bottle", "Dog Bone", "Golden Armor plate", "Golden Mask Filter", "Grenade Bandolier", "Mag of Holding", "Sergeant's Beret", "Medium Backpack", "Large Backpack", "Self Revive", "Gas Mask", "Durable Gas Mask", "Armor Plate", "2-Plate Armor Vest", "3-Plate Armor Vest", "Stronghold Keycard", "Monkey Bomb", "LT53 Kazimir", "Thermal Phone", "Turret Trap Circuit", "Sentry Gun", "Cluster Mine", "Precision Airstrike", "Juggernaut", "Mortar Strike"];
+
+	// Field Upgrades
+
+	self.syn["field_upgrades"][0] = ["none", "super_energy_mine", "super_frenzied_guard", "super_healing_aura", "super_frost_blast", "super_aether_shroud", "super_tesla_storm"];
+	self.syn["field_upgrades"][1] = ["None", "Energy Mine", "Frenzied Guard", "Healing Aura", "Frost Blast", "Aether Shroud", "Tesla Storm"];
 }
 
 function create_menu() {
@@ -1143,6 +1162,8 @@ function menu_option() {
 			self add_option("Zombie Options", undefined, &new_menu, "Zombie Options");
 			self add_option("Powerup Options", undefined, &new_menu, "Powerup Options");
 			self add_option("Give Killstreaks", undefined, &new_menu, "Give Killstreaks");
+			self add_option("Give Acquisitions", undefined, &new_menu, "Give Acquisitions");
+			self add_option("Give Field Upgrades", undefined, &new_menu, "Give Field Upgrades");
 			self add_option("Menu Options", undefined, &new_menu, "Menu Options");
 
 			break;
@@ -1166,6 +1187,8 @@ function menu_option() {
 
 			self add_option("Take Current Weapon", undefined, &take_weapon);
 			self add_option("Drop Current Weapon", undefined, &drop_weapon);
+
+			self add_option("Magic Bullets", undefined, &new_menu, "Magic Bullets");
 
 			break;
 		case "Perk Options":
@@ -1245,11 +1268,35 @@ function menu_option() {
 			}
 
 			break;
+		case "Give Acquisitions":
+			self set_title(menu);
+
+			for(i = 0; i < self.syn["acquisitions"][0].size; i++) {
+				self add_option(self.syn["acquisitions"][1][i], undefined, &give_acquisition, self.syn["acquisitions"][0][i]);
+			}
+
+			break;
+		case "Give Field Upgrades":
+			self set_title(menu);
+
+			for(i = 0; i < self.syn["field_upgrades"][0].size; i++) {
+				self add_option(self.syn["field_upgrades"][1][i], undefined, &give_field_upgrade, self.syn["field_upgrades"][0][i]);
+			}
+
+			break;
 		case "Give AAT":
 			self set_title(menu);
 
 			for(i = 0; i < self.syn["aats"][0].size; i++) {
 				self add_option(self.syn["aats"][1][i], undefined, &give_aat, self.syn["aats"][0][i]);
+			}
+
+			break;
+	  case "Magic Bullets":
+			self set_title(menu);
+
+			for(i = 0; i < self.syn["bullets"][0].size; i++) {
+				self add_toggle(self.syn["bullets"][1][i], undefined, &modify_bullet, self.bullet[i], self.syn["bullets"][0][i], i);
 			}
 
 			break;
@@ -1315,6 +1362,12 @@ function menu_option() {
 			load_weapons("launchers");
 
 			break;
+		case "Melee":
+			self set_title(menu);
+
+			load_weapons("melee");
+
+			break;
 		case "Equipment":
 			self set_title(menu);
 
@@ -1326,6 +1379,12 @@ function menu_option() {
 			self set_title(menu);
 
 			load_weapons("extras");
+
+			self add_option("Explosive Mors", undefined, &give_special_weapon, "mors");
+			self add_option("Rocket Riveter", undefined, &give_special_weapon, "riveter");
+			self add_option("Incendiary Tyrs", undefined, &give_special_weapon, "tyr");
+			self add_option("Minigun", undefined, &give_special_weapon, "minigun");
+			self add_option("Arcade Sledgehammer", undefined, &give_special_weapon, "sledgehammer");
 
 			break;
 		default:
@@ -1427,6 +1486,10 @@ function infinite_ammo_loop() {
 			self giveMaxAmmo(weapons[i]);
 		}
 		self setWeaponAmmoClip(self getCurrentWeapon(), 999);
+		self setWeaponAmmoClip(self getCurrentWeapon(), 999, "left");
+		self setWeaponAmmoClip(self getCurrentWeapon(), 999, "right");
+
+		self.has_power = 1;
 
 		wait 0.05;
 	}
@@ -1442,7 +1505,7 @@ function set_plate_carrier_level(value) {
 // Weapon Options
 
 function give_weapon(weapon) {
-	weapon = weapon::buildweapon(weapon);
+	weapon = weapon::buildWeapon(weapon);
 
 	if(!self hasWeapon(weapon)) {
 		if(self getWeaponsListPrimaries().size >= 5) {
@@ -1460,17 +1523,50 @@ function give_weapon(weapon) {
 }
 
 function give_lethal(grenade) {
-	equipment::takeequipment("primary");
+	equipment::takeEquipment("primary");
 	wait 0.5;
-  equipment::giveequipment("equip_" + grenade, "primary");
-	equipment::setequipmentslotammo("primary", 8);
+  equipment::giveEquipment("equip_" + grenade, "primary");
+	equipment::setEquipmentSlotAmmo("primary", 8);
 }
 
 function give_tactical(grenade) {
-	equipment::takeequipment("secondary");
+	equipment::takeEquipment("secondary");
 	wait 0.5;
-  equipment::giveequipment("equip_" + grenade, "secondary");
-	equipment::setequipmentslotammo("secondary", 8);
+  equipment::giveEquipment("equip_" + grenade, "secondary");
+	equipment::setEquipmentSlotAmmo("secondary", 8);
+}
+
+function give_special_weapon(weapon_name) {
+	explosive_mors = weapon::buildWeapon("jup_jp35_sn_moscar", ["jup_moscar_rec", "jup_jp35_sn_moscar_stock", "jup_jp35_sn_moscar_pgrip", "jup_moscar_bipod", "jup_ammo_rail_std", "jup_moscar_scope", "jup_jp35_sn_moscar_bar_explode", "jup_jp35_sn_moscar_bolt_hvy"], "jup_camo_17c", "none");
+  rocket_riveter = weapon::buildWeapon("jup_cp01_sh_aromeo410", ["jup_ammo_410g_vortex", "jup_cp01_sh_aromeo410_pgrip_tac", "jup_reflex04"], "jup_camo_17c", "none");
+  incendiary_tyrs = weapon::buildWeapon("jup_jp14_pi_rsierra12", ["jup_ammo_127_db_arcade", "jup_rsierra12_akimbo", "jup_jp14_pi_rsierra12_bar_hvylong"], "jup_camo_17c", "none");
+	minigun = makeWeapon("iw9_lm_dblmg_jup_mp", ["ammo_762n_vortex"], undefined, "jup_camo_17c", 0);
+  sledgehammer = makeWeapon("jup_jp23_me_shotel_arcade_mp", ["jup_me_shotel"], undefined, "jup_camo_17c", 0);
+
+	switch(weapon_name) {
+		case "mors":
+			weapon = explosive_mors;
+			break;
+		case "riveter":
+			weapon = rocket_riveter;
+			break;
+		case "tyr":
+			weapon = incendiary_tyrs;
+			break;
+		case "minigun":
+			weapon = minigun;
+			break;
+		case "sledgehammer":
+			weapon = sledgehammer;
+			break;
+	}
+
+	if(self getWeaponsListPrimaries().size >= 5) {
+		self takeWeapon(self getCurrentWeapon());
+	}
+
+	self inventory_utility::_giveWeapon(weapon, undefined, undefined, 0);
+  self inventory_utility::_switchToWeapon(weapon);
 }
 
 function pack_weapon() {
@@ -1503,11 +1599,35 @@ function drop_weapon() {
 	self dropItem(self getCurrentWeapon());
 }
 
+function modify_bullet(bullet, i) {
+	self.bullet[i] = !return_toggle(self.bullet[i]);
+	if(self.bullet[i]) {
+		self iPrintString(self.syn["bullets"][1][i] + " [^2ON^7]");
+		self thread [[&modify_bullet_loop]](bullet);
+	} else {
+		self iPrintString(self.syn["bullets"][1][i] + " [^1OFF^7]");
+		self notify("stop_modify_bullet_loop");
+	}
+}
+
+function modify_bullet_loop(bullet) {
+	self endon("stop_modify_bullet_loop");
+	self endon("disconnect");
+
+	for(;;) {
+		self waittill("weapon_fired");
+
+		magicBullet(makeWeapon(bullet), self getEye(), get_bullet_trace_position(), self);
+
+		wait 0.05;
+	}
+}
+
 // Killstreaks
 
 function give_killstreak(streak) {
 	self br_pickups::forceGiveKillstreak(streak, 0, 0, 0, 0, 0, undefined);
-	self hud_message::showkillstreaksplash(streak, undefined, 1);
+	self hud_message::showKillstreakSplash(streak, undefined, 1);
 }
 
 // Menu Options
@@ -1520,7 +1640,7 @@ function iPrintString(string, font_scale) {
 		self.syn["string"] = self create_text(string, "bigfixed", font_scale, "center", "top", 0, -100, (1, 1, 1), 1, 9999, true);
 	} else {
 		self.syn["string"] set_text(string);
-		self.syn["string"].fontscale = font_scale;
+		self.syn["string"].fontScale = font_scale;
 	}
 	self.syn["string"] notify("stop_hud_fade");
 	self.syn["string"].alpha = 1;
@@ -1643,6 +1763,23 @@ function take_perkaholic() {
 	foreach(perk in self.syn["perks"][0]) {
 		take_perk(perk);
 	}
+}
+
+// Acquisition Options
+
+function give_acquisition(item) {
+	itembundle = getscriptbundle("itemspawnentry:" + item);
+
+	if(isDefined(itembundle)) {
+		common_item::function_c465d27f3f6066b4(itembundle, (self.origin + anglesToForward(self.angles) * 25));
+	}
+}
+
+// Field Upgrade Options
+
+function give_field_upgrade(field_upgrade) {
+	perkpackage::perkPackage_giveDebug(field_upgrade);
+	self.has_power = 1;
 }
 
 // Zombie Options
