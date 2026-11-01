@@ -1,5 +1,8 @@
 {
     "name": "Gun Game",
+		"version": "2.0",
+    "author": "SyndiShanX",
+    "description": "Gun Game for Black Ops 4 Zombies using either Kills or Points to progress",
     "data": [
         {
             "type": "scriptparsetree",

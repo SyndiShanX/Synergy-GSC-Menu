@@ -936,7 +936,7 @@ frag_no_clip() { //b991b337
 
 	if(!isDefined(self.frag_no_clip)) {
 		self.frag_no_clip = true;
-		self iPrintlnBold("Frag No Clip [^2ON^7], Press your ^3Equipment^7 Keybind to Enter and ^3Melee^7 to Exit");
+		self iPrintlnBold("Frag No Clip [^2ON^7], Press ^3[{+frag}]^7 to Enter and ^3[{+melee}]^7 to Exit");
 		while (isDefined(self.frag_no_clip)) {
 			if(self fragButtonPressed()) {
 				if(!isDefined(self.frag_no_clip_loop)) {

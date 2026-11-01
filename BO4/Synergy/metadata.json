@@ -1,5 +1,8 @@
 {
     "name": "Synergy",
+		"version": "2.25",
+    "author": "SyndiShanX",
+    "description": "A GSC Mod Menu for Zombies and Multiplayer",
     "data": [
         {
             "type": "scriptparsetree",
