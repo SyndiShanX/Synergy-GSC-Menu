@@ -261,6 +261,7 @@ get_map_name() { //53bbf9d2
 	if(level.script == "zm_red") return "ancient_evil";
 	if(level.script == "zm_white") return "alpha_omega";
 	if(level.script == "zm_orange") return "tag_der_toten";
+	return "";
 }
 
 // Menu Options

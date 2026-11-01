@@ -1,6 +1,6 @@
 {
     "name": "Gun Game",
-		"version": "2.0",
+    "version": "2.1",
     "author": "SyndiShanX",
     "description": "Gun Game for Black Ops 4 Zombies using either Kills or Points to progress",
     "data": [
