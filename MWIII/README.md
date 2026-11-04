@@ -16,6 +16,12 @@ A Modern Warfare III Zombies GSC Mod Menu that uses the [Lumen MWIII Client](htt
 
 * Place it into `jupiter\Assets\Scripts\Custom\zm`
 
+#### Multiplayer:
+
+* Download [Synergy_MP.gscc](https://syndishanx.github.io/Synergy-GSC-Menu/MWIII/Synergy_MP.gscc)
+
+* Place it into `jupiter\Assets\Scripts\Custom\mp`
+
 ##### Known Issues:
 
 * Perks can be Applied Multiple Times in MWZ
