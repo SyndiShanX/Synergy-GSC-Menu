@@ -18,5 +18,6 @@ A Modern Warfare III Zombies GSC Mod Menu that uses the [Lumen MWIII Client](htt
 
 ##### Known Issues:
 
-* Perks can be Applied Multiple Times
+* Perks can be Applied Multiple Times in MWZ
 * You can't open/interact with the Menu if your Aiming Input Device is set to Controller
+* Some Camos don't work

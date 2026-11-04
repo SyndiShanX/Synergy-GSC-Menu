@@ -2,8 +2,5 @@
 *.bat
 *.jpg
 *.pdn
-*.gsc
-*.cscc
-*.luac
 *.blitzignore
 Thumbnail.*
