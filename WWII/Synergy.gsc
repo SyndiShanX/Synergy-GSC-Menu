@@ -129,6 +129,11 @@ initial_variables() {
 	self.syn["attachments"]["pistols"][0] = ["fast_ads", "hipfire", "fmj", "extended_mag", "extended_range", "head_damage_zm", "akimbo"]; // Pistols
 	self.syn["attachments"]["pistols_alt"][0] = ["fast_ads", "hipfire", "fmj", "extended_mag", "extended_range", "head_damage_zm", "akimbo"]; // Pistols Alt (Reichsrevolver, Enfield No.2)
 	self.syn["attachments"]["crossbow"][0] = ["aperture_sight", "telescopic_sight", "tribolt_dp28", "fast_mag_dp28", "fast_bolt_dp28", "explosive_tips_dp28"]; // Crossbow
+	
+	// Bullets
+
+	self.syn["bullets"][0] = ["fliegerfaust_pap_zm", "dp28_pap_zm", "ribeyrolles_pap_zm", "geist_blast_red", "ptrs41_pap_zm+zmb_mad_minute", "teslagun_zm_death", "teslagun_zm_blood", "bazooka_zm", "panzerschreck_zm", "razergun_zm"];
+	self.syn["bullets"][1] = ["Fliegerfaust PaP", "Crossbow PaP", "Ribeyrolles PaP", "Red Geist Blast", "PTRS-41 Mad Minute", "Reaper", "Bloodthirst", "Bazooka", "Panzerschreck", "Ripsaw Blade"];
 
 	// Perks
 
@@ -1206,6 +1211,7 @@ menu_option() {
 			}
 
 			self add_option("Equip Camo", undefined, ::new_menu, "Equip Camo");
+			self add_option("Magic Bullets", undefined, ::new_menu, "Magic Bullets");
 
 			self add_option("Take Current Weapon", undefined, ::take_weapon);
 			self add_option("Drop Current Weapon", undefined, ::drop_weapon);
@@ -1447,6 +1453,20 @@ menu_option() {
 
 			for(i = 0; i < self.syn["camos"][8].size; i++) {
 				self add_option(self.syn["camos"][9][i], "" + self.syn["camos"][8][i], ::equip_camo, self.syn["camos"][8][i]);
+			}
+
+			break;
+	  case "Magic Bullets":
+			self set_title(menu);
+
+			if(self.map_name == "the_darkest_shore") {
+				bullets = self.syn["bullets"][0].size;
+			} else {
+				bullets = (self.syn["bullets"][0].size - 1);
+			}
+			
+			for(i = 0; i < bullets; i++) {
+				self add_toggle(self.syn["bullets"][1][i], undefined, ::modify_bullet, self.bullet[i], self.syn["bullets"][0][i], i);
 			}
 
 			break;
@@ -1704,6 +1724,9 @@ infinite_ammo_loop() {
 		self setWeaponAmmoClip(self getCurrentWeapon(), 999);
 		self setWeaponAmmoClip(self getCurrentWeapon(), 999, "left");
 		self setWeaponAmmoClip(self getCurrentWeapon(), 999, "right");
+		
+		self setWeaponAmmoClip(self getLethalWeapon(), 4);
+		self setWeaponAmmoClip("jack_in_box_decoy_zm", 3);
 
 		wait 0.2;
 	}
@@ -2331,7 +2354,7 @@ give_weapon(weapon, is_finished_weapon, keep_ammo) {
 			saved_weapon = self getCurrentWeapon();
 			self takeWeapon(self getCurrentWeapon());
 		} else {
-			if(self getWeaponListPrimaries().size >= get_max_weapons()) {
+			if(self getWeaponsListPrimaries().size >= get_max_weapons()) {
 				self takeWeapon(self getCurrentWeapon());
 			}
 		}
@@ -2391,7 +2414,7 @@ give_weapon_variant(variant, weapon) {
 }
 
 check_weapons(weapon) {
-	return self getCurrentWeapon() != weapon && self getWeaponListPrimaries()[1] != weapon && self getWeaponListPrimaries()[2] != weapon;
+	return self getCurrentWeapon() != weapon && self getWeaponsListPrimaries()[1] != weapon && self getWeaponsListPrimaries()[2] != weapon;
 }
 
 equip_camo(camo, target) {
@@ -2427,9 +2450,33 @@ _id_A9ED_stub(var_0, var_1) {
 	return camo;
 }
 
+modify_bullet(bullet, i) {
+	self.bullet[i] = !return_toggle(self.bullet[i]);
+	if(self.bullet[i]) {
+		self iPrintString(self.syn["bullets"][1][i] + " [^2ON^7]");
+		self thread modify_bullet_loop(bullet);
+	} else {
+		self iPrintString(self.syn["bullets"][1][i] + " [^1OFF^7]");
+		self notify("stop_modify_bullet_loop");
+	}
+}
+
+modify_bullet_loop(bullet) {
+	self endon("stop_modify_bullet_loop");
+	self endon("disconnect");
+
+	for(;;) {
+		self waittill("weapon_fired");
+
+		magicBullet(bullet, self getEye(), get_bullet_trace_position(), self);
+
+		wait 0.05;
+	}
+}
+
 take_weapon() {
 	self takeWeapon(self getCurrentWeapon());
-	self switchToWeapon(self getWeaponListPrimaries()[1]);
+	self switchToWeapon(self getWeaponsListPrimaries()[1]);
 }
 
 drop_weapon() {
@@ -2711,15 +2758,15 @@ outline_zombies_loop() {
 // Account Options
 
 set_prestige(value) { // Lazy Dev
-	self setPlayerData(getstatsgroup_ranked(), "prestigeLevel", value);
+	self setPlayerData(common_scripts\utility::getstatsgroup_ranked(), "prestigeLevel", value);
 }
 
 set_rank(value) { // Lazy Dev
 	if(value > 55) {
-		self setPlayerData(getstatsgroup_ranked(), "totalXP", int(tablelookup("mp/cp_ranktable.csv", 0, (value - 2), 7)));
-		self setPlayerData(getstatsgroup_ranked(), "prestigeLevel", 10);
+		self setPlayerData(common_scripts\utility::getstatsgroup_ranked(), "totalXP", int(tablelookup("mp/cp_ranktable.csv", 0, (value - 2), 7)));
+		self setPlayerData(common_scripts\utility::getstatsgroup_ranked(), "prestigeLevel", 10);
 	} else {
-		self setPlayerData(getstatsgroup_ranked(), "totalXP", int(tablelookup("mp/cp_ranktable.csv", 0, (value - 2), 7)));
+		self setPlayerData(common_scripts\utility::getstatsgroup_ranked(), "totalXP", int(tablelookup("mp/cp_ranktable.csv", 0, (value - 2), 7)));
 	}
 }
 
@@ -2746,8 +2793,8 @@ unlock_all() { // CF4_99
 			finalTier   = tierId + 1;
 		}
 
-		self setPlayerData(getstatsgroup_ranked(), "challengeProgress", challengeRef, finalTarget);
-		self setPlayerData(getstatsgroup_ranked(), "challengeState", challengeRef, finalTier);
+		self setPlayerData(common_scripts\utility::getstatsgroup_ranked(), "challengeProgress", challengeRef, finalTarget);
+		self setPlayerData(common_scripts\utility::getstatsgroup_ranked(), "challengeState", challengeRef, finalTier);
 		wait 0.01;
 	}
 
