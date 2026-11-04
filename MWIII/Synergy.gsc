@@ -1,29 +1,29 @@
+#include scripts\common\powerups;
 #include scripts\common\system;
 #include scripts\common\utility;
-#include scripts\common\powerups;
-#include scripts\engine\trace;
-#include scripts\engine\utility;
-#include scripts\mp\hud_util;
-#include scripts\mp\gamescore;
-#include scripts\mp\equipment;
-#include scripts\mp\hud_message;
-#include scripts\mp\gametypes\br_pickups;
-#include scripts\mp\perks\perkpackage;
-#include scripts\mp\utility\perk;
-#include scripts\cp_mp\pack_a_punch;
 #include scripts\cp_mp\armor;
+#include scripts\cp_mp\pack_a_punch;
 #include scripts\cp_mp\weapon;
 #include scripts\cp_mp\zombie_perks;
 #include scripts\cp_mp\loot\common_item;
 #include scripts\cp_mp\utility\inventory_utility;
 #include scripts\cp_mp\utility\weapon_utility;
+#include scripts\engine\trace;
+#include scripts\engine\utility;
+#include scripts\mp\equipment;
+#include scripts\mp\gamescore;
+#include scripts\mp\hud_message;
+#include scripts\mp\hud_util;
+#include scripts\mp\gametypes\br_pickups;
+#include scripts\mp\perks\perkpackage;
+#include scripts\mp\utility\perk;
 #include scripts\ob\points;
 #include script_6bffae1b97f70547; //ammo_mod
 
 #namespace synergy;
 
 function private autoexec __init__system__() {
-	system::register(#"synergy", undefined, &init, undefined);
+	system::register( #"synergy", undefined, &init, undefined );
 }
 
 function init() {
@@ -119,6 +119,17 @@ function initial_variables() {
 	self.syn["weapons"]["lethals"][1] =            ["Frag Grenade", "Claymore", "Throwing Knife", "Thermite", "Thermobaric Grenade", "Proximity Mine", "Drill Charge", "Sticky Grenade", "C4", "Breacher Drone", "Molotov", "Aether Blade", "Snowball", "Rock"];
 	self.syn["weapons"]["tacticals"][1] =          ["Stun Grenade", "Battle Rage", "Smoke Grenade", "Scatter Mine", "Decoy Grenade", "Flash Grenade", "Snapshot Grenade", "Shock Stick", "Stim", "Tear Gas", "EMD Grenade", "EMP Grenade", "Kazamir", "Monkey Bomb", "Deployable Cover", "Suppression Mine", "Trophy System", "Heartbeast Sensor", "Tactical insertion", "Inflatable Decoy", "Munitions Box", "Armor Box", "Equipment Box", "Blast Shield Armor Box", "Haunted Box", "Binoculars", "Thermal Phone", "Inhibitor", "Decon Station", "Mutant EMP Ball", "Iodine Pills", "Geiger Counter", "Aether Counter"];
 	self.syn["weapons"]["extras"][1] =             ["V-R11", "Ray Gun", "Wunderwaffe DG-2", "Scorcher", "Revive Pistol"];
+
+	// Camos - RyGuy2Cool
+
+	self.syn["camos"]["mw2"][0] = ["camo_a_01", "camo_a_02", "camo_a_03", "camo_a_04", "camo_a_05", "camo_a_06", "camo_a_07", "camo_a_08", "camo_a_09", "camo_a_10", "camo_a_11", "camo_a_12", "camo_a_13", "camo_a_14", "camo_a_15", "camo_b_01", "camo_b_02", "camo_b_03", "camo_b_04", "camo_b_05", "camo_b_06", "camo_b_07", "camo_b_08", "camo_b_09", "camo_b_10", "camo_b_11", "camo_b_12", "camo_b_13", "camo_b_14", "camo_b_15", "camo_c_01", "camo_c_02", "camo_c_03", "camo_c_04", "camo_c_05", "camo_c_06", "camo_c_07", "camo_c_08", "camo_c_09", "camo_c_10", "camo_c_11", "camo_c_12", "camo_c_13", "camo_c_14", "camo_c_15", "camo_cdl_01", "camo_cdl_02", "camo_cdl_03", "camo_cdl_04", "camo_cdl_05", "camo_cdl_06", "camo_cdl_07", "camo_cdl_08", "camo_cdl_09", "camo_cdl_10", "camo_cdl_11", "camo_cdl_12", "camo_cdl_13", "camo_d_01", "camo_d_02", "camo_d_03", "camo_d_04", "camo_d_05", "camo_d_06", "camo_d_07", "camo_d_08", "camo_d_09", "camo_d_10", "camo_d_11", "camo_d_12", "camo_d_13", "camo_d_14", "camo_d_15", "camo_e_01", "camo_e_02", "camo_e_03", "camo_e_04", "camo_e_05", "camo_e_06", "camo_e_07", "camo_e_08", "camo_e_09", "camo_e_10", "camo_e_11", "camo_e_12", "camo_e_13", "camo_e_14", "camo_e_15", "camo_f_01", "camo_f_02", "camo_f_03", "camo_f_04", "camo_f_05", "camo_f_06", "camo_f_07", "camo_f_08", "camo_f_09", "camo_f_10", "camo_f_11", "camo_f_12", "camo_f_13", "camo_f_14", "camo_f_15", "camo_g_01", "camo_g_02", "camo_g_03", "camo_g_04", "camo_g_05", "camo_g_06", "camo_g_07", "camo_g_08", "camo_g_09", "camo_g_10", "camo_g_11", "camo_g_12", "camo_g_13", "camo_g_14", "camo_g_15", "camo_h_01", "camo_h_02", "camo_h_03", "camo_h_04", "camo_h_05", "camo_h_06", "camo_h_07", "camo_h_08", "camo_h_09", "camo_h_10", "camo_h_11", "camo_h_12", "camo_h_13", "camo_h_14", "camo_h_15", "camo_i_01", "camo_i_02", "camo_i_03", "camo_i_04", "camo_i_05", "camo_i_06", "camo_i_07", "camo_i_08", "camo_i_09", "camo_i_10", "camo_i_11", "camo_i_12", "camo_i_13", "camo_i_14", "camo_i_15", "camo_j_01", "camo_j_02", "camo_j_03", "camo_j_04", "camo_j_05", "camo_j_06", "camo_j_07", "camo_j_08", "camo_j_09", "camo_j_10", "camo_j_11", "camo_j_12", "camo_j_13", "camo_j_14", "camo_j_15", "camo_k_01", "camo_k_02", "camo_k_03", "camo_k_04", "camo_k_05", "camo_k_06", "camo_k_07", "camo_k_08", "camo_k_09", "camo_k_10", "camo_k_11", "camo_k_12", "camo_k_13", "camo_k_14", "camo_k_15", "camo_l_01", "camo_l_02", "camo_l_03", "camo_l_04", "camo_l_05", "camo_l_06", "camo_l_07", "camo_l_08", "camo_l_09", "camo_l_10", "camo_l_11", "camo_l_12", "camo_l_13", "camo_l_14", "camo_l_15", "camo_m_01", "camo_m_02", "camo_m_03", "camo_m_04", "camo_m_05", "camo_m_06", "camo_m_07", "camo_m_08", "camo_m_09", "camo_m_10", "camo_m_11", "camo_m_12", "camo_m_13", "camo_m_14", "camo_m_15", "camo_n_01", "camo_n_02", "camo_n_03", "camo_n_04", "camo_n_05", "camo_n_06", "camo_n_07", "camo_n_08", "camo_n_09", "camo_n_10", "camo_n_11", "camo_n_12", "camo_n_13", "camo_n_14", "camo_n_15", "camo_o_01", "camo_o_02", "camo_o_03", "camo_o_04", "camo_o_05", "camo_o_06", "camo_o_07", "camo_o_08", "camo_o_09", "camo_o_10", "camo_o_11", "camo_o_12", "camo_o_13", "camo_o_14", "camo_o_15", "camo_p_01", "camo_p_02", "camo_p_03", "camo_p_04", "camo_p_05", "camo_p_06", "camo_p_07", "camo_p_08", "camo_p_09", "camo_p_10", "camo_p_11", "camo_p_12", "camo_p_13", "camo_p_14", "camo_p_15", "camo_q_01", "camo_q_02", "camo_q_03", "camo_q_04", "camo_q_05", "camo_q_06", "camo_q_07", "camo_q_08", "camo_q_09", "camo_q_10", "camo_q_11", "camo_q_12", "camo_q_13", "camo_q_14", "camo_q_15", "camo_r_01", "camo_r_02", "camo_r_03", "camo_r_04", "camo_r_05", "camo_r_06", "camo_r_07", "camo_r_08", "camo_r_09", "camo_r_10", "camo_r_11", "camo_r_12", "camo_r_13", "camo_r_14", "camo_s_01", "camo_s_02", "camo_s_03", "camo_s_04", "camo_s_05", "camo_s_06", "camo_s_07", "camo_s_08", "camo_s_09", "camo_s_10", "camo_s_11", "camo_s_12", "camo_s_13", "camo_s_14", "camo_s_15", "camo_t_01", "camo_t_02", "camo_t_03", "camo_t_04", "camo_t_05", "camo_t_06", "camo_t_07", "camo_t_08", "camo_t_09", "camo_t_10", "camo_t_11", "camo_t_12", "camo_t_13", "camo_t_14", "camo_t_15", "camo_u_01", "camo_u_02", "camo_u_03", "camo_u_04", "camo_u_05", "camo_u_06", "camo_u_07", "camo_u_08", "camo_u_09", "camo_u_10", "camo_u_11", "camo_u_12", "camo_u_13", "camo_u_14", "camo_u_15", "camo_v_01", "camo_v_02", "camo_v_03", "camo_v_04", "camo_v_05", "camo_v_06", "camo_v_07", "camo_v_08", "camo_v_09", "camo_v_10", "camo_v_11", "camo_v_12", "camo_v_13", "camo_v_14", "camo_v_15", "camo_w_01", "camo_w_02"];
+  self.syn["camos"]["mw2"][1] = ["Desert Snake", "Sponge Tac", "Forest Shadow", "Surface Tension", "Gladiator", "Dead Hive", "Scratch", "Scales", "Darkfall", "Shark Net", "Day Mars", "Sand Viper", "Rip N' Tear", "China Lake", "Ripple Effect", "Green Woods", "Hidden Snake", "Dark Canopy", "Snowdrift ", "Dune Stalker", "Urban Foliage", "Concrete Jungle", "Dead Leaves", "Azure Fray", "Jungle Cat", "Modern Woodland", "Kill Brush", "Rocky Desert", "Desert Hybrid", "Void and Light", "Desert Oil Digital", "Arid Digital", "Bio Static Digital", "Urban Digital", "Sandstorm Digital", "Lichen Digital", "Snowstorm Digital", "Snow Melt Digital", "Dark Tiger Digital", "Petri Digital", "Stonewall Digital", "Chemist Digital", "Asphalt Digital", "Magma Digital", "Commando Digital", "Los Angeles Thieves", "Los Angeles Guerrillas", "Boston Breach", "Florida Mutineers", "Atlanta FaZe", "Seattle Surge", "Vegas Legion", "Optic Texas", "Minnesota RØKKR", "London Royal Ravens", "New York Subliners", "Toronto Ultra", "Call of Duty® League", "H20", "Dirt", "Moss", "Tagged", "Black Top", "Asphalt", "Crime Scene", "Neon Pink", "Trailblazer", "Foliage", "Reptilian", "Dark Leaves", "Internal Flame", "Omnihex", "Tessellation", "Blades", "Motley", "Dune Sea", "Forest Ice", "Stone Guard", "Icepick", "Shale", "Uncheckered", "Canary Stone", "Stoked Flame", "Autumn Dazzle", "Poison", "Granite ", "Chrysolite", "Splintered Asphalt", "Red Cell", "Burned Edges", "Pixel Coast", "Sunset", "Bloodied", "Crimson Streak", "Rainbow Tiger", "Diabolical", "Elevated Lines", "8-Bit Static", "Midnight Bay", "Unearthed", "Deep Jungle", "Autumnal", "What Skulls?", "Overgrown", "Mudslide", "Dank Forest", "Abominable", "Faded Veil", "Feral Beast", "Tiger Stripes", "Desert Cat", "Red Tiger", "Blue Tiger", "Desert Wave", "Neon Shards", "Teal Tiger", "Intoxicate", "Shadow Tiger", "Commando Paint", "Marshland", "Savannah", "Mud Bath", "Dark Rainforest", "Shadow Stalker", "Ground Cover", "Urban Zebra", "Wild Zebra", "Tendrils", "Beached", "Timber", "Coral Snake", "Snowed In", "Stalking Cat", "Anaconda", "Python", "Rattlesnake", "Bullsnake", "Gecko", "Garter Snake", "Dark Echo", "Toxicity", "Shedding", "Skin and Scales", "Heavy Commando", "Night Terror", "Muddied", "Grass Snake", "Field Ops", "Necropolis", "Cthulhu", "Lichyard", "Haunting", "Unplumbed", "Paths of Light", "Rad n' Rancid", "Gaseous", "Lost Signal", "Cloud Hopper", "Unlit Showers", "Rush Hour", "Aztec", "Snow Leopard", "Ice Cave", "Sand", "Olive", "Clay", "Charcoal", "Slate", "Pine", "Neon Loud", "Hunting Orange", "Azul", "Ghastly Green", "Aqua", "Scarlet", "Navy", "Pinkish", "Whiteout", "New Urban", "Autumn Return", "Back in Blue", "Hexed", "Spectrums", "80s Fever", "Jungle Digital", "Arctic Digital", "Forest Digital", "Marsh Digital", "Bark Digital", "Blue Digital", "Classic Digital", "Desert Digital", "Green Digital", "Torn Scales", "Outcrop", "Sunlit Croc", "Dry Field", "Moon Shadow", "Party Time", "Countryside", "Arctic Chill", "Leopard", "Dark Violet", "Coral Reef", "Forest Water", "Snowy Nights", "Tarnished", "Projectile", "Snow Grass", "Aspen", "Bamboo", "Mosswood", "Ferns", "Urban Dusk", "Leafless", "Winds of Ash", "Bowing Blossoms", "Ethereal Rampage", "Riot's Nest", "Conflagration", "Deciduous", "Pure Poison", "Viscous", "Forest Rain", "Desert Rain", "Quarry", "Night Quarry", "Rupture", "Chemical Reaction", "Fractal Mud", "Noxious Neon", "Violent Orchid", "Earthbound", "Speckled", "Oxysporum", "Dire Growth", "Sandfall", "MWII WZ Saint Patrick's Day Event", "Arctic Growth", "Stone Ridge", "Styx", "Intergalactic", "Vapor Storm", "Bedlam", "Psychoactive", "Serpentine", "Painted Pig", "Sandpaper", "Velvet Midnight", "Fuzzy Spectrum", "Digital Wilds", "Rhyolitic", "Cracking Onyx", "Rad Reverb", "The Murk", "Galvanic", "Dark Bones", "Skull Eater", "You Dropped This", "Radioactivity", "Splatter Tactics", "Train Car", "Snake Oil", "Dark Croc", "Alien Waves", "Sky Cover", "Tunnels", "Ziggurat", "Season 2 Ranked Veteran", "Season 3 Ranked Veteran", "Season 3 Ranked Veteran", "MWII Season 4 Ranked Veteran", "WZ Season 4 Ranked Veteran", "MWII Season 5 Ranked Veteran", "WZ Season 5 Ranked Veteran", "Polished", "Blood Cell", "MWII Season 6 Ranked Veteran", "WZ Season 6 Ranked Veteran", "Zany Zebra", "Eddies", "Eddies Supreme", "Dappled Shade", "Prismatic", "Oxidation", "Wet Sands", "Connected Dots", "Red Smoke", "Green Edges", "Cemented", "Poison Rivers", "Demise", "Virulent Strain", "Vought International", "The Boys", "Unformed", "Ether Wave", "Birch", "Cloud Static", "Blood and Mud", "Lumber Tactical", "Fibrous", "Scattered Lines", "Bioluminescent", "Postmortem", "Deserted", "Hunter", "Fractal Lapse", "Crosshatch", "Mud Snake", "Germinate", "Acrid Drift", "Goodnight Vibes", "MWII Season 5 Gold", "MWII Season 5 Platinum", "MWII Season 5 Diamond", "MWII Season 5 Crimson", "MWII Season 5 Iridescent", "MWII Season 5 Top 250", "WZ Season 5 Gold", "WZ Season 5 Platinum", "WZ Season 5 Diamond", "WZ Season 5 Crimson", "WZ Season 5 Iridescent", "WZ Season 5 Top 250", "Flow Thru", "Cyber Plateau", "Veldt", "Wild Funk", "Scratched Up", "Light Revisited", "Digital Boulder", "Foundation", "Snow Tiger", "Neon Peaks", "Dusted", "Shuffle", "Drip", "Gaggle", "Get Stony", "Digital Bloodbath", "Nightshade", "Tiger Blood", "Ghoulie"];
+
+	self.syn["camos"]["mw3"][0] = ["jup_camo_02a", "jup_camo_02b", "jup_camo_02c", "jup_camo_02d", "jup_camo_02e", "jup_camo_02f", "jup_camo_03a", "jup_camo_03b", "jup_camo_03c", "jup_camo_03d", "jup_camo_03e", "jup_camo_03f", "jup_camo_03g", "jup_camo_03h", "jup_camo_03p", "jup_camo_06a", "jup_camo_06b", "jup_camo_06c", "jup_camo_06d", "jup_camo_06e", "jup_camo_06f", "jup_camo_06g", "jup_camo_06h", "jup_camo_06i", "jup_camo_06j", "jup_camo_07a", "jup_camo_07b", "jup_camo_07c", "jup_camo_07d", "jup_camo_07e", "jup_camo_07f", "jup_camo_07g", "jup_camo_07h", "jup_camo_07i", "jup_camo_07j", "jup_camo_08a", "jup_camo_09a", "jup_camo_09b", "jup_camo_09c", "jup_camo_09d", "jup_camo_09e", "jup_camo_09f", "jup_camo_09g", "jup_camo_09h", "jup_camo_09i", "jup_camo_10a", "jup_camo_10b", "jup_camo_10c", "jup_camo_10d", "jup_camo_10e", "jup_camo_10f", "jup_camo_10g", "jup_camo_10h", "jup_camo_10i", "jup_camo_10j", "jup_camo_10k", "jup_camo_10l", "jup_camo_11a", "jup_camo_11b", "jup_camo_11c", "jup_camo_11d", "jup_camo_11e", "jup_camo_11f", "jup_camo_11g", "jup_camo_11h", "jup_camo_11i", "jup_camo_11j", "jup_camo_11k", "jup_camo_11l", "jup_camo_11m", "jup_camo_11n", "jup_camo_13a", "jup_camo_13b", "jup_camo_13c", "jup_camo_13d", "jup_camo_13e", "jup_camo_13f", "jup_camo_13h", "jup_camo_13i", "jup_camo_13j", "jup_camo_13k", "jup_camo_13l", "jup_camo_13m", "jup_camo_14a", "jup_camo_14b", "jup_camo_14c", "jup_camo_14d", "jup_camo_14e", "jup_camo_14f", "jup_camo_14g", "jup_camo_14h", "jup_camo_14i", "jup_camo_14j", "jup_camo_14k", "jup_camo_14l", "jup_camo_15a", "jup_camo_16a", "jup_camo_16b", "jup_camo_16c", "jup_camo_16d", "jup_camo_16e", "jup_camo_16f", "jup_camo_16g", "jup_camo_16h", "jup_camo_16i", "jup_camo_16j", "jup_camo_16k", "jup_camo_16l", "jup_camo_16m", "jup_camo_17a", "jup_camo_17b", "jup_camo_17c", "jup_camo_17d", "jup_camo_17e", "jup_camo_17f", "jup_camo_17g", "jup_camo_18a", "jup_camo_18b", "jup_camo_18c", "jup_camo_18d", "jup_camo_18e", "jup_camo_19a", "jup_camo_19b", "jup_camo_19c", "jup_camo_19d", "jup_camo_19e", "jup_camo_19f", "jup_camo_19g", "jup_camo_19h", "jup_camo_19i", "jup_camo_19j", "jup_camo_19k", "jup_camo_19l", "jup_camo_19m", "jup_camo_20d", "jup_camo_20f", "jup_camo_20g", "jup_camo_20h", "jup_camo_21a", "jup_camo_22a", "jup_camo_22b", "jup_camo_22c", "jup_camo_22d", "jup_camo_22e", "jup_camo_22f", "jup_camo_22g", "jup_camo_22h", "jup_camo_23a", "jup_camo_23d", "jup_camo_23e", "jup_camo_23f", "jup_camo_24a", "jup_camo_24b", "jup_camo_24c", "jup_camo_24d", "jup_camo_24e", "jup_camo_24f", "jup_camo_24h", "jup_camo_24i", "jup_camo_25a", "jup_camo_25b", "jup_camo_25c", "jup_camo_26a", "jup_camo_26b", "jup_camo_b2068", "jup_camo_b2068_5", "jup_camo_eventsa", "jup_camo_eventsaa", "jup_camo_eventsab", "jup_camo_eventsac", "jup_camo_eventsad", "jup_camo_eventsae", "jup_camo_eventsb", "jup_camo_eventsc", "jup_camo_eventsd", "jup_camo_eventse", "jup_camo_eventsf", "jup_camo_eventsg", "jup_camo_eventsh", "jup_camo_eventsi", "jup_camo_eventsj", "jup_camo_eventsk", "jup_camo_eventsl", "jup_camo_eventsm", "jup_camo_eventsn", "jup_camo_eventsp", "jup_camo_eventsr", "jup_camo_eventss", "jup_camo_eventst", "jup_camo_eventsu", "jup_camo_eventsv", "jup_camo_eventsw", "jup_camo_eventsy", "jup_camo_eventsz", "jup_camo_n2919_2", "jup_camo_n2940_1", "jup_camo_n3906_2", "jup_camo_n3907_10", "jup_camo_n3907_11", "jup_camo_n3907_12", "jup_camo_n3907_13", "jup_camo_n3907_23", "jup_camo_n3907_24", "jup_camo_n3907_25", "jup_camo_n3907_26", "jup_camo_n3907_36", "jup_camo_n3908_10", "jup_camo_n3908_11", "jup_camo_n3908_12", "jup_camo_n3908_13", "jup_camo_n3909_10", "jup_camo_n3909_11", "jup_camo_n3909_12", "jup_camo_n3909_13", "jup_camo_n3909_23", "jup_camo_n3909_36", "jup_camo_n3909_37", "jup_camo_n3909_38", "jup_camo_n3909_39", "jup_camo_n3910_10", "jup_camo_n3910_11", "jup_camo_n3910_12", "jup_camo_n3910_13", "jup_camo_n3913_4", "jup_camo_n3914_19", "jup_camo_n3914_20", "jup_camo_n3914_21", "jup_camo_n3914_22", "jup_camo_n3914_23", "jup_camo_n3914_24", "jup_camo_n3914_4", "jup_camo_n3917_6", "jup_camo_n3918_7", "jup_camo_n3920_8", "jup_camo_n3921_8", "jup_camo_n3924_1", "jup_camo_n3925_1", "jup_camo_n3929_5", "jup_camo_n3930_4", "jup_camo_n3936_1", "jup_camo_n3938_1", "jup_camo_n3939_1", "jup_camo_n4907_10", "jup_camo_n4907_11", "jup_camo_n4907_12", "jup_camo_n4907_13", "jup_camo_n4907_23", "jup_camo_n4907_24", "jup_camo_n4907_25", "jup_camo_n4907_26", "jup_camo_n4908_10", "jup_camo_n4908_11", "jup_camo_n4908_12", "jup_camo_n4908_13", "jup_camo_n4908_23", "jup_camo_n4909_10", "jup_camo_n4909_11", "jup_camo_n4909_12", "jup_camo_n4909_13", "jup_camo_n4909_23", "jup_camo_n4909_24", "jup_camo_n4909_25", "jup_camo_n4909_26", "jup_camo_n4910_10", "jup_camo_n4910_11", "jup_camo_n4910_12", "jup_camo_n4910_13", "jup_camo_n4910_23", "jup_camo_n4914_4", "jup_camo_n4917_4", "jup_camo_n4918_10", "jup_camo_n4920_6", "jup_camo_n4922_2", "jup_camo_n4923_6", "jup_camo_n4924_1", "jup_camo_n4927_1", "jup_camo_n4927_2", "jup_camo_n4927_3", "jup_camo_n4927_4", "jup_camo_n4927_5", "jup_camo_n4927_6", "jup_camo_n4927_7", "jup_camo_n4931_6", "jup_camo_n4931_7", "jup_camo_n4931_8", "jup_camo_n4931_9", "jup_camo_n4933_25", "jup_camo_n4933_26", "jup_camo_n4933_27", "jup_camo_n4934_1", "jup_camo_n4936_1", "jup_camo_n4942_1", "jup_camo_n4943_1", "jup_camo_n4945_2", "jup_camo_n4945_3", "jup_camo_n4945_4", "jup_camo_n5907_10", "jup_camo_n5907_11", "jup_camo_n5907_12", "jup_camo_n5907_13", "jup_camo_n5907_23", "jup_camo_n5907_24", "jup_camo_n5907_25", "jup_camo_n5907_26", "jup_camo_n5908_10", "jup_camo_n5908_20", "jup_camo_n5909_10", "jup_camo_n5909_11", "jup_camo_n5909_12", "jup_camo_n5909_13", "jup_camo_n5909_23", "jup_camo_n5909_24", "jup_camo_n5909_25", "jup_camo_n5909_26", "jup_camo_n5914_19", "jup_camo_n5914_20", "jup_camo_n5914_21", "jup_camo_n5914_22", "jup_camo_n5914_23", "jup_camo_n5914_24", "jup_camo_n5914_4", "jup_camo_n5915_4", "jup_camo_n5918_1", "jup_camo_n5920_10", "jup_camo_n5920_14", "jup_camo_n5920_15", "jup_camo_n5920_7", "jup_camo_n5922_1", "jup_camo_n5923_1", "jup_camo_n5924_1", "jup_camo_n5926_1", "jup_camo_n5927_2", "jup_camo_n5928_1", "jup_camo_n5930_10", "jup_camo_n5930_11", "jup_camo_n5930_12", "jup_camo_n5930_13", "jup_camo_n5931_1", "jup_camo_n6905_1", "jup_camo_n6907_10", "jup_camo_n6907_11", "jup_camo_n6907_12", "jup_camo_n6907_13", "jup_camo_n6907_23", "jup_camo_n6907_24", "jup_camo_n6907_25", "jup_camo_n6907_26", "jup_camo_n6908_10", "jup_camo_n6908_11", "jup_camo_n6908_23", "jup_camo_n6908_24", "jup_camo_n6908_25", "jup_camo_n6908_26", "jup_camo_n6910_10", "jup_camo_n6911_19", "jup_camo_n6911_20", "jup_camo_n6911_21", "jup_camo_n6911_22", "jup_camo_n6911_23", "jup_camo_n6911_24", "jup_camo_n6911_4", "jup_camo_n6912_1", "jup_camo_n6914_7", "jup_camo_n6915_1", "jup_camo_n6916_10", "jup_camo_n6916_12", "jup_camo_n6916_13", "jup_camo_n6916_7", "jup_camo_n6916_8", "jup_camo_n6916_9", "jup_camo_n6917_1", "jup_camo_n6918_1", "jup_camo_n6918_2", "jup_camo_n6918_6", "jup_camo_n6920_1", "jup_camo_n6922_1", "jup_camo_n6922_2", "jup_camo_n6922_3", "jup_camo_n6922_4", "jup_camo_ob_02a", "jup_camo_ob_02b", "jup_camo_ob_02c", "jup_camo_ob_02d", "jup_camo_ob_02e", "jup_camo_ob_02f", "jup_camo_ob_03a", "jup_camo_ob_03b", "jup_camo_ob_03c", "jup_camo_ob_03d", "jup_camo_ob_03e", "jup_camo_ob_03f", "jup_camo_ob_03g", "jup_camo_ob_03h", "jup_camo_ob_03p", "jup_camo_ob_06a", "jup_camo_ob_06b", "jup_camo_ob_06c", "jup_camo_ob_06d", "jup_camo_ob_06e", "jup_camo_ob_06f", "jup_camo_ob_06g", "jup_camo_ob_06h", "jup_camo_ob_06i", "jup_camo_ob_06j", "jup_camo_ob_07a", "jup_camo_ob_07b", "jup_camo_ob_07c", "jup_camo_ob_07d", "jup_camo_ob_07e", "jup_camo_ob_07f", "jup_camo_ob_07g", "jup_camo_ob_07h", "jup_camo_ob_07i", "jup_camo_ob_07j", "jup_camo_ob_09a", "jup_camo_ob_09b", "jup_camo_ob_09c", "jup_camo_ob_09d", "jup_camo_ob_09e", "jup_camo_ob_09f", "jup_camo_ob_09g", "jup_camo_ob_09h", "jup_camo_ob_09j", "jup_camo_ob_10a", "jup_camo_ob_10b", "jup_camo_ob_10c", "jup_camo_ob_10d", "jup_camo_ob_10e", "jup_camo_ob_10f", "jup_camo_ob_10g", "jup_camo_ob_10h", "jup_camo_ob_10i", "jup_camo_ob_10j", "jup_camo_ob_10k", "jup_camo_ob_10l", "jup_camo_ob_11a", "jup_camo_ob_11b", "jup_camo_ob_11c", "jup_camo_ob_11d", "jup_camo_ob_11e", "jup_camo_ob_11f", "jup_camo_ob_11g", "jup_camo_ob_11h", "jup_camo_ob_11i", "jup_camo_ob_11j", "jup_camo_ob_11k", "jup_camo_ob_11l", "jup_camo_ob_11m", "jup_camo_ob_11n", "jup_camo_ob_13a", "jup_camo_ob_13b", "jup_camo_ob_13c", "jup_camo_ob_13d", "jup_camo_ob_13e", "jup_camo_ob_13f", "jup_camo_ob_13h", "jup_camo_ob_13i", "jup_camo_ob_13j", "jup_camo_ob_13k", "jup_camo_ob_13l", "jup_camo_ob_13m", "jup_camo_ob_14a", "jup_camo_ob_14b", "jup_camo_ob_14c", "jup_camo_ob_14d", "jup_camo_ob_14e", "jup_camo_ob_14f", "jup_camo_ob_14g", "jup_camo_ob_14h", "jup_camo_ob_14i", "jup_camo_ob_14j", "jup_camo_ob_14k", "jup_camo_ob_14l", "jup_camo_ob_16a", "jup_camo_ob_16b", "jup_camo_ob_16c", "jup_camo_ob_16d", "jup_camo_ob_16e", "jup_camo_ob_16f", "jup_camo_ob_16g", "jup_camo_ob_16h", "jup_camo_ob_16i", "jup_camo_ob_16j", "jup_camo_ob_16k", "jup_camo_ob_16l", "jup_camo_ob_16m", "jup_camo_ob_17a", "jup_camo_ob_17b", "jup_camo_ob_17c", "jup_camo_ob_17d", "jup_camo_ob_17e", "jup_camo_ob_17f", "jup_camo_ob_17g", "jup_camo_ob_18a", "jup_camo_ob_18b", "jup_camo_ob_18c", "jup_camo_ob_18d", "jup_camo_ob_18e", "jup_camo_ob_19a", "jup_camo_ob_19b", "jup_camo_ob_19c", "jup_camo_ob_19d", "jup_camo_ob_19e", "jup_camo_ob_19f", "jup_camo_ob_19g", "jup_camo_ob_19h", "jup_camo_ob_19i", "jup_camo_ob_19j", "jup_camo_ob_19k", "jup_camo_ob_19l", "jup_camo_ob_19m", "jup_camo_ob_20d", "jup_camo_ob_20f", "jup_camo_ob_20g", "jup_camo_ob_20h", "jup_camo_ob_22a", "jup_camo_ob_22b", "jup_camo_ob_22c", "jup_camo_ob_22d", "jup_camo_ob_22e", "jup_camo_ob_22f", "jup_camo_ob_22g", "jup_camo_ob_22h", "jup_camo_ob_23a", "jup_camo_ob_23d", "jup_camo_ob_23e", "jup_camo_ob_23f", "jup_camo_ob_24a", "jup_camo_ob_24b", "jup_camo_ob_24c", "jup_camo_ob_24d", "jup_camo_ob_24e", "jup_camo_ob_24f", "jup_camo_ob_24h", "jup_camo_ob_24i", "jup_camo_ob_25a", "jup_camo_ob_25b", "jup_camo_ob_25c", "jup_camo_ob_25i", "jup_camo_ob_26a", "jup_camo_ob_26b", "jup_camo_ob_iw9_10a", "jup_camo_ob_iw9_10b", "jup_camo_ob_iw9_10c", "jup_camo_ob_iw9_10d", "jup_camo_ob_iw9_10e", "jup_camo_ob_iw9_10f", "jup_camo_ob_iw9_10g", "jup_camo_ob_iw9_10h", "jup_camo_ob_iw9_10i", "jup_camo_ob_iw9_10j", "jup_camo_ob_iw9_10k", "jup_camo_ob_iw9_10l", "jup_camo_ob_iw9_10m", "jup_camo_ob_iw9_10n", "jup_camo_ob_iw9_10o", "jup_camo_ob_iw9_10p", "jup_camo_ob_iw9_10q", "jup_camo_ob_iw9_10s", "jup_camo_ob_iw9_10t", "jup_camo_ob_iw9_10v", "jup_camo_ob_iw9_11a", "jup_camo_ob_iw9_11b", "jup_camo_ob_iw9_11c", "jup_camo_ob_iw9_11d", "jup_camo_ob_iw9_11e", "jup_camo_ob_iw9_11f", "jup_camo_ob_iw9_11g", "jup_camo_ob_iw9_11h", "jup_camo_ob_iw9_11i", "jup_camo_ob_iw9_11j", "jup_camo_ob_iw9_11k", "jup_camo_ob_iw9_11l", "jup_camo_ob_iw9_11m", "jup_camo_ob_iw9_11n", "jup_camo_ob_iw9_11o", "jup_camo_ob_iw9_11p", "jup_camo_ob_iw9_11q", "jup_camo_ob_iw9_11s", "jup_camo_ob_iw9_11t", "jup_camo_ob_iw9_11v", "jup_camo_ob_iw9_12a", "jup_camo_ob_iw9_12b", "jup_camo_ob_iw9_12c", "jup_camo_ob_iw9_12d", "jup_camo_ob_iw9_12e", "jup_camo_ob_iw9_12f", "jup_camo_ob_iw9_12g", "jup_camo_ob_iw9_12h", "jup_camo_ob_iw9_12i", "jup_camo_ob_iw9_12j", "jup_camo_ob_iw9_12k", "jup_camo_ob_iw9_12l", "jup_camo_ob_iw9_12m", "jup_camo_ob_iw9_12n", "jup_camo_ob_iw9_12o", "jup_camo_ob_iw9_12p", "jup_camo_ob_iw9_12q", "jup_camo_ob_iw9_12r", "jup_camo_ob_iw9_12t", "jup_camo_ob_iw9_12v", "jup_camo_ob_iw9_13a", "jup_camo_ob_iw9_13b", "jup_camo_ob_iw9_13c", "jup_camo_ob_iw9_13d", "jup_camo_ob_iw9_13e", "jup_camo_ob_iw9_13f", "jup_camo_ob_iw9_13g", "jup_camo_ob_iw9_13h", "jup_camo_ob_iw9_13i", "jup_camo_ob_iw9_13j", "jup_camo_ob_iw9_13k", "jup_camo_ob_iw9_13l", "jup_camo_ob_iw9_13m", "jup_camo_ob_iw9_13n", "jup_camo_ob_iw9_13o", "jup_camo_ob_iw9_13p", "jup_camo_ob_iw9_13q", "jup_camo_ob_iw9_13t", "jup_camo_ob_iw9_13v", "jup_camo_ob_iw9_14a", "jup_camo_ob_iw9_14b", "jup_camo_ob_iw9_14c", "jup_camo_ob_iw9_14d", "jup_camo_ob_iw9_14e", "jup_camo_ob_iw9_14f", "jup_camo_ob_iw9_14g", "jup_camo_ob_iw9_14h", "jup_camo_ob_iw9_14i", "jup_camo_ob_iw9_14j", "jup_camo_ob_iw9_14k", "jup_camo_ob_iw9_14l", "jup_camo_ob_iw9_14m", "jup_camo_ob_iw9_14o", "jup_camo_ob_iw9_14p", "jup_camo_ob_iw9_14q", "jup_camo_ob_iw9_14t", "jup_camo_ob_iw9_14v", "jup_camo_ob_iw9_15a", "jup_camo_ob_iw9_15b", "jup_camo_ob_iw9_15c", "jup_camo_ob_iw9_15d", "jup_camo_ob_iw9_15e", "jup_camo_ob_iw9_15f", "jup_camo_ob_iw9_15g", "jup_camo_ob_iw9_15h", "jup_camo_ob_iw9_15i", "jup_camo_ob_iw9_15j", "jup_camo_ob_iw9_15k", "jup_camo_ob_iw9_15l", "jup_camo_ob_iw9_15m", "jup_camo_ob_iw9_15p", "jup_camo_ob_iw9_15q", "jup_camo_ob_iw9_15t", "jup_camo_ob_iw9_15u", "jup_camo_ob_iw9_15v", "jup_camo_ob_iw9_1a", "jup_camo_ob_iw9_1b", "jup_camo_ob_iw9_1c", "jup_camo_ob_iw9_1d", "jup_camo_ob_iw9_1e", "jup_camo_ob_iw9_1f", "jup_camo_ob_iw9_1g", "jup_camo_ob_iw9_1h", "jup_camo_ob_iw9_1i", "jup_camo_ob_iw9_1j", "jup_camo_ob_iw9_1k", "jup_camo_ob_iw9_1l", "jup_camo_ob_iw9_1m", "jup_camo_ob_iw9_1n", "jup_camo_ob_iw9_1o", "jup_camo_ob_iw9_1p", "jup_camo_ob_iw9_1q", "jup_camo_ob_iw9_1s", "jup_camo_ob_iw9_1t", "jup_camo_ob_iw9_1u", "jup_camo_ob_iw9_1v", "jup_camo_ob_iw9_1w", "jup_camo_ob_iw9_2a", "jup_camo_ob_iw9_2b", "jup_camo_ob_iw9_2c", "jup_camo_ob_iw9_2d", "jup_camo_ob_iw9_2e", "jup_camo_ob_iw9_2f", "jup_camo_ob_iw9_2g", "jup_camo_ob_iw9_2h", "jup_camo_ob_iw9_2i", "jup_camo_ob_iw9_2j", "jup_camo_ob_iw9_2k", "jup_camo_ob_iw9_2l", "jup_camo_ob_iw9_2m", "jup_camo_ob_iw9_2n", "jup_camo_ob_iw9_2o", "jup_camo_ob_iw9_2p", "jup_camo_ob_iw9_2s", "jup_camo_ob_iw9_2t", "jup_camo_ob_iw9_2v", "jup_camo_ob_iw9_3a", "jup_camo_ob_iw9_3b", "jup_camo_ob_iw9_3c", "jup_camo_ob_iw9_3d", "jup_camo_ob_iw9_3e", "jup_camo_ob_iw9_3f", "jup_camo_ob_iw9_3g", "jup_camo_ob_iw9_3h", "jup_camo_ob_iw9_3i", "jup_camo_ob_iw9_3j", "jup_camo_ob_iw9_3k", "jup_camo_ob_iw9_3l", "jup_camo_ob_iw9_3m", "jup_camo_ob_iw9_3n", "jup_camo_ob_iw9_3o", "jup_camo_ob_iw9_3p", "jup_camo_ob_iw9_3s", "jup_camo_ob_iw9_3t", "jup_camo_ob_iw9_3v", "jup_camo_ob_iw9_4a", "jup_camo_ob_iw9_4b", "jup_camo_ob_iw9_4c", "jup_camo_ob_iw9_4d", "jup_camo_ob_iw9_4e", "jup_camo_ob_iw9_4f", "jup_camo_ob_iw9_4g", "jup_camo_ob_iw9_4h", "jup_camo_ob_iw9_4i", "jup_camo_ob_iw9_4j", "jup_camo_ob_iw9_4k", "jup_camo_ob_iw9_4l", "jup_camo_ob_iw9_4m", "jup_camo_ob_iw9_4n", "jup_camo_ob_iw9_4o", "jup_camo_ob_iw9_4p", "jup_camo_ob_iw9_4s", "jup_camo_ob_iw9_4t", "jup_camo_ob_iw9_4v", "jup_camo_ob_iw9_5a", "jup_camo_ob_iw9_5b", "jup_camo_ob_iw9_5c", "jup_camo_ob_iw9_5d", "jup_camo_ob_iw9_5e", "jup_camo_ob_iw9_5f", "jup_camo_ob_iw9_5g", "jup_camo_ob_iw9_5h", "jup_camo_ob_iw9_5i", "jup_camo_ob_iw9_5j", "jup_camo_ob_iw9_5k", "jup_camo_ob_iw9_5l", "jup_camo_ob_iw9_5m", "jup_camo_ob_iw9_5n", "jup_camo_ob_iw9_5o", "jup_camo_ob_iw9_5p", "jup_camo_ob_iw9_5s", "jup_camo_ob_iw9_5t", "jup_camo_ob_iw9_5v", "jup_camo_ob_iw9_6a", "jup_camo_ob_iw9_6b", "jup_camo_ob_iw9_6c", "jup_camo_ob_iw9_6d", "jup_camo_ob_iw9_6e", "jup_camo_ob_iw9_6f", "jup_camo_ob_iw9_6g", "jup_camo_ob_iw9_6h", "jup_camo_ob_iw9_6i", "jup_camo_ob_iw9_6j", "jup_camo_ob_iw9_6k", "jup_camo_ob_iw9_6l", "jup_camo_ob_iw9_6m", "jup_camo_ob_iw9_6n", "jup_camo_ob_iw9_6o", "jup_camo_ob_iw9_6p", "jup_camo_ob_iw9_6s", "jup_camo_ob_iw9_6t", "jup_camo_ob_iw9_6v", "jup_camo_ob_iw9_7a", "jup_camo_ob_iw9_7b", "jup_camo_ob_iw9_7c", "jup_camo_ob_iw9_7d", "jup_camo_ob_iw9_7e", "jup_camo_ob_iw9_7f", "jup_camo_ob_iw9_7g", "jup_camo_ob_iw9_7h", "jup_camo_ob_iw9_7i", "jup_camo_ob_iw9_7j", "jup_camo_ob_iw9_7k", "jup_camo_ob_iw9_7l", "jup_camo_ob_iw9_7m", "jup_camo_ob_iw9_7n", "jup_camo_ob_iw9_7o", "jup_camo_ob_iw9_7p", "jup_camo_ob_iw9_7s", "jup_camo_ob_iw9_7t", "jup_camo_ob_iw9_7v", "jup_camo_ob_iw9_8a", "jup_camo_ob_iw9_8b", "jup_camo_ob_iw9_8c", "jup_camo_ob_iw9_8d", "jup_camo_ob_iw9_8e", "jup_camo_ob_iw9_8f", "jup_camo_ob_iw9_8g", "jup_camo_ob_iw9_8h", "jup_camo_ob_iw9_8i", "jup_camo_ob_iw9_8j", "jup_camo_ob_iw9_8k", "jup_camo_ob_iw9_8l", "jup_camo_ob_iw9_8m", "jup_camo_ob_iw9_8o", "jup_camo_ob_iw9_8s", "jup_camo_ob_iw9_8t", "jup_camo_ob_iw9_8v", "jup_camo_ob_iw9_9a", "jup_camo_ob_iw9_9b", "jup_camo_ob_iw9_9c", "jup_camo_ob_iw9_9d", "jup_camo_ob_iw9_9e", "jup_camo_ob_iw9_9f", "jup_camo_ob_iw9_9g", "jup_camo_ob_iw9_9h", "jup_camo_ob_iw9_9i", "jup_camo_ob_iw9_9j", "jup_camo_ob_iw9_9k", "jup_camo_ob_iw9_9l", "jup_camo_ob_iw9_9m", "jup_camo_ob_iw9_9o", "jup_camo_ob_iw9_9p", "jup_camo_ob_iw9_9s", "jup_camo_ob_iw9_9t", "jup_camo_ob_iw9_9v", "jup_camo_ob_n5910_10", "jup_camo_ob_n5910_20", "jup_camo_ob_n6908_12", "jup_camo_ob_n6908_13", "jup_camo_rankeda", "jup_camo_rankedb", "jup_camo_rankedc", "jup_camo_rankedd", "jup_camo_rankede", "jup_camo_rankedf", "jup_camo_rankedg", "jup_camo_rankedh", "jup_camo_rankedi", "jup_camo_rankedj", "jup_camo_rankedk", "jup_camo_rankedl", "jup_camo_rankedm", "jup_camo_rankedn", "jup_camo_rankedo", "jup_camo_rankedp", "jup_camo_rankedq", "jup_camo_rankedr", "jup_camo_rankeds", "jup_camo_rankedt", "jup_camo_rankedu", "jup_camo_special_01a", "jup_camo_speciala", "jup_camo_specialg", "jup_camo_specialh", "jup_camo_speciali", "jup_camo_specialj", "jup_camo_specialk", "jup_camo_speciall", "jup_camo_specialm", "jup_camo_specialo", "jup_camo_specialp", "jup_camo_specialq", "jup_camo_specialr", "jup_camo_specials", "jup_camo_specialt", "jup_camo_specialv", "jup_camo_specialw", "jup_camo_specialx", "jup_camo_specialy", "jup_camo_specialz", "jup_camo_pap_a_01_mp", "jup_camo_pap_a_02_mp", "jup_camo_pap_a_03_mp"];
+  self.syn["camos"]["mw3"][1] = ["Dart", "Rock Stone", "Ameerga", "Marbled", "Golden Poison", "Phantasmal", "Fractal Dirt", "Orange Tones", "Blue Tones", "Heat Map", "Razor Feather", "Deconstructed", "Granite Pass", "Shattered Rock", "Omnigenesis", "Ghastly", "Bone Shaker", "Death 3D", "Crimson Skulls", "Skullish", "Deathparency", "Skull-O-Vision", "Skullflagration", "Skull Jumble", "Big Grins", "Topo Boulder", "Topo Reverb", "Topo Lithic", "Topo Hardpan", "Topo Regal", "Topo Caustic", "Topo Sandrock", "Topo Arid", "Topo Glitch", "Topo Muddy", "Missing Texture/Pink Camo", "Ember Glitch", "Oil Slick Glitch", "Iris Glitch", "Twilight Glitch", "Rainfall Glitch", "Deluge Glitch", "Alert Glitch", "Phantom Glitch", "Scoured Glitch", "Pink Sands", "Blue Sands", "Purple Sands", "Amaranth Sands", "Yellow Sands", "Brown Sands", "Green Sands", "Orange Sands", "Cobalt Sands", "Red Sands", "Sea Green Sands", "Lavender Sands", "Desolate Ops", "Magma Heat", "Cinders", "Rock Glow", "Sandzone", "Green Field", "Dry Heat", "Acid Drip", "Cherry Blossom", "Guts", "Cold Fall", "Tactical Colors", "Ice Cave", "Fjord", "Palette Sunrise", "Palette Dusk", "Palette Tropics", "Palette Navy", "Palette Garden", "Palette Sands", "Palette Storm", "Palette Twilight", "Palette Grasses", "Palette Rosemary", "Palette Neapolitan", "Fairway", "Germ Factory", "Deadly Spores", "Red Cells", "Spreading", "Firmicutes", "Microbiology", "Viral", "Strain", "Microscopic", "Bacterial Decay", "Viral Invasion", "Overwhelmed", "Missing Texture/Pink Camo", "Purple Satin", "Blue Satin", "White Satin", "Satin Swirl", "Smooth Satin", "Warbled", "B&W Fuzz", "B&W Re-Fuzz", "Broken Signal", "Sprayed Lines", "Spectral Overload", "Light Vision", "Dark Vision", "Geofunk", "Psychotropic", "Heatwave", "Mind Peak", "Sunset Retro", "'80s Spheres", "Gradient Globs", "Swift Brush", "Woods Brush", "Thick Brush", "Sharp Brush", "Liquid Brush", "Mind Test", "Pabels", "Corrugated", "Descent", "Clouded Mind", "Pyramidical", "Insectoid", "Upward Reverb", "Art Glass", "Creeplines", "Abyssal Fox", "Absorption", "Overlayered", "Psychedelic Sky", "Psychedelic Pop", "Occult", "Psychedelic Loops", "Missing Texture/Pink Camo", "Heat Waves", "Ocean Waves", "Arctic Filaments", "Pyro Filaments", "Sunset Blur", "Aquatic Blur", "Solar Flare", "Cosmic Filaments", "Red", "Orange", "Pink", "Purple", "Monarch", "Oakleaf", "Menelaus Blue", "Orange Sulphur", "Fritillary", "Red Admiral", "Dopamine", "Imago", "Rippled", "Fidget", "Puzzling Tiles", "Coiled", "Tidepool", "Carved", "Missing Texture/Pink Camo", "Brave Stripes", "Season 2 Ranked Veteran", "Unreleased Stripe Camo", "Blue Steel", "MWIII Season 2 Top 250", "Thirsty Luck", "Makarov", "Royalty Tiger", "Hard Target", "Golden River", "Soft Target", "Sand & Spice", "Making Heroes Super", "Death to Supes", "Magma", "Coherence", "MWIII Ranked Play Rank 10", "MWIII Ranked Play Rank 45", "Season 1 Ranked Veteran", "Tiki", "Acerbic Roil", "Ductile Plates", "Forest Gloom", "Abyssal", "Velvet Radiance", "Imperial Shields", "MWIII Season 2 Ranked Veteran", "Crimson Wyrm", "Rotten Inferno", "Missing Texture/Pink Camo", "Allegiances", "Blacklight", "She Bites", "Desert Veil", "Penny", "What's Your Sign?", "Shadow", "At Ease", "The Horrors", "Bullet Hell", "Sunset Waves", "Simpler Times", "Electro Torrent", "Sunny Side", "Spectral", "Rabid", "Crypt", "Lurker", "Necromancy", "Caliber", "Blight Hound", "Apocalyptic", "Apparition", "Ethereal Revolution", "Decoy Drizzle", "Ghostware", "Evil Spawn", "MWIII Season 3 Ranked Veteran", "WZ Season 3 Gold", "WZ Season 3 Platinum", "WZ Season 3 Diamond", "WZ Season 3 Crimson", "WZ Season 3 Iridescent", "WZ Season 3 Top 250", "WZ Season 3 Ranked Veteran", "Blazon", "Heavy Metal", "Binary Morality", "Game Over", "Red Documents camo", "That's a Lot of Molecules", "Engine Light's On", "Welcome to the Mainframe", "Nuking Hazard", "Cheetah Print", "Unreleased Lightning Camo", "Popping Out", "Delighted Liquification", "Wild Lines and Wild Times", "Hey Boo!", "Illusive Neon", "And Then They All Fell Out...", "Lambent Streaks", "Filed and Buffed", "Bugged Out", "He's Looking At You", "Azure Refract", "Donut Worry", "Dubs Dubs Dubs", "Raising the Bar", "Molten Blue", "Viscose Violence", "Ghosted", "Optically Elusive", "Healthy Appetite", "Do the Wave", "Primed and Polished", "Dead Creeper", "Evil-eye-ris", "Crystalized", "Tangy Donut", "Retrowave", "Gold Face", "MWIII Season 4 Ranked Veteran", "WZ Season 4 Ranked Veteran", "Exerting Control", "RX-78-2", "Dendritic Devastation", "Nuka-Cola Quantum", "Bisexual Pride", "Lesbian Pride" , "Non-binary Pride", "Pansexual Pride", "Transgender Pride", "Pride", "Asexual Pride", "Royal Helix", "Gilded Genetics", "Veiled Strands", "Purified Helix", "Death Touch", "Neural Outbreak", "Luminous Germ", "Hazardous Ruin", "Helical Reverb", "Mark of the Survivor", "Feelings Unabridged", "Shifting Grid", "Gridlocked", "Synth-Bust", "Flit and Float", "Forms and Features", "Out of Sorts", "White", "Shapely Print", "Garden of Eyes", "Cacophonous Collision", "No-Fly Zone", "The Last Post", "Color Wave", "Globular Neon", "Maps and Mazes", "Overstretched", "Black", "Neo-Geo", "Eye Love You", "Calamitous Collision", "Flightless Bird", "MWIII Season 5 Gold", "MWIII Season 5 Platinum", "MWIII Season 5 Diamond", "MWIII Season 5 Crimson", "MWIII Season 5 Iridescent", "MWIII Season 5 Top 250", "MWIII Season 5 Ranked Veteran", "WZ Season 5 Ranked Veteran", "Cat-Girl Smile", "Bubba", "TipToe", "Going Bananas", "Frogged Out", "In the Crosshair", "Reflect 115", "Evolution Forge", "Chainbreaker", "Spilled Beans", "Super Slick", "Iron Ore", "Rose Quartz", "All Speed", "Decipher", "Bowl Buzzkill", "Drawn and Quartered", "All-Consuming", "Finger Trap", "Hit 'OK'", "Shifting Legacy", "Cursed Photocopy", "Atoms Abound", "Peaks and Valleys", "Star Light Star Bright", "Photocopied Horror", "Atomic Structure", "Devouring Demons", "Finger Garden", "Highs and Lows", "Pixel Perfect", "MWIII Season 6 Ranked Veteran", "WZ Season 6 Gold", "WZ Season 6 Platinum", "WZ Season 6 Diamond", "WZ Season 6 Crimson", "WZ Season 6 Iridescent", "WZ Season 6 Top 250", "WZ Season 6 Ranked Veteran", "GAMMA STORM", "Halloween Spoils", "Terminus", "Bricked", "Live Laugh Lava", "Tall Order", "Sunset Armageddon", "Cloudy Day", "Sparkle and Shine", "Cybernetic", "Inner Demons", "Cloud Watching", "Still Beating", "JAK of All Trades", "The Fallout", "Whispering Veil", "Mutant Flux", "Headed to Hell", "Disoriented", "Fading Breath", "Nocuous", "Dire", "Perilous", "Familiar", "Subterranean", "Astray", "Wayward", "Typhoon", "Wyvern", "Obsession", "Unmarked Grave", "Splintered", "Neuronic", "Archfiend", "Damned Souls", "Ruination", "Calamity", "Destiny", "Incinerated", "Thanatos", "Vehement Rage", "Harbinger", "Ceaseless Agony", "Topo Stone", "Topo Spirit", "Topo Ooze", "Topo Gargoyle", "Topo Blaze", "Topo Sickly", "Topo Grave", "Topo Ash", "Topo Gloom", "Topo Ghast", "Pain Glitch", "Slash Glitch", "Murk Glitch", "Hallowed Glitch", "Torment Glitch", "Tomb Glitch", "Hallucinate Glitch", "Spirit Glitch", "Sonic Glitch", "Burnt Sands", "Dark Sands", "Marrow Sands", "Toxic Sands", "Midnight Sands", "Decayed Sands", "Dead Sands", "Forest Sands", "Drowned Sands", "Golden Sands", "Foam Sands", "Crimson Sands", "Illusions", "Caustic River", "Sludge", "Cartilage", "Tide Surge", "Patchwork", "Decay", "Haunted", "Sunstroke", "Below Zero", "Stonework", "Spoiled Eggs", "Dissolver", "Gloom", "Palette Adjudicator", "Palette Grove", "Palette Buried", "Palette Rage", "Palette Cursed", "Palette Scorched", "Palette Shade", "Palette Sickly", "Palette Infected", "Palette Cyst", "Palette Corpse", "Palette Diffusion", "New Strain", "Incurable", "Hemoglobin", "Pestilence", "Microbial", "Black Plague", "Symptomatic", "Pathosis", "Ferver", "Cold Snap", "Living Tissue", "Riddled", "Green Satin", "Orange Satin", "Black Satin", "Royale Swirl", "Inkblot", "Dazed", "Blurred Myopia", "Spectral Sight", "Fluctuation", "Blood Gutter", "Deformed", "Unknown Visitor", "Ripped", "Lost Transmission", "Radio Waves", "Alert", "Cacophony", "Purple Ooze", "Global Panic", "Biomass", "Mummified Brush", "Rusted Brush", "Blood Brush", "Spirit Brush", "Brimstone Brush", "Apocalyptic", "Oxidized", "Crystal Palace", "Magma Beast", "Grim Reaper", "Mysterious", "Unyielding", "Melting Hope", "Dimensional Shift", "Hysteria", "Tempest Shards", "Inner Demon", "Empty Screams", "Psychedelic Ridge", "Psychedelic Toxins", "Mystic Wither", "Psychedelic Misery", "Greed Blur", "Burning Blur", "Moss Filaments", "Mist Filaments", "Reality Blur", "Firestorm Blur", "Mutated Flare", "Dirt Filaments", "Terracotta", "Oracle", "Desolation", "Mud", "Chaos", "Petrified", "Toxic Spots", "Decrepit", "Death Form", "Grief Manifest", "Venom Prism", "Putrid Locust", "Puzzled", "Trapped", "Strung Organs", "Putrid Locust", "Shadow Sting", "Piranha", "Kaiju", "Diseased Beast", "Drudge Digital", "Tarragon", "Vile Petrichor", "Chromatism", "Carcass", "Parasitic Invader", "Cryonics", "Macrophage", "Coagulation", "Maggot Digital", "Forsaken", "Butchered", "Shattered Hope", "Dark Clouds", "Boomslang", "Repulsive Waters", "Condemned", "Jagged Edges", "Disembodied Voices", "Guttural Shriek", "Blister Digital", "Kiln", "Ominous Haze", "Chewed Organs", "Radiation", "Fossilized", "Stalking Eyes", "Acid Rain", "Sinew", "Spore Digital", "Infested Waters", "Paranoiac", "Bottomless Void", "Mummified", "Mutation", "Dreadnought", "Fate Mirror", "Avaricious", "Cursed Serpent", "Endemic", "Plasma Digital", "Nightmare", "Blood Stone", "Decomposition", "Mucus", "Ribcage", "Mangy Innards", "Lost Souls", "Malignant", "Surge Digital", "Sycophantism", "Hermit", "Dyspnea", "Magnetic Field", "Hazardous Waste", "Poached", "Zeal", "Shin Rippers", "Festering Wound", "Sinister Ghoul", "Writhe Digital", "Emerald", "Vitriol", "Penumbra", "Séance", "Hemlock", "Open Sores", "Sacrificial Heart", "Dredge", "Occult Digital", "Evoke Darkness", "Severed", "Afflicted", "Shackled", "Hyperacid", "Sickly", "Puncture", "Brain Fog", "Dark Mist", "Death Digital", "Treasure Hoard", "Iron Hammer", "Marooned Joy", "Putrid Rot", "Inferno", "Blood Streaks", "Solitary", "Ghoulish", "Viscera Digital", "Moldy Membrane", "Distressed", "Cadaver", "Somber River", "Perforated", "Digital Wildwood", "Torn Asunder", "Ectoplasm", "Hemorrhage Digital", "Cosmic", "Rive Gravel", "Bone Marrow", "Waterlogged", "Smoke Plume", "Looming Shadow", "Final Visage", "Stain", "Contagion Digital", "Tormentor", "Crystallized", "Burial Ground", "Plague Heart", "Flooded", "Unseen Ravager", "Headless Viper", "Dark Seer", "Grease Digital", "Swamp", "Rat Cage", "Cracked Vessel", "Infested Hollow", "Carbuncle", "Shed Skin", "Mausoleum", "Smudging", "Fertilizer", "Meat Hook", "Pack Hunter", "Slag", "Stachybotrys", "Brined Entrails", "Masquerade", "Scratch Marks", "Umbral Destiny", "Gaudy Lesion", "Anomaly", "Dried Blood", "Infected Bark", "Pustule Digital", "Uncanny", "Conglomerate", "Putrefied", "Bruised", "Lost Sepulcher", "Rash", "Heat Death", "Bile", "Poison Oak", "Grim Portent", "Pollution", "Toxoid", "Sacrifice", "Finality", "Shipwreck", "Bleak Visions", "Scorched Ash", "Wretched Hollow", "Rot Digital", "Spitfire", "Abrasion", "Binary Death", "Bog", "Drowned Corpse", "Flayed Snake", "Tartarus", "Sarcophagus", "Spoiled Meat", "Death Roll", "Defile", "Gravesite", "Spirit Guide", "Consumed", "Congealed", "Eviscerated", "Caged Terror", "Bloodletting", "Plague Digital", "Charred", "Permafrost", "End Times", "Abhorrent", "Blighted", "Necrosis", "Miasma", "Abandoned", "Imprisoned", "Locust", "Cursed Forest", "Catacomb", "Hallucination", "Arborescent", "Abscess", "Soul Harvest", "Rough Thicket", "Voodoo", "Mold Digital", "Shaman", "Sacrament", "Retch", "Noxious Gas", "Cut Circulation", "Dehydrate", "Myrtle", "Arterial", "Specter", "Endless Dirge", "Eternal Rest", "Numb", "Interloper", "Hidden Patterns", "Last Strand", "Sanguine", "Psychopomp", "Nausea", "Blood Digital", "Hydra", "Suture", "Laceration", "Tattered Cloak", "Creeping Death", "Molten", "Faustian Bargain", "Phantom", "Buckshot", "Delirious", "Ethereal Stench", "Malpractice", "Mortal Wound", "Murky Skies", "Discorded", "Coalesce", "Tooth & Claw", "Impending Storm", "Corrosive Digital", "Cataclysm", "Membrane", "Sullied Spirits", "Crushed Bone", "Watery Grave", "Diamond Eye", "Braindead", "Shiver", "Mulch Digital", "Frigid", "Blood Moon", "Ghostly", "Shimmering Lure", "Trenchant", "Null Space", "Tsunami", "Rancid Venom", "Embalmed", "Gruel Digital", "Frostbite", "Twisted", "Oozing Hives", "Phantasm", "IV Drip", "Flatline", "Ichor Mist", "Gourd", "Hoarfrost Digital", "Wasteland", "Paranormal", "Entranced", "Doom Whispers", "Summit", "Scarecrow", "Foul Scab", "Disorder Digital", "Incarnate", "Migraine", "Amputate", "Decayed Tiger", "Dart Frog", "Cauterized", "Signal Jam", "Weeping", "Leviathan Digital", "Hemocyte", "Rigor Mortis", "Mired", "Quagmire", "Desolation", "Isolation", "Forum Chaser", "Glitch", "Failure to Launch", "Trouble-Shoot", "Seattle Surge 2024", "Vegas Legion 2024", "Toronto Ultra 2024", "OpTic Texas 2024", "New York Subliners 2024", "Minnesota RØKKR 2024", "Los Angeles Thieves 2024", "Los Angeles Guerrillas 2024", "Carolina Royal Ravens 2024", "Miami Heretics 2024", "Boston Breach 2024", "Atlanta FaZe 2024", "MWIII Season 2 Top 250", "MWIII Season 2 Gold", "MWIII Season 2 Platinum", "MWIII Season 2 Diamond", "MWIII Season 2 Crimson", "MWIII Season 2 Iridescent", "MWIII Season 2 Ranked Veteran", "WZ Ranked Play Rank 30", "Season 2 Ranked Veteran", "Full Shields", "Flying High", "Windfall", "The Hundreds™", "Melty", "Dragon Scales", "Looking At You", "Wriggler", "Lost Souls", "Crimson Wyrm", "Barbed and Dangerous", "The Pit", "Mystic Wither", "Shadow Sting", "Piranha", "Grave Robber", "Regal Death", "Royal Mess", "Blue Steel", "Thirsty Luck", "PAP Camo 1", "PAP Camo 2", "PAP Camo 3"];
+
+	self.syn["camos"]["mastery"][0] = ["jup_camo_comp_01", "jup_camo_comp_02", "jup_camo_comp_03", "jup_camo_comp_04", "jup_camo_ob_comp_01", "jup_camo_ob_comp_02", "jup_camo_ob_comp_03", "jup_camo_ob_comp_04", "jup_camo_ob_iw9_comp_01", "jup_camo_ob_iw9_comp_02", "jup_camo_ob_iw9_comp_03", "jup_camo_ob_iw9_comp_04", "camo_comp_01", "camo_comp_02", "camo_comp_03", "camo_comp_04", "jup_camo_prest_01", "jup_camo_prest_02", "jup_camo_prest_03", "jup_camo_prest_04"];
+	self.syn["camos"]["mastery"][1] = ["Gilded", "Forged", "Priceless", "Interstellar", "Golden Enigma", "Zircon Scale", "Serpentinite", "Borealis", "Golden Ivory", "Spinel Husk", "Arachnida", "Bioluminescent", "Gold", "Platinum", "Polyatomic", "Orion", "One Trick", "Molten Obsidian", "Mercury", "Constellation's End"];
 
 	// Bullets
 
@@ -691,16 +702,16 @@ function get_bullet_trace_position() {
 
 function load_weapons(weapon_category) {
 	for(i = 0; i < self.syn["weapons"][weapon_category][0].size; i++) {
-		self add_option(self.syn["weapons"][weapon_category][1][i], self.syn["weapons"][weapon_category][0][i], &give_weapon, self.syn["weapons"][weapon_category][0][i]);
+		self add_option(self.syn["weapons"][weapon_category][1][i], undefined, &give_weapon, self.syn["weapons"][weapon_category][0][i]);
 	}
 }
 
 function load_equipment(weapon_category) {
 	for(i = 0; i < self.syn["weapons"][weapon_category][0].size; i++) {
 		if(weapon_category == "lethals") {
-			self add_option(self.syn["weapons"][weapon_category][1][i], self.syn["weapons"][weapon_category][0][i], &give_lethal, self.syn["weapons"][weapon_category][0][i]);
+			self add_option(self.syn["weapons"][weapon_category][1][i], undefined, &give_lethal, self.syn["weapons"][weapon_category][0][i]);
 		} else {
-			self add_option(self.syn["weapons"][weapon_category][1][i], self.syn["weapons"][weapon_category][0][i], &give_tactical, self.syn["weapons"][weapon_category][0][i]);
+			self add_option(self.syn["weapons"][weapon_category][1][i], undefined, &give_tactical, self.syn["weapons"][weapon_category][0][i]);
 		}
 	}
 }
@@ -1185,10 +1196,11 @@ function menu_option() {
 			self add_option("Un-Pack-a-Punch Current Weapon", "Held Weapon will be Un-Pack-a-Punched", &unpack_weapon);
 			self add_option("Give AAT", undefined, &new_menu, "Give AAT");
 
+			self add_option("Equip Camo", undefined, &new_menu, "Equip Camo");
+			self add_option("Magic Bullets", undefined, &new_menu, "Magic Bullets");
+
 			self add_option("Take Current Weapon", undefined, &take_weapon);
 			self add_option("Drop Current Weapon", undefined, &drop_weapon);
-
-			self add_option("Magic Bullets", undefined, &new_menu, "Magic Bullets");
 
 			break;
 		case "Perk Options":
@@ -1289,6 +1301,38 @@ function menu_option() {
 
 			for(i = 0; i < self.syn["aats"][0].size; i++) {
 				self add_option(self.syn["aats"][1][i], undefined, &give_aat, self.syn["aats"][0][i]);
+			}
+
+			break;
+	  case "Equip Camo":
+			self set_title(menu);
+
+			self add_option("MWII Camos", undefined, &new_menu, "MWII Camos");
+			self add_option("MWIII Camos", undefined, &new_menu, "MWIII Camos");
+			self add_option("Mastery Camos", undefined, &new_menu, "Mastery Camos");
+
+			break;
+	  case "MWII Camos":
+			self set_title(menu);
+
+			for(i = 0; i < self.syn["camos"]["mw2"][0].size; i++) {
+				self add_option(self.syn["camos"]["mw2"][1][i], undefined, &equip_camo, self.syn["camos"]["mw2"][0][i]);
+			}
+
+			break;
+	  case "MWIII Camos":
+			self set_title(menu);
+
+			for(i = 0; i < self.syn["camos"]["mw3"][0].size; i++) {
+				self add_option(self.syn["camos"]["mw3"][1][i], undefined, &equip_camo, self.syn["camos"]["mw3"][0][i]);
+			}
+
+			break;
+	  case "Mastery Camos":
+			self set_title(menu);
+
+			for(i = 0; i < self.syn["camos"]["mastery"][0].size; i++) {
+				self add_option(self.syn["camos"]["mastery"][1][i], undefined, &equip_camo, self.syn["camos"]["mastery"][0][i]);
 			}
 
 			break;
@@ -1507,6 +1551,10 @@ function set_plate_carrier_level(value) {
 function give_weapon(weapon) {
 	weapon = weapon::buildWeapon(weapon);
 
+	root_name = weapon::getWeaponRootName(weapon);
+	clip = self getWeaponAmmoClip(weapon);
+	stock = self getWeaponAmmoStock(weapon);
+
 	if(!self hasWeapon(weapon)) {
 		if(self getWeaponsListPrimaries().size >= 5) {
 			self takeWeapon(self getCurrentWeapon());
@@ -1519,6 +1567,18 @@ function give_weapon(weapon) {
 		self giveStartAmmo(weapon);
 	} else {
 		self switchToWeaponImmediate(weapon);
+	}
+
+	wait 0.25;
+
+	if(weapon::getWeaponRootName(self getCurrentWeapon()) != root_name) {
+		self giveWeapon(weapon);
+		self setSpawnWeapon(weapon);
+
+		wait 0.25;
+
+		self setWeaponAmmoClip(weapon, clip);
+		self setWeaponAmmoStock(weapon, stock);
 	}
 }
 
@@ -1567,6 +1627,40 @@ function give_special_weapon(weapon_name) {
 
 	self inventory_utility::_giveWeapon(weapon, undefined, undefined, 0);
   self inventory_utility::_switchToWeapon(weapon);
+}
+
+function equip_camo(camo) {
+	weapon = self getCurrentWeapon();
+	root_name = weapon::getWeaponRootName(weapon);
+	attachments = getWeaponAttachments(weapon);
+	variant_id = getWeaponVariantIndex(weapon);
+
+	clip = self getWeaponAmmoClip(weapon);
+	stock = self getWeaponAmmoStock(weapon);
+
+	painted_weapon = weapon::buildWeapon(root_name, attachments, camo, "none", variant_id);
+
+	self takeWeapon(weapon);
+
+	self giveWeapon(painted_weapon);
+	self setSpawnWeapon(painted_weapon);
+
+	wait 0.25;
+
+	self setWeaponAmmoClip(painted_weapon, clip);
+	self setWeaponAmmoStock(painted_weapon, stock);
+
+	wait 0.25;
+
+	if(weapon::getWeaponRootName(self getCurrentWeapon()) != root_name) {
+		self giveWeapon(weapon);
+		self setSpawnWeapon(weapon);
+
+		wait 0.25;
+
+		self setWeaponAmmoClip(weapon, clip);
+		self setWeaponAmmoStock(weapon, stock);
+	}
 }
 
 function pack_weapon() {
@@ -1628,88 +1722,6 @@ function modify_bullet_loop(bullet) {
 function give_killstreak(streak) {
 	self br_pickups::forceGiveKillstreak(streak, 0, 0, 0, 0, 0, undefined);
 	self hud_message::showKillstreakSplash(streak, undefined, 1);
-}
-
-// Menu Options
-
-function iPrintString(string, font_scale) {
-	if(!isDefined(font_scale)) {
-		font_scale = 0.5;
-	}
-	if(!isDefined(self.syn["string"])) {
-		self.syn["string"] = self create_text(string, "bigfixed", font_scale, "center", "top", 0, -100, (1, 1, 1), 1, 9999, true);
-	} else {
-		self.syn["string"] set_text(string);
-		self.syn["string"].fontScale = font_scale;
-	}
-	self.syn["string"] notify("stop_hud_fade");
-	self.syn["string"].alpha = 1;
-	self.syn["string"] setText(string);
-	self.syn["string"] thread [[&fade_hud]](0, 2.5);
-}
-
-function fade_hud(alpha, time) {
-	self endon("stop_hud_fade");
-	self fadeOverTime(time);
-	self.alpha = alpha;
-	wait time;
-}
-
-function modify_menu_position(offset, axis) {
-	if(axis == "x") {
-		self.x_offset = 175 + offset;
-	} else {
-		self.y_offset = 160 + offset;
-	}
-	self close_menu();
-	self open_menu();
-}
-
-function set_menu_rainbow() {
-	if(!isString(self.color_theme)) {
-		self.color_theme = "rainbow";
-		self.menu["border"] thread [[&start_rainbow]]();
-		self.menu["separator_1"] thread [[&start_rainbow]]();
-		self.menu["separator_2"] thread [[&start_rainbow]]();
-		self.menu["border"].color = self.color_theme;
-		self.menu["separator_1"].color = self.color_theme;
-		self.menu["separator_2"].color = self.color_theme;
-	}
-}
-
-function set_menu_color(value, color) {
-	if(color == "Red") {
-		self.menu_color_red = value;
-		iPrintString(color + " Changed to " + value);
-	} else if(color == "Green") {
-		self.menu_color_green = value;
-		iPrintString(color + " Changed to " + value);
-	} else if(color == "Blue") {
-		self.menu_color_blue = value;
-		iPrintString(color + " Changed to " + value);
-	} else {
-		iPrintString(value + " | " + color);
-	}
-	self.color_theme = (self.menu_color_red / 255, self.menu_color_green / 255, self.menu_color_blue / 255);
-	self.menu["border"] notify("stop_rainbow");
-	self.menu["separator_1"] notify("stop_rainbow");
-	self.menu["separator_2"] notify("stop_rainbow");
-	self.menu["border"].rainbow_enabled = false;
-	self.menu["separator_1"].rainbow_enabled = false;
-	self.menu["separator_2"].rainbow_enabled = false;
-	self.menu["border"].color = self.color_theme;
-	self.menu["separator_1"].color = self.color_theme;
-	self.menu["separator_2"].color = self.color_theme;
-}
-
-function hide_ui() {
-	self.hide_ui = !return_toggle(self.hide_ui);
-	setDvar("cg_draw2d", !self.hide_ui);
-}
-
-function hide_weapon() {
-	self.hide_weapon = !return_toggle(self.hide_weapon);
-	setDvar("cg_drawgun", !self.hide_weapon);
 }
 
 // Point Options
@@ -1845,4 +1857,86 @@ function shoot_powerups_loop() {
 		}
 		wait 0.05;
 	}
+}
+
+// Menu Options
+
+function iPrintString(string, font_scale) {
+	if(!isDefined(font_scale)) {
+		font_scale = 0.5;
+	}
+	if(!isDefined(self.syn["string"])) {
+		self.syn["string"] = self create_text(string, "bigfixed", font_scale, "center", "top", 0, -100, (1, 1, 1), 1, 9999, true);
+	} else {
+		self.syn["string"] set_text(string);
+		self.syn["string"].fontScale = font_scale;
+	}
+	self.syn["string"] notify("stop_hud_fade");
+	self.syn["string"].alpha = 1;
+	self.syn["string"] setText(string);
+	self.syn["string"] thread [[&fade_hud]](0, 2.5);
+}
+
+function fade_hud(alpha, time) {
+	self endon("stop_hud_fade");
+	self fadeOverTime(time);
+	self.alpha = alpha;
+	wait time;
+}
+
+function modify_menu_position(offset, axis) {
+	if(axis == "x") {
+		self.x_offset = 175 + offset;
+	} else {
+		self.y_offset = 160 + offset;
+	}
+	self close_menu();
+	self open_menu();
+}
+
+function set_menu_rainbow() {
+	if(!isString(self.color_theme)) {
+		self.color_theme = "rainbow";
+		self.menu["border"] thread [[&start_rainbow]]();
+		self.menu["separator_1"] thread [[&start_rainbow]]();
+		self.menu["separator_2"] thread [[&start_rainbow]]();
+		self.menu["border"].color = self.color_theme;
+		self.menu["separator_1"].color = self.color_theme;
+		self.menu["separator_2"].color = self.color_theme;
+	}
+}
+
+function set_menu_color(value, color) {
+	if(color == "Red") {
+		self.menu_color_red = value;
+		iPrintString(color + " Changed to " + value);
+	} else if(color == "Green") {
+		self.menu_color_green = value;
+		iPrintString(color + " Changed to " + value);
+	} else if(color == "Blue") {
+		self.menu_color_blue = value;
+		iPrintString(color + " Changed to " + value);
+	} else {
+		iPrintString(value + " | " + color);
+	}
+	self.color_theme = (self.menu_color_red / 255, self.menu_color_green / 255, self.menu_color_blue / 255);
+	self.menu["border"] notify("stop_rainbow");
+	self.menu["separator_1"] notify("stop_rainbow");
+	self.menu["separator_2"] notify("stop_rainbow");
+	self.menu["border"].rainbow_enabled = false;
+	self.menu["separator_1"].rainbow_enabled = false;
+	self.menu["separator_2"].rainbow_enabled = false;
+	self.menu["border"].color = self.color_theme;
+	self.menu["separator_1"].color = self.color_theme;
+	self.menu["separator_2"].color = self.color_theme;
+}
+
+function hide_ui() {
+	self.hide_ui = !return_toggle(self.hide_ui);
+	setDvar("cg_draw2d", !self.hide_ui);
+}
+
+function hide_weapon() {
+	self.hide_weapon = !return_toggle(self.hide_weapon);
+	setDvar("cg_drawgun", !self.hide_weapon);
 }
