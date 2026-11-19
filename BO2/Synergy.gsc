@@ -70,8 +70,6 @@ initial_variables() {
 	self.point_increment = 100;
 	self.round_increment = 1;
 
-	self.equip_attachment_in_progress = false;
-
 	self.syn = [];
 
 	// Visions
@@ -1073,12 +1071,6 @@ scroll_slider(direction) {
 }
 
 set_options() {
-	if(isDefined(self.equip_attachment_in_progress)) {
-		while(self.equip_attachment_in_progress) {
-			wait 0.05;
-		}
-	}
-
 	self.menu["slider_text"] set_text("");
 	self.menu["slider"].alpha = 0;
 
