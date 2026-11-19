@@ -1282,10 +1282,6 @@ menu_option() {
 				self add_option("Turn Power On", undefined, ::power_on);
 			}
 
-			if(!isDefined(level.parts_collected)) {
-				self add_option("Pick up all Parts", undefined, ::pick_up_parts);
-			}
-
 			break;
 		case "Powerup Options":
 			self set_title(menu);
@@ -1951,23 +1947,6 @@ power_on() {
 	if(self.map_name == "mob_of_the_dead") {
 		level notify("gondola_powered_on_roof");
 	}
-}
-
-pick_up_parts() {
-	if(isDefined(level.parts_collected)) {
-	  return;
-	}
-	staff_elements = array("t6_wpn_zmb_staff_crystal_air_part", "t6_wpn_zmb_staff_crystal_fire_part", "t6_wpn_zmb_staff_crystal_bolt_part", "t6_wpn_zmb_staff_crystal_water_part");
-
-	foreach(craftable in level.zombie_include_craftables) {
-	  foreach(part in craftable.a_piecestubs) {
-	    if(isDefined(part.pieceSpawn) && !in_array(staff_elements, part.pieceSpawn.modelname)) {
-	      self maps\mp\zombies\_zm_craftables::player_take_piece(part.pieceSpawn);
-			}
-	  }
-	}
-
-	level.parts_collected = true;
 }
 
 // Powerup Options
