@@ -1,0 +1,30 @@
+{
+    "name": "Timer",
+    "version": "2.0",
+    "author": "SyndiShanX",
+    "data": [
+        {
+            "type": "scriptparsetree",
+            "name": "scripts/timer.gsc",
+            "path": "timer.gscc",
+            "hooks": [
+                "scripts/zm_common/load.gsc"
+            ]
+        },
+				{
+            "type": "scriptparsetree",
+            "name": "scripts/timer.csc",
+            "path": "timer.cscc",
+            "hooks": [
+                "scripts/zm_common/load.csc"
+            ]
+        },
+        {
+            "type": "hashes",
+            "path": "hashes.txt",
+            "format": "serious_compiler",
+            "ignore_error": true
+        }
+    ],
+    "enabled": true
+}

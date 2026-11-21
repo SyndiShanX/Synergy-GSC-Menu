@@ -1,0 +1,11 @@
+0x89F2DF9, __init__system__
+0x9284135D, init
+0x1F26B6EB, player_connect
+0x9B11A3B0, load_settings
+0x881EB500, start_timer
+0x9ED0E6E9, update_timer
+0xF8557668, set_hours
+0x21EB67AA, set_minutes
+0xC48569E7, set_seconds
+0x8A07E851, pad_time
+0x7F9D1AC4, set_time
