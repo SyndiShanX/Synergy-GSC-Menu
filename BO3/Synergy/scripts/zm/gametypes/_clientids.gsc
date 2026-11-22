@@ -578,6 +578,8 @@ function input_manager() {
 
 				self menu_option();
 				set_options();
+				wait 0.25;
+				scroll_cursor();
 
 				while(self useButtonPressed()) {
 					wait 0.2;
@@ -1435,6 +1437,7 @@ function menu_option() {
 			self add_option("Basic Options", undefined, &new_menu, "Basic Options");
 			self add_option("Fun Options", undefined, &new_menu, "Fun Options");
 			self add_option("Weapon Options", undefined, &new_menu, "Weapon Options");
+			self add_option("Point Options", undefined, &new_menu, "Point Options");
 			self add_option("Perk Options", undefined, &new_menu, "Perk Options");
 			self add_option("Zombie Options", undefined, &new_menu, "Zombie Options");
 			self add_option("Map Options", undefined, &new_menu, "Map Options");
@@ -1453,8 +1456,6 @@ function menu_option() {
 			self add_toggle("Infinite Shield", "Gives you Infinite Shield Durability", &infinite_shield, self.syn_infinite_shield);
 
 			self add_option("Give Gobblegum", undefined, &new_menu, "Give Gobblegum");
-
-			self add_option("Point Options", undefined, &new_menu, "Point Options");
 
 			break;
 		case "Fun Options":
@@ -2166,35 +2167,6 @@ function give_gobblegum(gobblegum) {
 	}
 }
 
-function set_points_increment(value) {
-	self.syn_point_increment = value;
-}
-
-function set_points(value, target) {
-	if(!isDefined(target)) {
-		target = self;
-	}
-
-	target zm_score::minus_to_player_score(9999999);
-	target zm_score::add_to_player_score(value);
-}
-
-function add_points(value, target) {
-	if(!isDefined(target)) {
-		target = self;
-	}
-
-	target zm_score::add_to_player_score(value);
-}
-
-function take_points(value, target) {
-	if(!isDefined(target)) {
-		target = self;
-	}
-
-	target zm_score::minus_to_player_score(value);
-}
-
 // Fun Options
 
 function forge_mode() {
@@ -2364,6 +2336,37 @@ function set_vision(vision) {
 	visionset_mgr::activate("visionset", vision, self);
 	visionset_mgr::activate("overlay", vision, self);
 	self.syn_prev_vision = vision;
+}
+
+// Point Options
+
+function set_points_increment(value) {
+	self.syn_point_increment = value;
+}
+
+function set_points(value, target) {
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	target zm_score::minus_to_player_score(9999999);
+	target zm_score::add_to_player_score(value);
+}
+
+function add_points(value, target) {
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	target zm_score::add_to_player_score(value);
+}
+
+function take_points(value, target) {
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	target zm_score::minus_to_player_score(value);
 }
 
 // Perk Options
