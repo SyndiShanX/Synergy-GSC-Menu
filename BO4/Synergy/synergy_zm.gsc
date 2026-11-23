@@ -10,6 +10,7 @@
 #include scripts\core_common\system_shared;
 #include scripts\core_common\util_shared;
 #include scripts\core_common\values_shared;
+#include scripts\core_common\weapons_shared;
 #include scripts\core_common\ai\zombie_utility;
 #include scripts\zm_common\zm_bgb;
 #include scripts\zm_common\zm_laststand;
@@ -61,105 +62,102 @@ initial_variables() { //ec264b2e
 
 	self.equip_attachment_in_progress = false;
 
-	self.narrative_open = false;
+	if(!isDefined(level.syn_arrays_defined)) {
 
-	//if(level.script == "zm_zodt8" || level.script == "zm_towers" || level.script == "zm_mansion") {
-	//	zm_loadout::register_lethal_grenade_for_level(#"homunculus_leprechaun");
-	//	level.w_homunculus_leprechaun = getweapon(#"homunculus_leprechaun");
-	//}
+		// Weapons
 
+		level.syn["mastercraft"] = array();
 
-	// Weapons
+		level.syn["weapons"]["category"][0] = ["assault_rifles", "sub_machine_guns", "tactical_rifles", "light_machine_guns", "sniper_rifles", "shotguns", "pistols", "launchers", "melee", "equipment", "extras"];
+		level.syn["weapons"]["category"][1] = ["Assault Rifles", "Sub Machine Guns", "Tactical Rifles", "Light Machine Guns", "Sniper Rifles", "Shotguns", "Pistols", "Launchers", "Melee", "Equipment", "Extras"];
 
-	self.syn["mastercraft"] = array();
+		level.syn["weapons"]["assault_rifles"][0] =     array("ar_accurate_t8", "ar_fastfire_t8", "ar_modular_t8", "ar_mg1909_t8", "ar_damage_t8", "ar_stealth_t8", "ar_galil_t8", "ar_standard_t8", "ar_an94_t8", "ar_doublebarrel_t8", "ar_peacekeeper_t8");
+		level.syn["weapons"]["sub_machine_guns"][0] =   array("smg_drum_pistol_t8", "smg_standard_t8", "smg_fastfire_t8", "smg_handling_t8", "smg_accurate_t8", "smg_capacity_t8", "smg_mp40_t8", "smg_vmp_t8", "smg_fastburst_t8", "smg_folding_t8", "smg_minigun_t8");
+		level.syn["weapons"]["tactical_rifles"][0] =    array("tr_longburst_t8", "tr_leveraction_t8", "tr_midburst_t8", "tr_powersemi_t8", "tr_flechette_t8", "tr_damageburst_t8");
+		level.syn["weapons"]["light_machine_guns"][0] = array("lmg_standard_t8", "lmg_spray_t8", "lmg_heavy_t8", "lmg_double_t8", "lmg_stealth_t8");
+		level.syn["weapons"]["sniper_rifles"][0] =      array("sniper_powersemi_t8", "sniper_powerbolt_t8", "sniper_quickscope_t8", "sniper_fastrechamber_t8", "sniper_locus_t8", "sniper_mini14_t8", "sniper_damagesemi_t8");
+		level.syn["weapons"]["shotguns"][0] =           array("shotgun_trenchgun_t8", "shotgun_semiauto_t8", "shotgun_pump_t8", "shotgun_precision_t8", "shotgun_fullauto_t8");
+		level.syn["weapons"]["pistols"][0] =            array("pistol_topbreak_t8", "pistol_revolver_t8", "pistol_standard_t8", "pistol_burst_t8", "pistol_fullauto_t8");
+		level.syn["weapons"]["launchers"][0] =          array("launcher_standard_t8", "special_crossbow_t8");
+		level.syn["weapons"]["melee"][0] =              array("bowie_knife", "special_ballisticknife_t8_dw");
+		level.syn["weapons"]["equipment"][0] =          array("eq_frag_grenade", "eq_acid_bomb", "claymore", "sticky_grenade", "eq_molotov", "eq_wraith_fire", "mini_turret", "proximity_grenade");
+		level.syn["weapons"]["extras"][0] =             array("minigun");
 
-	self.syn["weapons"]["category"][0] = ["assault_rifles", "sub_machine_guns", "tactical_rifles", "light_machine_guns", "sniper_rifles", "shotguns", "pistols", "launchers", "melee", "equipment", "extras"];
-	self.syn["weapons"]["category"][1] = ["Assault Rifles", "Sub Machine Guns", "Tactical Rifles", "Light Machine Guns", "Sniper Rifles", "Shotguns", "Pistols", "Launchers", "Melee", "Equipment", "Extras"];
+		level.syn["weapons"]["assault_rifles"][1] =     array("ICR-7", "Maddox RFB", "KN-57", "Hitchcock M9", "Rampart 17", "VAPR-XKG", "Grav", "Swat RFT", "AN-94", "Doublecross", "Peacekeeper");
+		level.syn["weapons"]["sub_machine_guns"][1] =   array("Escargot", "MX9", "Spitfire", "Saug 9mm", "GKS", "Cordite", "MP-40", "VMP", "Daemon 3XB", "Switchblade X9", "MicroMG 9mm");
+		level.syn["weapons"]["tactical_rifles"][1] =    array("Swordfish", "Essex Model 07", "ABR 223", "Auger DMR", "S6 Stingray", "M16");
+		level.syn["weapons"]["light_machine_guns"][1] = array("Titan", "Hades", "VKM 750", "Zweihänder", "Tigershark");
+		level.syn["weapons"]["sniper_rifles"][1] =      array("SDM", "Paladin HB50", "Koshka", "Outlaw", "Locus", "Vendetta", "Havelina AA50");
+		level.syn["weapons"]["shotguns"][1] =           array("M1897 Trebuchet", "SG12", "MOG 12", "Argus", "Rampage");
+		level.syn["weapons"]["pistols"][1] =            array("Welling", "Mozu", "Strife", "RK 7 Garrison", "KAP 45");
+		level.syn["weapons"]["launchers"][1] =          array("Hellion Salvo", "Reaver C86");
+		level.syn["weapons"]["melee"][1] =              array("Bowie Knife", "Ballistic Knife");
+		level.syn["weapons"]["equipment"][1] =          array("Frag Grenade", "Acid Bomb", "Claymore", "Semtex", "Molotov", "Wraith Fire", "Mini Turret", "Shock Charge");
+		level.syn["weapons"]["extras"][1] =             array("Death Machine");
 
-	self.syn["weapons"]["assault_rifles"][0] =     array("ar_accurate_t8", "ar_fastfire_t8", "ar_modular_t8", "ar_mg1909_t8", "ar_damage_t8", "ar_stealth_t8", "ar_galil_t8", "ar_standard_t8", "ar_an94_t8", "ar_doublebarrel_t8", "ar_peacekeeper_t8");
-	self.syn["weapons"]["sub_machine_guns"][0] =   array("smg_drum_pistol_t8", "smg_standard_t8", "smg_fastfire_t8", "smg_handling_t8", "smg_accurate_t8", "smg_capacity_t8", "smg_mp40_t8", "smg_vmp_t8", "smg_fastburst_t8", "smg_folding_t8", "smg_minigun_t8");
-	self.syn["weapons"]["tactical_rifles"][0] =    array("tr_longburst_t8", "tr_leveraction_t8", "tr_midburst_t8", "tr_powersemi_t8", "tr_flechette_t8", "tr_damageburst_t8");
-	self.syn["weapons"]["light_machine_guns"][0] = array("lmg_standard_t8", "lmg_spray_t8", "lmg_heavy_t8", "lmg_double_t8", "lmg_stealth_t8");
-	self.syn["weapons"]["sniper_rifles"][0] =      array("sniper_powersemi_t8", "sniper_powerbolt_t8", "sniper_quickscope_t8", "sniper_fastrechamber_t8", "sniper_locus_t8", "sniper_mini14_t8", "sniper_damagesemi_t8");
-	self.syn["weapons"]["shotguns"][0] =           array("shotgun_trenchgun_t8", "shotgun_semiauto_t8", "shotgun_pump_t8", "shotgun_precision_t8", "shotgun_fullauto_t8");
-	self.syn["weapons"]["pistols"][0] =            array("pistol_topbreak_t8", "pistol_revolver_t8", "pistol_standard_t8", "pistol_burst_t8", "pistol_fullauto_t8");
-	self.syn["weapons"]["launchers"][0] =          array("launcher_standard_t8", "special_crossbow_t8");
-	self.syn["weapons"]["melee"][0] =              array("bowie_knife", "special_ballisticknife_t8_dw");
-	self.syn["weapons"]["equipment"][0] =          array("eq_frag_grenade", "eq_acid_bomb", "claymore", "sticky_grenade", "eq_molotov", "eq_wraith_fire", "mini_turret", "proximity_grenade");
-	self.syn["weapons"]["extras"][0] =             array("minigun");
+		level.syn["weapons"]["hashes"][0] = array("2580570083c8795a", "44214c17f34996ea", "5fd15d3e3a7a9b0c", "28d36f686569f6db", "1039f66708e1d597", "4ef408b2b3e35377", "3c2d17d2f2c857e1", "70f8f3d92031f6f7", "0f662b8266f6be66", "6009b31eb328208b", "6cb6925ebe3bc0d6", "3d5b6ca92bd02c5c", "5bf4dd6dcf1d24f3", "6436ccb615a2b9c6", "7a398a475f8af4c7", "5f1d38574585b35e", "2f42bb0a766b63b4", "66e6c9c83987136b", "28b38fa134e54223", "62032b32d0d142be", "5d7835133aa2daa1", "2f1f9926e48404f7", "5b3e3bae603f9641", "4328baa07bf1d03b", "0b73b6226aaa80f5", "6dc98fe2dc7c7650", "7b2cb0cda291ae11", "1dd5e58c9eb28af6", "66adeb4d1a0422d2", "5d9abb421c753ff2", "497d3824e705398c", "54c9bab69f2a2d2a", "57f46c2caf1de7fc", "0b75a649c0e85983", "369cff6935966a74", "485d0d5e33d6802b", "6840b7b398f4bb83", "67b5b30f9aa8786c", "59618269d014e1fe", "33d6e545e88450c5", "196b2477923b2f7f", "6f8ae16433fba11c", "5243385728e38aa9", "5f9eb7548cc02363", "7a7bda9ab5e9bf35", "0a9dd31e84aaab4e", "35a57559d3bdc159", "3003d1fc53331a5b", "42f6b4f6dd8585ac", "1f48082b20588e4e", "3b0e53f588197120", "18a2b56939a972ee", "6ab1184700ce0aa6", "7be1faad20a192c8", "181d603caefe4cdb", "957f735864c76c09", "99a4271a5452dc0b", "bbb22e33fa2975ad", "34b7eb9fde56bd35", "4e23def16bca8076", "79110fd100108ab9", "703eb1b835b3361f", "640d88fb13e0421e", "0c78156ba6aeda14", "71a5a304a66b5bc9", "4ccbdb4876f0a027", "10f614b278daaebc", "ab3a2f2eeada34a8", "fa6f01faf5bdba69", "7847b8511647815a", "5a4291956faa97ef", "2605a6745df58840", "3a1959bb039f2be3", "62d7f56331878d18", "5b8d1ff4b772bd85", "095dd69e40d99560", "0539f784146391d2", "5004e2171c2be97d", "7d7f0dbb00201240", "243cd42eb1bd6e10", "4ae11871b1233211", "5203eb1bc7ccee98", "b6392019ff8dc689", "c2a45d43be3dba42", "f8e66b21aa05c753", "19c157f2230454ad", "023882a5729dceca", "25a13b6f6232a985", "617dcc39334959ce", "25f355b5d35b8488", "138efe2bb30be63c", "138f012bb30beb55", "138f002bb30be9a2", "4868d59af21181c9", "a7e4878539bc7f72", "134c05846f7c5c98", "67c8d6a04ecce713", "67c8dba04eccef92", "67c8dea04eccf4ab", "67c8e2a04eccfb77", "09b4f9ecbedf98fb", "09b4f7ecbedf9595", "09b4f6ecbedf93e2", "09b4f5ecbedf922f", "4b7e4696d38d13e3", "1ecb90ddb44096f4", "7b1ab4354f6a9ef4", "cd50a2c4ff4e615d", "8fa49b6dc614ec3e", "7a42b57be462143f", "f264d6f24a950a5b", "a91e1c117ebbf5e6", "579652e2459b8c74", "60f0c0ede97e5741", "7e6386f7403487f5", "13a204ba6887b18f", "6684ea1c92c6b6e4", "4fa72f3aca76724f", "3bce061cf2bc9f98", "50f35c4cfb775a9c", "187a6cbc1c93a177", "18829f56b3fbdac1", "74dd69dd8a46d4aa", "6627899099b8a69d", "1d3a5309fa2c9b80", "4dfeb08c20a14b8b", "2b648e8ce3814bbb", "0e1311542f5782b5", "55330e258be3e3cc", "478e71d96c16eb50", "2c8e9cd5fbd53e70", "3ce59657b420dbb2", "40788017f1c860f0", "56584ced84931c9f", "7c76823f9f06439c", "0e052dd0c54e4a6f", "3477cc89337a5ea5", "0fcb8798a7354324", "435dd4ea9f2fd1bf", "514128f7d058cde0", "757d19cbfbeb94b7", "354b896513d0581d", "552dc81e8f3ba5bc", "35aeae4085f96334", "6184fe412da2bb57", "3041cc761d495272", "42ec1ef8c9536af0", "4bf5a2219b1a65d2", "7f8028bb8adc966c", "44f95b73da64d7ee", "081c373345c076c1", "24c644460c2b5642", "78ae302374d576cf", "1fc7843987e89a83", "1efb82c43276a4e3", "6aadfdc58af04635", "2721c688766673fb", "55ab674fdfba3485", "173040967fe4f754", "16044c4b951b7bdd", "16f590f4c5bbc17c", "749afb2862fc3d54", "65f0a900303f4c55", "62c799cc48d4d897", "6c8b8cf03f3be5de", "485b656efb0fd0f8", "713d1e36bd254b65", "459f15018585edda", "716f4e16d6efbd74", "2f4a72ac7be5902e", "6a0c4101e88a4707", "0c2a620242d1636a", "0cd53ea4d4ee864c", "2df0835a53060b95", "7dc8f3611c942007", "7f6a3674177103f1", "7a3940c928f342e7", "3882e337d28ec4df", "0e992907ddf45c9e", "337a0bfc51449d31", "34415d7a97a7d783", "3b5823adc79b4e56", "2909dcf2d0d6eed1", "5f45cf57e1bee38b", "7c29084c96931c48", "5e450b80e312b0d1", "43b2880f3238b8d2", "38662c868c5d5cee", "491ff8e9d1af03a8", "b9826c972a454fb9", "0cb1cdb5b47f0226", "1b5092cccdb3d65b", "4c157b1aeefae09e", "68bfa6918dc2eb81", "5f8f734c5dd02242", "508ba13614577e04", "403bfa4250f7a743", "7d9d24e1aef966fc", "6fed6a04129cb670", "71707ceac8b47c2c", "932b1b9ca78dc1fb", "2cc459d985c09333", "454db5bc2d8b3088");
+		level.syn["weapons"]["hashes"][1] = array("ar_accurate_t8", "ar_fastfire_t8", "ar_modular_t8", "ar_mg1909_t8", "ar_damage_t8", "ar_stealth_t8", "ar_galil_t8", "ar_standard_t8", "ar_an94_t8", "ar_doublebarrel_t8", "ar_peacekeeper_t8", "smg_drum_pistol_t8", "smg_standard_t8", "smg_fastfire_t8", "smg_handling_t8", "smg_accurate_t8", "smg_capacity_t8", "smg_mp40_t8", "smg_vmp_t8", "smg_fastburst_t8", "smg_folding_t8", "smg_minigun_t8", "tr_longburst_t8", "tr_leveraction_t8", "tr_midburst_t8", "tr_powersemi_t8", "tr_flechette_t8", "tr_damageburst_t8", "lmg_standard_t8", "lmg_spray_t8", "lmg_heavy_t8", "lmg_double_t8", "lmg_stealth_t8", "sniper_powersemi_t8", "sniper_powerbolt_t8", "sniper_quickscope_t8", "sniper_fastrechamber_t8", "sniper_locus_t8", "sniper_mini14_t8", "sniper_damagesemi_t8", "shotgun_trenchgun_t8", "shotgun_semiauto_t8", "shotgun_pump_t8", "shotgun_precision_t8", "shotgun_fullauto_t8", "pistol_topbreak_t8", "pistol_revolver_t8", "pistol_standard_t8", "pistol_burst_t8", "pistol_fullauto_t8", "launcher_standard_t8", "special_crossbow_t8", "special_ballisticknife_t8_dw", "minigun", "bowie_knife", "bowie_knife_story_1", "stake_knife", "galvaknuckles_t8", "eq_frag_grenade", "eq_acid_bomb", "claymore", "sticky_grenade", "eq_molotov", "eq_wraith_fire", "mini_turret", "proximity_grenade", "homunculus", "homunculus_leprechaun", "cymbal_monkey", "ray_gun", "ray_gun_mk2", "ww_freezegun_t8", "zhield_dw", "zhield_frost_dw", "ww_tricannon_t8", "ww_tricannon_earth_t8", "ww_tricannon_fire_t8", "ww_tricannon_water_t8", "ww_tricannon_air_t8", "zhield_zword_dw", "ww_crossbow_t8", "tomahawk_t8", "tomahawk_t8_upgraded", "zhield_spectral_dw", "zhield_spectral_dw_upgraded", "ww_blundergat_t8", "ww_blundergat_fire_t8", "ww_blundergat_acid_t8", "ww_blundergat_fire_t8_unfinished", "ww_crossbow_impaler_t8", "ww_random_ray_gun1", "ww_random_ray_gun2", "ww_random_ray_gun3", "equip_sprout", "thunderstorm", "zhield_zpear_dw", "ww_hand_o", "ww_hand_h", "ww_hand_g", "ww_hand_c", "ray_gun_mk2v", "ray_gun_mk2x", "ray_gun_mk2y", "ray_gun_mk2z", "snowball", "snowball_upgraded", "snowball_yellow", "snowball_yellow_upgraded", "music_box", "eq_nesting_doll_grenade", "eq_nesting_doll_grenade_niko", "eq_nesting_doll_grenade_rich", "eq_nesting_doll_grenade_takeo", "thundergun", "tundragun", "ww_tesla_gun_t8", "ww_tesla_sniper_t8", "hero_chakram_lv3", "hero_hammer_lv3", "hero_scepter_lv3", "hero_sword_pistol_lv3", "hero_flamethrower_t8_lv3", "hero_minigun_t8_lv3", "hero_katana_t8_lv3", "hero_gravityspikes_t8_lv3", "ar_accurate_t8_upgraded", "ar_fastfire_t8_upgraded", "ar_modular_t8_upgraded", "ar_mg1909_t8_upgraded", "ar_damage_t8_upgraded", "ar_stealth_t8_upgraded", "ar_galil_t8_upgraded", "ar_standard_t8_upgraded", "ar_an94_t8_upgraded", "ar_doublebarrel_t8_upgraded", "ar_peacekeeper_t8_upgraded", "smg_drum_pistol_t8_upgraded", "smg_standard_t8_upgraded", "smg_fastfire_t8_upgraded", "smg_handling_t8_upgraded", "smg_accurate_t8_upgraded", "smg_capacity_t8_upgraded", "smg_mp40_t8_upgraded", "smg_vmp_t8_upgraded", "smg_fastburst_t8_upgraded", "smg_folding_t8_upgraded", "smg_minigun_t8_upgraded", "tr_longburst_t8_upgraded", "tr_leveraction_t8_upgraded", "tr_midburst_t8_upgraded", "tr_powersemi_t8_upgraded", "tr_flechette_t8_upgraded", "tr_damageburst_t8_upgraded", "lmg_standard_t8_upgraded", "lmg_spray_t8_upgraded", "lmg_heavy_t8_upgraded", "lmg_double_t8_upgraded", "lmg_stealth_t8_upgraded", "sniper_powersemi_t8_upgraded", "sniper_powerbolt_t8_upgraded", "sniper_quickscope_t8_upgraded", "sniper_fastrechamber_t8_upgraded", "sniper_locus_t8_upgraded", "sniper_mini14_t8_upgraded", "sniper_damagesemi_t8_upgraded", "shotgun_trenchgun_t8_upgraded", "shotgun_semiauto_t8_upgraded", "shotgun_pump_t8_upgraded", "shotgun_precision_t8_upgraded", "shotgun_fullauto_t8_upgraded", "pistol_topbreak_t8_upgraded", "pistol_revolver_t8_upgraded", "pistol_standard_t8_upgraded", "pistol_burst_t8_upgraded", "pistol_fullauto_t8_upgraded", "launcher_standard_t8_upgraded", "special_crossbow_t8_upgraded", "special_ballisticknife_t8_dw_upgraded", "ww_tricannon_t8_upgraded", "ww_tricannon_earth_t8_upgraded", "ww_tricannon_fire_t8_upgraded", "ww_tricannon_water_t8_upgraded", "ww_tricannon_air_t8_upgraded", "ray_gun_upgraded", "ray_gun_mk2_upgraded", "ww_freezegun_t8_upgraded", "thundergun_upgraded", "tundragun_upgraded", "ww_tesla_gun_t8_upgraded", "ww_tesla_sniper_upgraded_t8", "ww_blundergat_t8_upgraded", "ww_blundergat_fire_t8_upgraded", "ww_blundergat_acid_t8_upgraded", "zhield_zword_dw_upgraded", "ww_crossbow_t8_upgraded", "ww_hand_o_upgraded", "ww_hand_h_upgraded", "ww_hand_g_upgraded", "ww_hand_c_upgraded", "ray_gun_mk2v_upgraded", "ray_gun_mk2x_dw", "ray_gun_mk2y_upgraded", "ray_gun_mk2z_upgraded");
 
-	self.syn["weapons"]["assault_rifles"][1] =     array("ICR-7", "Maddox RFB", "KN-57", "Hitchcock M9", "Rampart 17", "VAPR-XKG", "Grav", "Swat RFT", "AN-94", "Doublecross", "Peacekeeper");
-	self.syn["weapons"]["sub_machine_guns"][1] =   array("Escargot", "MX9", "Spitfire", "Saug 9mm", "GKS", "Cordite", "MP-40", "VMP", "Daemon 3XB", "Switchblade X9", "MicroMG 9mm");
-	self.syn["weapons"]["tactical_rifles"][1] =    array("Swordfish", "Essex Model 07", "ABR 223", "Auger DMR", "S6 Stingray", "M16");
-	self.syn["weapons"]["light_machine_guns"][1] = array("Titan", "Hades", "VKM 750", "Zweihänder", "Tigershark");
-	self.syn["weapons"]["sniper_rifles"][1] =      array("SDM", "Paladin HB50", "Koshka", "Outlaw", "Locus", "Vendetta", "Havelina AA50");
-	self.syn["weapons"]["shotguns"][1] =           array("M1897 Trebuchet", "SG12", "MOG 12", "Argus", "Rampage");
-	self.syn["weapons"]["pistols"][1] =            array("Welling", "Mozu", "Strife", "RK 7 Garrison", "KAP 45");
-	self.syn["weapons"]["launchers"][1] =          array("Hellion Salvo", "Reaver C86");
-	self.syn["weapons"]["melee"][1] =              array("Bowie Knife", "Ballistic Knife");
-	self.syn["weapons"]["equipment"][1] =          array("Frag Grenade", "Acid Bomb", "Claymore", "Semtex", "Molotov", "Wraith Fire", "Mini Turret", "Shock Charge");
-	self.syn["weapons"]["extras"][1] =             array("Death Machine");
+		level.syn["weapons"]["blacklisted_weapons"] = array("bowie_knife", "stake_knife", "galvaknuckles_t8", "eq_frag_grenade", "eq_acid_bomb", "claymore", "sticky_grenade", "eq_molotov", "eq_wraith_fire", "mini_turret", "proximity_grenade", "homunculus", "homunculus_leprechaun", "cymbal_monkey", "music_box", "eq_nesting_doll_grenade", "eq_nesting_doll_grenade_niko", "eq_nesting_doll_grenade_rich", "eq_nesting_doll_grenade_takeo", "minigun", "zhield_dw", "zhield_frost_dw", "ww_blundergat_fire_t8_unfinished", "ww_crossbow_impaler_t8", "ww_random_ray_gun1", "ww_random_ray_gun2", "ww_random_ray_gun3", "zhield_zpear_dw", "hero_chakram_lv3", "hero_hammer_lv3", "hero_scepter_lv3", "hero_sword_pistol_lv3", "hero_flamethrower_t8_lv3", "hero_minigun_t8_lv3", "hero_katana_t8_lv3", "hero_gravityspikes_t8_lv3");
 
-	self.syn["weapons"]["hashes"][0] = array("2580570083c8795a", "44214c17f34996ea", "5fd15d3e3a7a9b0c", "28d36f686569f6db", "1039f66708e1d597", "4ef408b2b3e35377", "3c2d17d2f2c857e1", "70f8f3d92031f6f7", "0f662b8266f6be66", "6009b31eb328208b", "6cb6925ebe3bc0d6", "3d5b6ca92bd02c5c", "5bf4dd6dcf1d24f3", "6436ccb615a2b9c6", "7a398a475f8af4c7", "5f1d38574585b35e", "2f42bb0a766b63b4", "66e6c9c83987136b", "28b38fa134e54223", "62032b32d0d142be", "5d7835133aa2daa1", "2f1f9926e48404f7", "5b3e3bae603f9641", "4328baa07bf1d03b", "0b73b6226aaa80f5", "6dc98fe2dc7c7650", "7b2cb0cda291ae11", "1dd5e58c9eb28af6", "66adeb4d1a0422d2", "5d9abb421c753ff2", "497d3824e705398c", "54c9bab69f2a2d2a", "57f46c2caf1de7fc", "0b75a649c0e85983", "369cff6935966a74", "485d0d5e33d6802b", "6840b7b398f4bb83", "67b5b30f9aa8786c", "59618269d014e1fe", "33d6e545e88450c5", "196b2477923b2f7f", "6f8ae16433fba11c", "5243385728e38aa9", "5f9eb7548cc02363", "7a7bda9ab5e9bf35", "0a9dd31e84aaab4e", "35a57559d3bdc159", "3003d1fc53331a5b", "42f6b4f6dd8585ac", "1f48082b20588e4e", "3b0e53f588197120", "18a2b56939a972ee", "6ab1184700ce0aa6", "7be1faad20a192c8", "181d603caefe4cdb", "957f735864c76c09", "99a4271a5452dc0b", "bbb22e33fa2975ad", "34b7eb9fde56bd35", "4e23def16bca8076", "79110fd100108ab9", "703eb1b835b3361f", "640d88fb13e0421e", "0c78156ba6aeda14", "71a5a304a66b5bc9", "4ccbdb4876f0a027", "10f614b278daaebc", "ab3a2f2eeada34a8", "fa6f01faf5bdba69", "7847b8511647815a", "5a4291956faa97ef", "2605a6745df58840", "3a1959bb039f2be3", "62d7f56331878d18", "5b8d1ff4b772bd85", "095dd69e40d99560", "0539f784146391d2", "5004e2171c2be97d", "7d7f0dbb00201240", "243cd42eb1bd6e10", "4ae11871b1233211", "5203eb1bc7ccee98", "b6392019ff8dc689", "c2a45d43be3dba42", "f8e66b21aa05c753", "19c157f2230454ad", "023882a5729dceca", "25a13b6f6232a985", "617dcc39334959ce", "25f355b5d35b8488", "138efe2bb30be63c", "138f012bb30beb55", "138f002bb30be9a2", "4868d59af21181c9", "a7e4878539bc7f72", "134c05846f7c5c98", "67c8d6a04ecce713", "67c8dba04eccef92", "67c8dea04eccf4ab", "67c8e2a04eccfb77", "09b4f9ecbedf98fb", "09b4f7ecbedf9595", "09b4f6ecbedf93e2", "09b4f5ecbedf922f", "4b7e4696d38d13e3", "1ecb90ddb44096f4", "7b1ab4354f6a9ef4", "cd50a2c4ff4e615d", "8fa49b6dc614ec3e", "7a42b57be462143f", "f264d6f24a950a5b", "a91e1c117ebbf5e6", "579652e2459b8c74", "60f0c0ede97e5741", "7e6386f7403487f5", "13a204ba6887b18f", "6684ea1c92c6b6e4", "4fa72f3aca76724f", "3bce061cf2bc9f98", "50f35c4cfb775a9c", "187a6cbc1c93a177", "18829f56b3fbdac1", "74dd69dd8a46d4aa", "6627899099b8a69d", "1d3a5309fa2c9b80", "4dfeb08c20a14b8b", "2b648e8ce3814bbb", "0e1311542f5782b5", "55330e258be3e3cc", "478e71d96c16eb50", "2c8e9cd5fbd53e70", "3ce59657b420dbb2", "40788017f1c860f0", "56584ced84931c9f", "7c76823f9f06439c", "0e052dd0c54e4a6f", "3477cc89337a5ea5", "0fcb8798a7354324", "435dd4ea9f2fd1bf", "514128f7d058cde0", "757d19cbfbeb94b7", "354b896513d0581d", "552dc81e8f3ba5bc", "35aeae4085f96334", "6184fe412da2bb57", "3041cc761d495272", "42ec1ef8c9536af0", "4bf5a2219b1a65d2", "7f8028bb8adc966c", "44f95b73da64d7ee", "081c373345c076c1", "24c644460c2b5642", "78ae302374d576cf", "1fc7843987e89a83", "1efb82c43276a4e3", "6aadfdc58af04635", "2721c688766673fb", "55ab674fdfba3485", "173040967fe4f754", "16044c4b951b7bdd", "16f590f4c5bbc17c", "749afb2862fc3d54", "65f0a900303f4c55", "62c799cc48d4d897", "6c8b8cf03f3be5de", "485b656efb0fd0f8", "713d1e36bd254b65", "459f15018585edda", "716f4e16d6efbd74", "2f4a72ac7be5902e", "6a0c4101e88a4707", "0c2a620242d1636a", "0cd53ea4d4ee864c", "2df0835a53060b95", "7dc8f3611c942007", "7f6a3674177103f1", "7a3940c928f342e7", "3882e337d28ec4df", "0e992907ddf45c9e", "337a0bfc51449d31", "34415d7a97a7d783", "3b5823adc79b4e56", "2909dcf2d0d6eed1", "5f45cf57e1bee38b", "7c29084c96931c48", "5e450b80e312b0d1", "43b2880f3238b8d2", "38662c868c5d5cee", "491ff8e9d1af03a8", "b9826c972a454fb9", "0cb1cdb5b47f0226", "1b5092cccdb3d65b", "4c157b1aeefae09e", "68bfa6918dc2eb81", "5f8f734c5dd02242", "508ba13614577e04", "403bfa4250f7a743", "7d9d24e1aef966fc", "6fed6a04129cb670", "71707ceac8b47c2c", "932b1b9ca78dc1fb", "2cc459d985c09333", "454db5bc2d8b3088");
-	self.syn["weapons"]["hashes"][1] = array("ar_accurate_t8", "ar_fastfire_t8", "ar_modular_t8", "ar_mg1909_t8", "ar_damage_t8", "ar_stealth_t8", "ar_galil_t8", "ar_standard_t8", "ar_an94_t8", "ar_doublebarrel_t8", "ar_peacekeeper_t8", "smg_drum_pistol_t8", "smg_standard_t8", "smg_fastfire_t8", "smg_handling_t8", "smg_accurate_t8", "smg_capacity_t8", "smg_mp40_t8", "smg_vmp_t8", "smg_fastburst_t8", "smg_folding_t8", "smg_minigun_t8", "tr_longburst_t8", "tr_leveraction_t8", "tr_midburst_t8", "tr_powersemi_t8", "tr_flechette_t8", "tr_damageburst_t8", "lmg_standard_t8", "lmg_spray_t8", "lmg_heavy_t8", "lmg_double_t8", "lmg_stealth_t8", "sniper_powersemi_t8", "sniper_powerbolt_t8", "sniper_quickscope_t8", "sniper_fastrechamber_t8", "sniper_locus_t8", "sniper_mini14_t8", "sniper_damagesemi_t8", "shotgun_trenchgun_t8", "shotgun_semiauto_t8", "shotgun_pump_t8", "shotgun_precision_t8", "shotgun_fullauto_t8", "pistol_topbreak_t8", "pistol_revolver_t8", "pistol_standard_t8", "pistol_burst_t8", "pistol_fullauto_t8", "launcher_standard_t8", "special_crossbow_t8", "special_ballisticknife_t8_dw", "minigun", "bowie_knife", "bowie_knife_story_1", "stake_knife", "galvaknuckles_t8", "eq_frag_grenade", "eq_acid_bomb", "claymore", "sticky_grenade", "eq_molotov", "eq_wraith_fire", "mini_turret", "proximity_grenade", "homunculus", "homunculus_leprechaun", "cymbal_monkey", "ray_gun", "ray_gun_mk2", "ww_freezegun_t8", "zhield_dw", "zhield_frost_dw", "ww_tricannon_t8", "ww_tricannon_earth_t8", "ww_tricannon_fire_t8", "ww_tricannon_water_t8", "ww_tricannon_air_t8", "zhield_zword_dw", "ww_crossbow_t8", "tomahawk_t8", "tomahawk_t8_upgraded", "zhield_spectral_dw", "zhield_spectral_dw_upgraded", "ww_blundergat_t8", "ww_blundergat_fire_t8", "ww_blundergat_acid_t8", "ww_blundergat_fire_t8_unfinished", "ww_crossbow_impaler_t8", "ww_random_ray_gun1", "ww_random_ray_gun2", "ww_random_ray_gun3", "equip_sprout", "thunderstorm", "zhield_zpear_dw", "ww_hand_o", "ww_hand_h", "ww_hand_g", "ww_hand_c", "ray_gun_mk2v", "ray_gun_mk2x", "ray_gun_mk2y", "ray_gun_mk2z", "snowball", "snowball_upgraded", "snowball_yellow", "snowball_yellow_upgraded", "music_box", "eq_nesting_doll_grenade", "eq_nesting_doll_grenade_niko", "eq_nesting_doll_grenade_rich", "eq_nesting_doll_grenade_takeo", "thundergun", "tundragun", "ww_tesla_gun_t8", "ww_tesla_sniper_t8", "hero_chakram_lv3", "hero_hammer_lv3", "hero_scepter_lv3", "hero_sword_pistol_lv3", "hero_flamethrower_t8_lv3", "hero_minigun_t8_lv3", "hero_katana_t8_lv3", "hero_gravityspikes_t8_lv3", "ar_accurate_t8_upgraded", "ar_fastfire_t8_upgraded", "ar_modular_t8_upgraded", "ar_mg1909_t8_upgraded", "ar_damage_t8_upgraded", "ar_stealth_t8_upgraded", "ar_galil_t8_upgraded", "ar_standard_t8_upgraded", "ar_an94_t8_upgraded", "ar_doublebarrel_t8_upgraded", "ar_peacekeeper_t8_upgraded", "smg_drum_pistol_t8_upgraded", "smg_standard_t8_upgraded", "smg_fastfire_t8_upgraded", "smg_handling_t8_upgraded", "smg_accurate_t8_upgraded", "smg_capacity_t8_upgraded", "smg_mp40_t8_upgraded", "smg_vmp_t8_upgraded", "smg_fastburst_t8_upgraded", "smg_folding_t8_upgraded", "smg_minigun_t8_upgraded", "tr_longburst_t8_upgraded", "tr_leveraction_t8_upgraded", "tr_midburst_t8_upgraded", "tr_powersemi_t8_upgraded", "tr_flechette_t8_upgraded", "tr_damageburst_t8_upgraded", "lmg_standard_t8_upgraded", "lmg_spray_t8_upgraded", "lmg_heavy_t8_upgraded", "lmg_double_t8_upgraded", "lmg_stealth_t8_upgraded", "sniper_powersemi_t8_upgraded", "sniper_powerbolt_t8_upgraded", "sniper_quickscope_t8_upgraded", "sniper_fastrechamber_t8_upgraded", "sniper_locus_t8_upgraded", "sniper_mini14_t8_upgraded", "sniper_damagesemi_t8_upgraded", "shotgun_trenchgun_t8_upgraded", "shotgun_semiauto_t8_upgraded", "shotgun_pump_t8_upgraded", "shotgun_precision_t8_upgraded", "shotgun_fullauto_t8_upgraded", "pistol_topbreak_t8_upgraded", "pistol_revolver_t8_upgraded", "pistol_standard_t8_upgraded", "pistol_burst_t8_upgraded", "pistol_fullauto_t8_upgraded", "launcher_standard_t8_upgraded", "special_crossbow_t8_upgraded", "special_ballisticknife_t8_dw_upgraded", "ww_tricannon_t8_upgraded", "ww_tricannon_earth_t8_upgraded", "ww_tricannon_fire_t8_upgraded", "ww_tricannon_water_t8_upgraded", "ww_tricannon_air_t8_upgraded", "ray_gun_upgraded", "ray_gun_mk2_upgraded", "ww_freezegun_t8_upgraded", "thundergun_upgraded", "tundragun_upgraded", "ww_tesla_gun_t8_upgraded", "ww_tesla_sniper_upgraded_t8", "ww_blundergat_t8_upgraded", "ww_blundergat_fire_t8_upgraded", "ww_blundergat_acid_t8_upgraded", "zhield_zword_dw_upgraded", "ww_crossbow_t8_upgraded", "ww_hand_o_upgraded", "ww_hand_h_upgraded", "ww_hand_g_upgraded", "ww_hand_c_upgraded", "ray_gun_mk2v_upgraded", "ray_gun_mk2x_dw", "ray_gun_mk2y_upgraded", "ray_gun_mk2z_upgraded");
+		// Attachments
 
-	self.syn["weapons"]["blacklisted_weapons"] = array("bowie_knife", "stake_knife", "galvaknuckles_t8", "eq_frag_grenade", "eq_acid_bomb", "claymore", "sticky_grenade", "eq_molotov", "eq_wraith_fire", "mini_turret", "proximity_grenade", "homunculus", "homunculus_leprechaun", "cymbal_monkey", "music_box", "eq_nesting_doll_grenade", "eq_nesting_doll_grenade_niko", "eq_nesting_doll_grenade_rich", "eq_nesting_doll_grenade_takeo", "minigun", "zhield_dw", "zhield_frost_dw", "ww_blundergat_fire_t8_unfinished", "ww_crossbow_impaler_t8", "ww_random_ray_gun1", "ww_random_ray_gun2", "ww_random_ray_gun3", "zhield_zpear_dw", "hero_chakram_lv3", "hero_hammer_lv3", "hero_scepter_lv3", "hero_sword_pistol_lv3", "hero_flamethrower_t8_lv3", "hero_minigun_t8_lv3", "hero_katana_t8_lv3", "hero_gravityspikes_t8_lv3");
+		level.syn["attachments"][0] = array("acog", "damage", "damage2", "dualoptic", "dw", "elo", "extbarrel", "extbarrel2", "extclip", "extclip2", "fastreload", "fastreload2", "fmj", "fmj2", "grip", "grip2", "holo", "is", "ir", "mixclip", "mms", "pistolscope", "quickdraw", "quickdraw2", "reflex", "rf", "speedreloader", "stalker", "stalker2", "steadyaim", "steadyaim2", "suppressed", "swayreduc", "uber");
+		level.syn["attachments"][1] = array("Acog", "High Caliber", "High Caliber II", "Dual Zoom", "Dual Wield", "Elo", "Long Barrel", "Long Barrel II", "Extended Mags", "Extended Mags II", "Fast Mags", "Fast Mags II", "FMJ", "FMJ II", "Grip", "Grip II", "Holographic", "Iron Sights", "Thermal", "Hybrid Mags", "Threat Detector", "Compact Scope", "Quickdraw", "Quickdraw II", "Reflex", "Rapid Fire", "Speed Loader", "Stock", "Stock II", "Laser Sight", "Laser Sight II", "Suppressor", "Stabilizer", "Operator Mod");
+		level.syn["blacklisted_attachments"] = array("none", "null", "clantag", "custom1", "custom2", "killcounter");
+		level.syn["optics"] = array("reflex", "elo", "mms", "holo", "acog", "dualoptic", "ir", "is");
 
-	// Attachments
+		// AATs
 
-	self.syn["attachments"][0] = array("acog", "damage", "damage2", "dualoptic", "dw", "elo", "extbarrel", "extbarrel2", "extclip", "extclip2", "fastreload", "fastreload2", "fmj", "fmj2", "grip", "grip2", "holo", "is", "ir", "mixclip", "mms", "pistolscope", "quickdraw", "quickdraw2", "reflex", "rf", "speedreloader", "stalker", "stalker2", "steadyaim", "steadyaim2", "suppressed", "swayreduc", "uber");
-	self.syn["attachments"][1] = array("Acog", "High Caliber", "High Caliber II", "Dual Zoom", "Dual Wield", "Elo", "Long Barrel", "Long Barrel II", "Extended Mags", "Extended Mags II", "Fast Mags", "Fast Mags II", "FMJ", "FMJ II", "Grip", "Grip II", "Holographic", "Iron Sights", "Thermal", "Hybrid Mags", "Threat Detector", "Compact Scope", "Quickdraw", "Quickdraw II", "Reflex", "Rapid Fire", "Speed Loader", "Stock", "Stock II", "Laser Sight", "Laser Sight II", "Suppressor", "Stabilizer", "Operator Mod");
-	self.syn["blacklisted_attachments"] = array("none", "null", "clantag", "custom1", "custom2", "killcounter");
-	self.syn["optics"] = array("reflex", "elo", "mms", "holo", "acog", "dualoptic", "ir", "is");
+		level.syn["aats"][0] = array(#"zm_aat_plasmatic_burst", #"zm_aat_kill_o_watt", #"zm_aat_frostbite", #"zm_aat_brain_decay");
+		level.syn["aats"][1] = array("Fire Bomb", "Kill-o-Watt", "Cryofreeze", "Brain Rot");
 
-	// AATs
+		// Perks
 
-	self.syn["aats"][0] = array(#"zm_aat_plasmatic_burst", #"zm_aat_kill_o_watt", #"zm_aat_frostbite", #"zm_aat_brain_decay");
-	self.syn["aats"][1] = array("Fire Bomb", "Kill-o-Watt", "Cryofreeze", "Brain Rot");
+		level.syn["perks"][0] = array(#"specialty_cooldown", #"specialty_quickrevive", #"specialty_awareness", #"specialty_staminup", #"specialty_etherealrazor", #"specialty_wolf_protector", #"specialty_zombshell", #"specialty_death_dash", #"specialty_electriccherry", #"specialty_berserker", #"specialty_camper", #"specialty_shield", #"specialty_deadshot", #"specialty_extraammo", #"specialty_widowswine", #"specialty_additionalprimaryweapon", #"specialty_phdflopper", #"specialty_mystery");
+		level.syn["perks"][1] = array("Timeslip", "Quick Revive", "Death Perception", "Stamin-Up", "Ethereal Razor", "Blood Wolf Bite", "Zombshell", "Blaze Phase", "Electric Cherry", "Dying Wish", "Stone Cold Stronghold", "Victorious Tortoise", "Deadshot Dealer", "Bandolier Bandit", "Winter's Wail", "Mule Kick", "PhD Slider", "Secret Sauce");
 
-	// Perks
+		// Powerups
 
-	self.syn["perks"][0] = array(#"specialty_cooldown", #"specialty_quickrevive", #"specialty_awareness", #"specialty_staminup", #"specialty_etherealrazor", #"specialty_wolf_protector", #"specialty_zombshell", #"specialty_death_dash", #"specialty_electriccherry", #"specialty_berserker", #"specialty_camper", #"specialty_shield", #"specialty_deadshot", #"specialty_extraammo", #"specialty_widowswine", #"specialty_additionalprimaryweapon", #"specialty_phdflopper", #"specialty_mystery");
-	self.syn["perks"][1] = array("Timeslip", "Quick Revive", "Death Perception", "Stamin-Up", "Ethereal Razor", "Blood Wolf Bite", "Zombshell", "Blaze Phase", "Electric Cherry", "Dying Wish", "Stone Cold Stronghold", "Victorious Tortoise", "Deadshot Dealer", "Bandolier Bandit", "Winter's Wail", "Mule Kick", "PhD Slider", "Secret Sauce");
+		level.syn["powerup_names"][0] = array("1cf58366f56051a9", "5bb3bdba52958ee0", "65a6e8a720ec27c9", "44139aa5d5d9acfb", "6080366ece401431", "7feb13c572497c4a", "78a69fe66c54a056", "951f1d39fde20f7", "50765381ed09468", "E6ffa040580ae58", "28c684193b1b7640", "356fd3bea40f1fee", "28095af5c98f035a", "5201bc3e92d0e7ee", "49f009410f356e84", "5afab57564fa0eb8", "7c95ffdff695fa09", "3331e35614cf574b", "20f05a40e6dfd271", "4656100643a2c7", "21fb0a0a015e0cea");
+		level.syn["powerup_names"][1] = array("Crowd Negative Points", "Nuke", "Insta-Kill", "Max Ammo", "Fire Sale", "Bonfire Sale", "Double Points", "Carpenter", "Full Power", "Free Perk", "Zombie Blood", "Bonus Points (Player)", "Bonus Points (Player Shared)", "Bonus Points (Team)", "Wolf Full Power", "Wolf Bonus Ammo", "Wolf Bonus Points", "Small Ammo (CRASH)", "Classic Mode Specialist Weapon", "Infinite Ammo", "Time Warp");
 
-	// Powerups
-
-	self.syn["powerup_names"][0] = array("1cf58366f56051a9", "5bb3bdba52958ee0", "65a6e8a720ec27c9", "44139aa5d5d9acfb", "6080366ece401431", "7feb13c572497c4a", "78a69fe66c54a056", "951f1d39fde20f7", "50765381ed09468", "E6ffa040580ae58", "28c684193b1b7640", "356fd3bea40f1fee", "28095af5c98f035a", "5201bc3e92d0e7ee", "49f009410f356e84", "5afab57564fa0eb8", "7c95ffdff695fa09", "3331e35614cf574b", "20f05a40e6dfd271");
-	self.syn["powerup_names"][1] = array("Crowd Negative Points", "Nuke", "Insta-Kill", "Max Ammo", "Fire Sale", "Bonfire Sale", "Double Points", "Carpenter", "Full Power", "Free Perk", "Zombie Blood", "Bonus Points (Player)", "Bonus Points (Player Shared)", "Bonus Points (Team)", "Wolf Full Power", "Wolf Bonus Ammo", "Wolf Bonus Points", "Small Ammo (CRASH)", "Classic Mode Specialist Weapon");
-
-	self.syn["powerups"][0] = getArrayKeys(level.zombie_include_powerups);
-	self.syn["powerups"][1] = array();
-	self.syn["powerups"][2] = array();
-	self.syn["powerups"][3] = array();
-	for(i = 0; i < self.syn["powerups"][0].size; i++) {
-		self.syn["powerups"][1][i] = construct_string(replace_character(self.syn["powerups"][0][i], "_", " "));
-		for(e = 0; e < self.syn["powerup_names"][0].size; e++) {
-			if(self.syn["powerups"][1][i] == self.syn["powerup_names"][0][e]) {
-				self.syn["powerups"][1][i] = self.syn["powerup_names"][1][e];
+		level.syn["powerups"][0] = getArrayKeys(level.zombie_include_powerups);
+		level.syn["powerups"][1] = array();
+		level.syn["powerups"][2] = array();
+		level.syn["powerups"][3] = array();
+		for(i = 0; i < level.syn["powerups"][0].size; i++) {
+			level.syn["powerups"][1][i] = construct_string(replace_character(level.syn["powerups"][0][i], "_", " "));
+			for(e = 0; e < level.syn["powerup_names"][0].size; e++) {
+				if(level.syn["powerups"][1][i] == level.syn["powerup_names"][0][e]) {
+					level.syn["powerups"][1][i] = level.syn["powerup_names"][1][e];
+				}
 			}
 		}
+
+		// Elixirs
+
+		level.syn["elixirs"][0] = array(#"zm_bgb_aftertaste", #"zm_bgb_alchemical_antithesis", #"zm_bgb_always_done_swiftly", #"zm_bgb_anti_entrapment", #"zm_bgb_anywhere_but_here", #"zm_bgb_arsenal_accelerator", #"zm_bgb_blood_debt", #"zm_bgb_bullet_boost", #"zm_bgb_burned_out", #"zm_bgb_cache_back", #"zm_bgb_conflagration_liquidation", #"zm_bgb_ctrl_z", #"zm_bgb_dead_of_nuclear_winter", #"zm_bgb_dividend_yield", #"zm_bgb_equip_mint", #"zm_bgb_extra_credit", #"zm_bgb_free_fire", #"zm_bgb_head_drama", #"zm_bgb_head_scan", #"zm_bgb_immolation_liquidation", #"zm_bgb_in_plain_sight", #"zm_bgb_join_the_party", #"zm_bgb_kill_joy", #"zm_bgb_licensed_contractor", #"zm_bgb_near_death_experience", #"zm_bgb_newtonian_negation", #"zm_bgb_now_you_see_me", #"zm_bgb_nowhere_but_there", #"zm_bgb_perk_up", #"zm_bgb_perkaholic", #"zm_bgb_phantom_reload", #"zm_bgb_phoenix_up", #"zm_bgb_point_drops", #"zm_bgb_pop_shocks", #"zm_bgb_power_keg", #"zm_bgb_power_vacuum", #"zm_bgb_quacknarok", #"zm_bgb_refresh_mint", #"zm_bgb_reign_drops", #"zm_bgb_secret_shopper", #"zm_bgb_shields_up", #"zm_bgb_shopping_free", #"zm_bgb_stock_option", #"zm_bgb_suit_up", #"zm_bgb_sword_flay", #"zm_bgb_talkin_bout_regeneration", #"zm_bgb_temporal_gift", #"zm_bgb_undead_man_walking", #"zm_bgb_wall_power", #"zm_bgb_wall_to_wall_clearance", #"zm_bgb_whos_keeping_score");
+		level.syn["elixirs"][1] = array("Aftertaste", "Alchemical Antithesis", "Always Done Swiftly", "Anti Entrapment", "Anywhere But Here", "Arsenal Accelerator", "Blood Debt", "Bullet Boost", "Burned Out", "Cache Back", "Conflagration Liquidation", "Ctrl-Z", "Dead Of Nuclear Winter", "Dividend Yield", "Equip Mint", "Extra Credit", "Free Fire", "Head Drama", "Head Scan", "Immolation Liquidation", "In Plain Sight", "Join The Party", "Kill Joy", "Licensed Contractor", "Near Death Experience", "Newtonian Negation", "Now You See Me", "Nowhere But There", "Perk Up", "Perkaholic", "Phantom Reload", "Phoenix Up", "Point Drops", "Pop Shocks", "Power Keg", "Power Vacuum", "Quacknarok", "Refresh Mint", "Reign Drops", "Secret Shopper", "Shields Up", "Shopping Free", "Stock Option", "Suit Up", "Sword Flay", "Talkin' Bout Regeneration", "Temporal Gift", "Undead Man Walking", "Wall Power", "Wall To Wall Clearance", "Who's Keeping Score");
+		level.syn["elixirs"][2] = array("timed", "instant", "timed", "timed", "instant", "timed", "timed", "instant", "timed", "instant", "instant", "timed", "instant", "timed", "instant", "instant", "timed", "timed", "timed", "instant", "instant", "instant", "instant", "instant", "timed", "timed", "timed", "instant", "instant", "instant", "timed", "instant", "instant", "timed", "instant", "timed", "timed", "instant", "instant", "timed", "instant", "timed", "timed", "instant", "timed", "timed", "timed", "timed", "timed", "timed", "instant");
+
+		// Talismans
+
+		level.syn["talismans"][0] = array("talisman_box_guarantee_box_only", "talisman_box_guarantee_lmg", "talisman_coagulant", "talisman_impatient", "talisman_weapon_reducepapcost", "talisman_shield_price", "talisman_shield_durability_rare", "talisman_shield_durability_legendary", "talisman_perk_reducecost_1", "talisman_perk_reducecost_2", "talisman_perk_reducecost_3", "talisman_perk_reducecost_4", "talisman_perk_permanent_1", "talisman_perk_permanent_2", "talisman_perk_permanent_3", "talisman_perk_permanent_4", "talisman_perk_mod_single", "talisman_special_xp_rate");
+		level.syn["talismans"][1] = array("Minor Virtuoso's Charm", "Major Virtuoso's Charm", "Coagulated Crystal", "Charm of Impatience", "Charm of the Miser", "Frugal Fetish", "Minor Reinforced Charm", "Major Reinforced Charm", "Minor Amulet of the 1st Circle", "Minor Amulet of the 2nd Circle", "Minor Amulet of the 3rd Circle", "Minor Amulet of the 4th Circle", "Grand Amulet of the 1st Circle", "Grand Amulet of the 2nd Circle", "Grand Amulet of the 3rd Circle", "Grand Amulet of the 4th Circle", "Sigil of the 4th Circle", "Energized Amulet");
+		level.syn["talismans"][2] = array("Next Box Spin will be a Box Only Weapon", "Next Box Spin will be an Lmg", "Respawn near the end of the Round or after 100 Zombies are killed", "Increased Last Stand Duration", "Reduced Pack-a-Punch Price", "Reduced Shield Price", "Increased Shield Durability", "Greatly Increased Shield Durability", "Reduced Danu/Brew Price", "Reduced Ra/Cola Price", "Reduced Zeus/Soda Price", "Reduced Odin/Tonic Price", "Permanent Danu/Brew", "Permanent Ra/Cola", "Permanent Zeus/Soda", "Permanent Odin/Tonic", "Activate Odin/Tonic Modifier without other Perks", "Increased Special Charge Rate");
+
+		// Camos
+
+		level.syn["camos"][0] = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 332, 198, 199, 45, 195, 194, 193, 192);
+		level.syn["camos"][1] = array("Hunt", "Grassland", "Overgrowth", "Patrol", "Desert Fox", "Tundra", "Panther", "Coral Panther", "Rend", "Monsoon", "Radar", "Tropic", "Agitator", "Roll", "Roil", "URD", "Urban", "Mangrove", "Bengal", "Platoon", "Clash", "Massacre", "Frost", "Dune", "Red Tiger", "Blue Tiger", "Green Tiger", "Roller Rink", "Fast Times", "Gutter Ball", "Mother of Pearl", "Red Oyster", "Spore", "Purple Hex", "Stealth Hex", "Red Hex Redux", "Penthouse", "Yacht Club", "Emerald UG", "Spectrum", "Infiltrator", "Silverfish", "Gold", "Diamond", "Diamond Alt", "Purple Diamond", "Rainbow Diamond", "Dark Matter", "Dark Matter Orange", "Dark Matter Red", "Dark Matter Red Alt", "Classic Dark Matter");
+		level.syn["camos"][2] = array(146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 280, 281, 282, 283, 284, 74, 75, 76, 77, 78, 345, 394);
+		level.syn["camos"][3] = array("Voyage of Despair Blue", "Voyage of Despair Red", "Voyage of Despair Green", "Voyage of Despair Yellow", "Voyage of Despair Purple", "IX Blue", "IX Red", "IX Green", "IX Purple", "IX Yellow", "Blood of the Dead Yellow", "Blood of the Dead Red", "Blood of the Dead Purple", "Blood of the Dead Green", "Blood of the Dead Pink", "Classified White", "Classified Black", "Classified Blue", "Classified Green", "Classified Red", "Dead of the Night Green", "Dead of the Night Purple", "Dead of the Night Red", "Dead of the Night Blue", "Dead of the Night Yellow", "Ancient Evil Purple", "Ancient Evil Blue", "Ancient Evil Red", "Ancient Evil Yellow", "Ancient Evil Green", "Alpha Omega", "Tag Der Toten");
+		level.syn["camos"][4] = array(129, 119, 346, 80, 86, 120, 117, 46, 81, 83, 79, 51, 314, 347, 355, 354, 348, 135, 387, 136, 121, 352, 349, 315, 49, 50, 122, 123, 317, 350, 351, 82, 316, 134, 353, 48, 84, 47, 88, 137, 118, 249, 124, 58, 59, 60, 61, 167, 184, 185, 91, 92, 131, 132, 133, 138, 89, 94, 95, 286, 287, 357, 391, 392, 393, 288, 289, 290, 295, 296, 297, 298, 53, 54, 55, 56, 306, 307, 305, 308, 172, 187, 188, 189, 191, 228, 310, 311, 312, 313, 68, 69, 70, 359, 360, 361, 385, 293, 170, 200, 300, 301, 302, 303, 363, 364, 365, 366, 168, 381, 382, 383, 384, 171, 181, 182, 126, 127, 389, 390, 166, 208, 209, 210, 211, 63, 64, 65, 66, 71, 72, 173, 201);
+		level.syn["camos"][5] = array("115", "Afterglow", "America", "Armor", "Assassin", "Astronomy", "Bacon", "Bejamins", "Blowfish", "Board Shorts", "Burple", "Carbolicious", "Cherry Blossom", "Citrus", "Connected", "Datamine", "Dino Glyphs", "Fear Haze", "Fractal Flames", "Fractalized", "Goosebumps", "Green Gradient", "Jellymaw", "Killabyte", "Kiss of Death", "Lady Luck", "Paradise", "Picnic Royale", "Rocket Box", "Scratch n’ Sniff", "Sea Flake", "Shark Plaque", "Shimmer", "Smoke Blast", "Speedometer", "Splatter", "Stealth Seal", "Street Race", "Treasure", "Trifecta", "Twitch Prime", "Wrapped", "Zombie Mai Tai", "APB Stage 1", "APB Stage 2", "APB Stage 3", "APB Stage 4", "Access Denied Stage 1", "Access Denied Stage 2", "Access Denied Stage 3", "Afterlife Stage 1", "Afterlife Stage 2", "Brains Stage 1", "Brains Stage 2", "Brains Stage 3", "Brains Stage 4", "Celestial Stage 1", "Celestial Stage 2", "Celestial Stage 3", "Cipher Stage 1", "Cipher Stage 2", "Circle Slice Stage 1", "Circle Slice Stage 2", "Circle Slice Stage 3", "Circle Slice Stage 4", "Cyberpunk Stage 1", "Cyberpunk Stage 2", "Cyberpunk Stage 3", "D-Day Stage 1", "D-Day Stage 2", "D-Day Stage 3", "D-Day Stage 4", "Death Reel Stage 1", "Death Reel Stage 2", "Death Reel Stage 3", "Death Reel Stage 4", "Dogfight Stage 1", "Dogfight Stage 2", "Dogfight Stage 3", "Dogfight Stage 4", "Killathon Stage 1", "Killathon Stage 2", "Killathon Stage 3", "Killathon Stage 4", "Killathon Stage 6", "Killathon Stage 7", "Masked Stage 1", "Masked Stage 2", "Masked Stage 3", "Masked Stage 4", "Party Rock Stage 1", "Party Rock Stage 4", "Party Rock Stage 6", "Incandescent Stage 1", "Incandescent Stage 2", "Incandescent Stage 3", "Incandescent Stage 4", "Plasma Drive Stage 1", "Rampage Stage 4", "Rampage Stage 5", "Roadtrip Stage 1", "Roadtrip Stage 2", "Roadtrip Stage 3", "Roadtrip Stage 4", "Shattered Stage 1", "Shattered Stage 2", "Shattered Stage 3", "Shattered Stage 4", "Skull Cracker Stage 1", "Solar Flare Stage 1", "Solar Flare Stage 2", "Solar Flare Stage 3", "Solar Flare Stage 4", "Soul Eater Stage 1", "Soul Eater Stage 5", "Soul Eater Stage 6", "Spinal Stage 1", "Spinal Stage 2", "Symbiosis Stage 1", "Symbiosis Stage 2", "Take It Personally Stage 1", "Take It Personally Stage 2", "Take It Personally Stage 3", "Take It Personally Stage 4", "Take It Personally Stage 5", "The Strip Stage 1", "The Strip Stage 2", "The Strip Stage 3", "The Strip Stage 4", "The Strip Stage 5", "The Strip Stage 6", "Vanguard Stage 2", "Vanguard Stage 5");
+
+		level.syn_arrays_defined = true;
 	}
-
-	// Elixirs
-
-	self.syn["elixirs"][0] = array(#"zm_bgb_aftertaste", #"zm_bgb_alchemical_antithesis", #"zm_bgb_always_done_swiftly", #"zm_bgb_anti_entrapment", #"zm_bgb_anywhere_but_here", #"zm_bgb_arsenal_accelerator", #"zm_bgb_blood_debt", #"zm_bgb_bullet_boost", #"zm_bgb_burned_out", #"zm_bgb_cache_back", #"zm_bgb_conflagration_liquidation", #"zm_bgb_ctrl_z", #"zm_bgb_dead_of_nuclear_winter", #"zm_bgb_dividend_yield", #"zm_bgb_equip_mint", #"zm_bgb_extra_credit", #"zm_bgb_free_fire", #"zm_bgb_head_drama", #"zm_bgb_head_scan", #"zm_bgb_immolation_liquidation", #"zm_bgb_in_plain_sight", #"zm_bgb_join_the_party", #"zm_bgb_kill_joy", #"zm_bgb_licensed_contractor", #"zm_bgb_near_death_experience", #"zm_bgb_newtonian_negation", #"zm_bgb_now_you_see_me", #"zm_bgb_nowhere_but_there", #"zm_bgb_perk_up", #"zm_bgb_perkaholic", #"zm_bgb_phantom_reload", #"zm_bgb_phoenix_up", #"zm_bgb_point_drops", #"zm_bgb_pop_shocks", #"zm_bgb_power_keg", #"zm_bgb_power_vacuum", #"zm_bgb_quacknarok", #"zm_bgb_refresh_mint", #"zm_bgb_reign_drops", #"zm_bgb_secret_shopper", #"zm_bgb_shields_up", #"zm_bgb_shopping_free", #"zm_bgb_stock_option", #"zm_bgb_suit_up", #"zm_bgb_sword_flay", #"zm_bgb_talkin_bout_regeneration", #"zm_bgb_temporal_gift", #"zm_bgb_undead_man_walking", #"zm_bgb_wall_power", #"zm_bgb_wall_to_wall_clearance", #"zm_bgb_whos_keeping_score");
-	self.syn["elixirs"][1] = array("Aftertaste", "Alchemical Antithesis", "Always Done Swiftly", "Anti Entrapment", "Anywhere But Here", "Arsenal Accelerator", "Blood Debt", "Bullet Boost", "Burned Out", "Cache Back", "Conflagration Liquidation", "Ctrl-Z", "Dead Of Nuclear Winter", "Dividend Yield", "Equip Mint", "Extra Credit", "Free Fire", "Head Drama", "Head Scan", "Immolation Liquidation", "In Plain Sight", "Join The Party", "Kill Joy", "Licensed Contractor", "Near Death Experience", "Newtonian Negation", "Now You See Me", "Nowhere But There", "Perk Up", "Perkaholic", "Phantom Reload", "Phoenix Up", "Point Drops", "Pop Shocks", "Power Keg", "Power Vacuum", "Quacknarok", "Refresh Mint", "Reign Drops", "Secret Shopper", "Shields Up", "Shopping Free", "Stock Option", "Suit Up", "Sword Flay", "Talkin' Bout Regeneration", "Temporal Gift", "Undead Man Walking", "Wall Power", "Wall To Wall Clearance", "Who's Keeping Score");
-	self.syn["elixirs"][2] = array("timed", "instant", "timed", "timed", "instant", "timed", "timed", "instant", "timed", "instant", "instant", "timed", "instant", "timed", "instant", "instant", "timed", "timed", "timed", "instant", "instant", "instant", "instant", "instant", "timed", "timed", "timed", "instant", "instant", "instant", "timed", "instant", "instant", "timed", "instant", "timed", "timed", "instant", "instant", "timed", "instant", "timed", "timed", "instant", "timed", "timed", "timed", "timed", "timed", "timed", "instant");
-
-	// Talismans
-
-	self.syn["talismans"][0] = array("talisman_box_guarantee_box_only", "talisman_box_guarantee_lmg", "talisman_coagulant", "talisman_impatient", "talisman_weapon_reducepapcost", "talisman_shield_price", "talisman_shield_durability_rare", "talisman_shield_durability_legendary", "talisman_perk_reducecost_1", "talisman_perk_reducecost_2", "talisman_perk_reducecost_3", "talisman_perk_reducecost_4", "talisman_perk_permanent_1", "talisman_perk_permanent_2", "talisman_perk_permanent_3", "talisman_perk_permanent_4", "talisman_perk_mod_single", "talisman_special_xp_rate");
-	self.syn["talismans"][1] = array("Minor Virtuoso's Charm", "Major Virtuoso's Charm", "Coagulated Crystal", "Charm of Impatience", "Charm of the Miser", "Frugal Fetish", "Minor Reinforced Charm", "Major Reinforced Charm", "Minor Amulet of the 1st Circle", "Minor Amulet of the 2nd Circle", "Minor Amulet of the 3rd Circle", "Minor Amulet of the 4th Circle", "Grand Amulet of the 1st Circle", "Grand Amulet of the 2nd Circle", "Grand Amulet of the 3rd Circle", "Grand Amulet of the 4th Circle", "Sigil of the 4th Circle", "Energized Amulet");
-	self.syn["talismans"][2] = array("Next Box Spin will be a Box Only Weapon", "Next Box Spin will be an Lmg", "Respawn near the end of the Round or after 100 Zombies are killed", "Increased Last Stand Duration", "Reduced Pack-a-Punch Price", "Reduced Shield Price", "Increased Shield Durability", "Greatly Increased Shield Durability", "Reduced Danu/Brew Price", "Reduced Ra/Cola Price", "Reduced Zeus/Soda Price", "Reduced Odin/Tonic Price", "Permanent Danu/Brew", "Permanent Ra/Cola", "Permanent Zeus/Soda", "Permanent Odin/Tonic", "Activate Odin/Tonic Modifier without other Perks", "Increased Special Charge Rate");
-
-	// Camos
-
-	self.syn["camos"][0] = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 332, 198, 199, 45, 195, 194, 193, 192);
-	self.syn["camos"][1] = array("Hunt", "Grassland", "Overgrowth", "Patrol", "Desert Fox", "Tundra", "Panther", "Coral Panther", "Rend", "Monsoon", "Radar", "Tropic", "Agitator", "Roll", "Roil", "URD", "Urban", "Mangrove", "Bengal", "Platoon", "Clash", "Massacre", "Frost", "Dune", "Red Tiger", "Blue Tiger", "Green Tiger", "Roller Rink", "Fast Times", "Gutter Ball", "Mother of Pearl", "Red Oyster", "Spore", "Purple Hex", "Stealth Hex", "Red Hex Redux", "Penthouse", "Yacht Club", "Emerald UG", "Spectrum", "Infiltrator", "Silverfish", "Gold", "Diamond", "Diamond Alt", "Purple Diamond", "Rainbow Diamond", "Dark Matter", "Dark Matter Orange", "Dark Matter Red", "Dark Matter Red Alt", "Classic Dark Matter");
-	self.syn["camos"][2] = array(146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 280, 281, 282, 283, 284, 74, 75, 76, 77, 78, 345, 394);
-	self.syn["camos"][3] = array("Voyage of Despair Blue", "Voyage of Despair Red", "Voyage of Despair Green", "Voyage of Despair Yellow", "Voyage of Despair Purple", "IX Blue", "IX Red", "IX Green", "IX Purple", "IX Yellow", "Blood of the Dead Yellow", "Blood of the Dead Red", "Blood of the Dead Purple", "Blood of the Dead Green", "Blood of the Dead Pink", "Classified White", "Classified Black", "Classified Blue", "Classified Green", "Classified Red", "Dead of the Night Green", "Dead of the Night Purple", "Dead of the Night Red", "Dead of the Night Blue", "Dead of the Night Yellow", "Ancient Evil Purple", "Ancient Evil Blue", "Ancient Evil Red", "Ancient Evil Yellow", "Ancient Evil Green", "Alpha Omega", "Tag Der Toten");
-	self.syn["camos"][4] = array(129, 119, 346, 80, 86, 120, 117, 46, 81, 83, 79, 51, 314, 347, 355, 354, 348, 135, 387, 136, 121, 352, 349, 315, 49, 50, 122, 123, 317, 350, 351, 82, 316, 134, 353, 48, 84, 47, 88, 137, 118, 249, 124, 58, 59, 60, 61, 167, 184, 185, 91, 92, 131, 132, 133, 138, 89, 94, 95, 286, 287, 357, 391, 392, 393, 288, 289, 290, 295, 296, 297, 298, 53, 54, 55, 56, 306, 307, 305, 308, 172, 187, 188, 189, 191, 228, 310, 311, 312, 313, 68, 69, 70, 359, 360, 361, 385, 293, 170, 200, 300, 301, 302, 303, 363, 364, 365, 366, 168, 381, 382, 383, 384, 171, 181, 182, 126, 127, 389, 390, 166, 208, 209, 210, 211, 63, 64, 65, 66, 71, 72, 173, 201);
-	self.syn["camos"][5] = array("115", "Afterglow", "America", "Armor", "Assassin", "Astronomy", "Bacon", "Bejamins", "Blowfish", "Board Shorts", "Burple", "Carbolicious", "Cherry Blossom", "Citrus", "Connected", "Datamine", "Dino Glyphs", "Fear Haze", "Fractal Flames", "Fractalized", "Goosebumps", "Green Gradient", "Jellymaw", "Killabyte", "Kiss of Death", "Lady Luck", "Paradise", "Picnic Royale", "Rocket Box", "Scratch n’ Sniff", "Sea Flake", "Shark Plaque", "Shimmer", "Smoke Blast", "Speedometer", "Splatter", "Stealth Seal", "Street Race", "Treasure", "Trifecta", "Twitch Prime", "Wrapped", "Zombie Mai Tai", "APB Stage 1", "APB Stage 2", "APB Stage 3", "APB Stage 4", "Access Denied Stage 1", "Access Denied Stage 2", "Access Denied Stage 3", "Afterlife Stage 1", "Afterlife Stage 2", "Brains Stage 1", "Brains Stage 2", "Brains Stage 3", "Brains Stage 4", "Celestial Stage 1", "Celestial Stage 2", "Celestial Stage 3", "Cipher Stage 1", "Cipher Stage 2", "Circle Slice Stage 1", "Circle Slice Stage 2", "Circle Slice Stage 3", "Circle Slice Stage 4", "Cyberpunk Stage 1", "Cyberpunk Stage 2", "Cyberpunk Stage 3", "D-Day Stage 1", "D-Day Stage 2", "D-Day Stage 3", "D-Day Stage 4", "Death Reel Stage 1", "Death Reel Stage 2", "Death Reel Stage 3", "Death Reel Stage 4", "Dogfight Stage 1", "Dogfight Stage 2", "Dogfight Stage 3", "Dogfight Stage 4", "Killathon Stage 1", "Killathon Stage 2", "Killathon Stage 3", "Killathon Stage 4", "Killathon Stage 6", "Killathon Stage 7", "Masked Stage 1", "Masked Stage 2", "Masked Stage 3", "Masked Stage 4", "Party Rock Stage 1", "Party Rock Stage 4", "Party Rock Stage 6", "Incandescent Stage 1", "Incandescent Stage 2", "Incandescent Stage 3", "Incandescent Stage 4", "Plasma Drive Stage 1", "Rampage Stage 4", "Rampage Stage 5", "Roadtrip Stage 1", "Roadtrip Stage 2", "Roadtrip Stage 3", "Roadtrip Stage 4", "Shattered Stage 1", "Shattered Stage 2", "Shattered Stage 3", "Shattered Stage 4", "Skull Cracker Stage 1", "Solar Flare Stage 1", "Solar Flare Stage 2", "Solar Flare Stage 3", "Solar Flare Stage 4", "Soul Eater Stage 1", "Soul Eater Stage 5", "Soul Eater Stage 6", "Spinal Stage 1", "Spinal Stage 2", "Symbiosis Stage 1", "Symbiosis Stage 2", "Take It Personally Stage 1", "Take It Personally Stage 2", "Take It Personally Stage 3", "Take It Personally Stage 4", "Take It Personally Stage 5", "The Strip Stage 1", "The Strip Stage 2", "The Strip Stage 3", "The Strip Stage 4", "The Strip Stage 5", "The Strip Stage 6", "Vanguard Stage 2", "Vanguard Stage 5");
 }
 
 initialize_menu() { //15544841
@@ -260,12 +258,19 @@ get_map_name() { //53bbf9d2
 	return "";
 }
 
+get_bullet_trace_position() { //e12b29ad
+	start = self getEye();
+	end = vectorScale(anglesToForward(self getPlayerAngles()), 9999);
+
+	return bulletTrace(start, start + end, false, self)["position"];
+}
+
 load_weapons(weapon_category) { //adb7e2c7
-	for(i = 0; i < self.syn["weapons"][weapon_category][0].size; i++) {
-		if(self.syn["weapons"][weapon_category][0][i] != "equipment") {
-			self synergy::add_option(self.syn["weapons"][weapon_category][1][i], undefined, &give_weapon, self.syn["weapons"][weapon_category][0][i]);
+	for(i = 0; i < level.syn["weapons"][weapon_category][0].size; i++) {
+		if(level.syn["weapons"][weapon_category][0][i] != "equipment") {
+			self synergy::add_option(level.syn["weapons"][weapon_category][1][i], undefined, &give_weapon, level.syn["weapons"][weapon_category][0][i]);
 		} else {
-			self synergy::add_option(self.syn["weapons"][weapon_category][1][i], undefined, &give_grenade, self.syn["weapons"][weapon_category][0][i]);
+			self synergy::add_option(level.syn["weapons"][weapon_category][1][i], undefined, &give_grenade, level.syn["weapons"][weapon_category][0][i]);
 		}
 	}
 }
@@ -370,6 +375,8 @@ menu_option() { //bf384607
 			self synergy::add_option("Fun Options", undefined, &synergy::new_menu, "Fun Options");
 			self synergy::add_option("Weapon Options", undefined, &synergy::new_menu, "Weapon Options");
 			self synergy::add_option("Zombie Options", undefined, &synergy::new_menu, "Zombie Options");
+			self synergy::add_option("Point Options", undefined, &synergy::new_menu, "Point Options");
+			self synergy::add_option("Perk Options", undefined, &synergy::new_menu, "Perk Options");
 			self synergy::add_option("Map Options", undefined, &synergy::new_menu, "Map Options");
 			self synergy::add_option("Powerup Options", undefined, &synergy::new_menu, "Powerup Options");
 			self synergy::add_option("Menu Options", undefined, &synergy::new_menu, "Menu Options");
@@ -385,17 +392,9 @@ menu_option() { //bf384607
 			self synergy::add_toggle("Infinite Ammo", "Gives you Infinite Ammo, Grenades, and Specialist", &infinite_ammo, self.infinite_ammo);
 			self synergy::add_toggle("Infinite Shield", "Gives you Infinite Shield Durability", &infinite_shield, self.infinite_shield);
 
-			self synergy::add_option("Give Perks", undefined, &synergy::new_menu, "Give Perks");
-			self synergy::add_option("Take Perks", undefined, &synergy::new_menu, "Take Perks");
-			self synergy::add_option("Give Perk Set", undefined, &give_perks);
-			self synergy::add_option("Give Perkaholic", undefined, &give_perkaholic);
-			self synergy::add_option("Take Perkaholic", undefined, &take_perkaholic);
-
 			self synergy::add_option("Give Self Revive", undefined, &give_self_revive);
 			self synergy::add_option("Give Elixirs", undefined, &synergy::new_menu, "Give Elixirs");
 			self synergy::add_option("Give Talismans", undefined, &synergy::new_menu, "Give Talismans");
-
-			self synergy::add_option("Point Options", undefined, &synergy::new_menu, "Point Options");
 
 			break;
 		case "Fun Options":
@@ -412,7 +411,11 @@ menu_option() { //bf384607
 
 			self synergy::add_option("Give Weapons", undefined, &synergy::new_menu, "Give Weapons");
 			self synergy::add_option("Give Mastercrafts", undefined, &synergy::new_menu, "Give Mastercrafts");
+
 			self synergy::add_increment("Pack-a-Punch Tier", "Given Weapons will be Pack-a-Punched", &give_packed_weapon, "give_packed_weapon", 0, 0, 4, 1);
+			self synergy::add_option("Pack-a-Punch Current Weapon", "Held Weapon will be Pack-a-Punched", &pack_weapon);
+			self synergy::add_option("Un-Pack-a-Punch Current Weapon", "Held Weapon will be Un-Pack-a-Punched", &unpack_weapon);
+
 			self synergy::add_option("Give AAT", undefined, &synergy::new_menu, "Give AAT");
 
 			weapon_attachments = get_weapon_attachments();
@@ -431,26 +434,34 @@ menu_option() { //bf384607
 		case "Zombie Options":
 			self synergy::set_title(menu);
 
+			self synergy::add_option("Round Options", undefined, &synergy::new_menu, "Round Options");
+
 			self synergy::add_toggle("No Target", "Zombies won't Target You", &no_target, self.no_target);
 
-			self synergy::add_increment("Set Round", undefined, &set_round, "set_round", 1, 1, 935, self.round_increment);
-			self synergy::add_array("Set Round Increment", undefined, &set_round_increment, "round_increment", array("1", "5", "10", "20", "30", "40", "50"), true);
-			self synergy::add_toggle("Show Real Round", undefined, &show_real_round, self.show_real_round);
+			self synergy::add_toggle("Zombie Counter", undefined, &zombie_counter, self.syn_zombie_counter);
 
 			self synergy::add_option("Spawn Zombie", undefined, &spawn_normal_zombie);
 			self synergy::add_option("Kill All Zombies", undefined, &kill_all_zombies);
-			self synergy::add_option("Teleport Zombies to Me", undefined, &teleport_zombies);
+			self synergy::add_option("Teleport Zombies to Crosshair", undefined, &teleport_zombies);
 
 			self synergy::add_toggle("One Shot Zombies", undefined, &one_shot_zombies, self.one_shot_zombies);
 			self synergy::add_toggle("Freeze Zombies", undefined, &freeze_zombies, self.freeze_zombies);
-			self synergy::add_toggle("Slow Zombies", undefined, &slow_zombies, self.slow_zombies);
+			self synergy::add_toggle("Slow Zombies", "Gives Zombies the Winter's Wail effect and slows them down", &slow_zombies, self.slow_zombies);
 			self synergy::add_toggle("Disable Spawns", undefined, &disable_spawns, self.disable_spawns);
 
 			if(self.map_name == "voyage_of_despair" || self.map_name == "ix" || self.map_name == "dead_of_the_night" || self.map_name == "ancient_evil") {
 				self synergy::add_toggle("Disable Transformations", "Disables Catalysts and Blightfathers", &disable_transformations, self.disable_transformations);
 			}
 
-			self synergy::add_array("Set Zombie Speed", undefined, &set_zombie_speed, "zombie_speed", array("Restore", "Walk", "Run", "Sprint", "Super Sprint"), true);
+			break;
+		case "Perk Options":
+			self synergy::set_title(menu);
+
+			self synergy::add_option("Give Perks", undefined, &synergy::new_menu, "Give Perks");
+			self synergy::add_option("Take Perks", undefined, &synergy::new_menu, "Take Perks");
+			self synergy::add_option("Give Perk Set", undefined, &give_perks);
+			self synergy::add_option("Give Perkaholic", undefined, &give_perkaholic);
+			self synergy::add_option("Take Perkaholic", undefined, &take_perkaholic);
 
 			break;
 		case "Map Options":
@@ -463,10 +474,7 @@ menu_option() { //bf384607
 				self synergy::add_option("Open Narrative Room", undefined, &open_narrative_room);
 			}
 
-			if(!level flag::get("power_on")) {
-				self synergy::add_option("Turn Power On", undefined, &power_on);
-			}
-
+			self synergy::add_option("Turn Power On", undefined, &power_on);
 			self synergy::add_option("Pick up all Parts", undefined, &pick_up_parts);
 
 			break;
@@ -475,12 +483,12 @@ menu_option() { //bf384607
 
 			self synergy::add_toggle("Shoot Powerups", undefined, &shoot_powerups, self.shoot_powerups);
 
-			for(i = 0; i < self.syn["powerups"][0].size; i++) {
-				switch(self.syn["powerups"][1][i]) {
+			for(i = 0; i < level.syn["powerups"][0].size; i++) {
+				switch(level.syn["powerups"][1][i]) {
 					case "Small Ammo (CRASH)":
 						break;
 					default:
-						self synergy::add_option("Spawn " + self.syn["powerups"][1][i], undefined, &spawn_powerup, self.syn["powerups"][0][i]);
+						self synergy::add_option("Spawn " + level.syn["powerups"][1][i], undefined, &spawn_powerup, level.syn["powerups"][0][i]);
 						break;
 				}
 			}
@@ -521,45 +529,38 @@ menu_option() { //bf384607
 			}
 
 			if(isDefined(target)) {
-				self synergy::add_option("Print", "Print Player Name", &print_name, target);
+				if(!target isHost() || self == target) {
+					self synergy::add_toggle("God Mode", "Makes you Invincible", &god_mode, target.god_mode, target);
+					self synergy::add_toggle("Frag No Clip", "Fly through the Map using your ^3Equipment^7 Keybind", &frag_no_clip, target.frag_no_clip, target);
+
+					self synergy::add_toggle("Infinite Ammo", "Gives you Infinite Ammo, Grenades, and Specialist", &infinite_ammo, target.infinite_ammo, target);
+					self synergy::add_toggle("Infinite Shield", "Gives you Infinite Shield Durability", &infinite_shield, target.infinite_shield, target);
+
+					self synergy::add_option("Give Self Revive", undefined, &give_self_revive, target);
+
+					self synergy::add_increment("Set Increment", undefined, &set_point_increment, "set_increment", 100, 100, 10000, 100);
+
+					self synergy::add_increment("Set Points", undefined, &set_points, "set_points", 500, 500, 100000, target.point_increment, target);
+					self synergy::add_increment("Add Points", undefined, &add_points, "add_points", 500, 500, 100000, target.point_increment, target);
+					self synergy::add_increment("Take Points", undefined, &take_points, "take_points", 500, 500, 100000, target.point_increment, target);
+
+					self synergy::add_option("Give Perk Set", undefined, &give_perks, target);
+					self synergy::add_option("Give Perkaholic", undefined, &give_perkaholic, target);
+					self synergy::add_option("Take Perkaholic", undefined, &take_perkaholic, target);
+
+					self synergy::add_toggle("Third Person", undefined, &third_person, self.third_person, target);
+
+					self synergy::add_toggle("No Target", "Zombies won't Target You", &no_target, self.no_target, target);
+
+					self synergy::add_option("Pack-a-Punch Current Weapon", "Held Weapon will be Pack-a-Punched", &pack_weapon, target);
+					self synergy::add_option("Un-Pack-a-Punch Current Weapon", "Held Weapon will be Un-Pack-a-Punched", &unpack_weapon, target);
+				}
 
 				if(!target isHost() && (target.access != "Verified")) {
 					self synergy::add_option("Verify", "Give the Player Mod Menu Access", &verify_player, target);
 				}
 			} else {
 				self synergy::add_option("Player not found");
-			}
-
-			break;
-		case "Give Perks":
-			self synergy::set_title(menu);
-
-			for(i = 0; i < self.syn["perks"][0].size; i++) {
-				self synergy::add_option(self.syn["perks"][1][i], undefined, &give_perk, self.syn["perks"][0][i]);
-			}
-
-			break;
-		case "Take Perks":
-			self synergy::set_title(menu);
-
-			for(i = 0; i < self.syn["perks"][0].size; i++) {
-				self synergy::add_option(self.syn["perks"][1][i], undefined, &take_perk, self.syn["perks"][0][i]);
-			}
-
-			break;
-		case "Give Elixirs":
-			self synergy::set_title(menu);
-
-			for(i = 0; i < self.syn["elixirs"][0].size; i++) {
-				self synergy::add_option(self.syn["elixirs"][1][i], undefined, &give_elixir, self.syn["elixirs"][0][i], self.syn["elixirs"][2][i]);
-			}
-
-			break;
-		case "Give Talismans":
-			self synergy::set_title(menu);
-
-			for(i = 0; i < self.syn["talismans"][0].size; i++) {
-				self synergy::add_option(self.syn["talismans"][1][i], self.syn["talismans"][2][i], &give_talisman, self.syn["talismans"][0][i]);
 			}
 
 			break;
@@ -573,12 +574,58 @@ menu_option() { //bf384607
 			self synergy::add_increment("Take Points", undefined, &take_points, "take_points", 500, 500, 100000, self.point_increment);
 
 			break;
+		case "Give Perks":
+			self synergy::set_title(menu);
+
+			for(i = 0; i < level.syn["perks"][0].size; i++) {
+				self synergy::add_option(level.syn["perks"][1][i], undefined, &give_perk, level.syn["perks"][0][i]);
+			}
+
+			break;
+		case "Take Perks":
+			self synergy::set_title(menu);
+
+			for(i = 0; i < level.syn["perks"][0].size; i++) {
+				self synergy::add_option(level.syn["perks"][1][i], undefined, &take_perk, level.syn["perks"][0][i]);
+			}
+
+			break;
+		case "Give Elixirs":
+			self synergy::set_title(menu);
+
+			for(i = 0; i < level.syn["elixirs"][0].size; i++) {
+				self synergy::add_option(level.syn["elixirs"][1][i], undefined, &give_elixir, level.syn["elixirs"][0][i], level.syn["elixirs"][2][i]);
+			}
+
+			break;
+		case "Give Talismans":
+			self synergy::set_title(menu);
+
+			for(i = 0; i < level.syn["talismans"][0].size; i++) {
+				self synergy::add_option(level.syn["talismans"][1][i], level.syn["talismans"][2][i], &give_talisman, level.syn["talismans"][0][i]);
+			}
+
+			break;
+		case "Round Options":
+			self synergy::set_title(menu);
+
+			self synergy::add_array("Set Round Increment", undefined, &set_round_increment, "round_increment", array("1", "5", "10", "20", "30", "40", "50"), true);
+			self synergy::add_increment("Set Round", undefined, &set_round, "set_round", 1, 1, 935, self.round_increment);
+
+			self synergy::add_toggle("Show Real Round", undefined, &show_real_round, self.show_real_round);
+
+			self synergy::add_array("Set Zombie Speed", undefined, &set_zombie_speed, "zombie_speed", array("Restore", "Walk", "Run", "Sprint", "Super Sprint"), true);
+
+			self synergy::add_increment("Set Round Health Cap", "Cap Zombies Health to Specified Round", &set_zombie_health_cap, "set_health_cap", 1, 1, 100, 1);
+			self synergy::add_option("Reset Zombie Health Cap", "Set Health Cap back to Normal", &reset_zombie_health_cap);
+
+			break;
 		case "Equip Attachment":
 			self synergy::set_title(menu);
 
 			self.equip_attachment_in_progress = true;
 
-			self.syn["attachment_toggles"] = [];
+			level.syn["attachment_toggles"] = [];
 
 			while(self getCurrentWeapon() == getWeapon(#"none")) {
 				wait 0.05;
@@ -588,8 +635,8 @@ menu_option() { //bf384607
 
 			if(isDefined(weapon_attachments) && isArray(weapon_attachments) && weapon_attachments.size > 0) {
 				for(i = 0; i < weapon_attachments.size; i++) {
-					self.syn["attachment_toggles"][i] = weaponHasAttachment(self getCurrentWeapon(), weapon_attachments[i]);
-					self synergy::add_toggle(get_attachment_name(weapon_attachments[i]), undefined, &equip_attachment, self.syn["attachment_toggles"][i], weapon_attachments[i], i);
+					level.syn["attachment_toggles"][i] = weaponHasAttachment(self getCurrentWeapon(), weapon_attachments[i]);
+					self synergy::add_toggle(get_attachment_name(weapon_attachments[i]), undefined, &equip_attachment, level.syn["attachment_toggles"][i], weapon_attachments[i], i);
 				}
 			}
 
@@ -609,8 +656,8 @@ menu_option() { //bf384607
 
 			self synergy::add_option("None", "0", &equip_camo, 0);
 
-			for(i = 0; i < self.syn["camos"][0].size; i++) {
-				self synergy::add_option(self.syn["camos"][1][i], "" + self.syn["camos"][0][i], &equip_camo, self.syn["camos"][0][i]);
+			for(i = 0; i < level.syn["camos"][0].size; i++) {
+				self synergy::add_option(level.syn["camos"][1][i], "" + level.syn["camos"][0][i], &equip_camo, level.syn["camos"][0][i]);
 			}
 
 			break;
@@ -619,8 +666,8 @@ menu_option() { //bf384607
 
 			self synergy::add_option("None", "0", &equip_camo, 0);
 
-			for(i = 0; i < self.syn["camos"][2].size; i++) {
-				self synergy::add_option(self.syn["camos"][3][i], "" + self.syn["camos"][2][i], &equip_camo, self.syn["camos"][2][i]);
+			for(i = 0; i < level.syn["camos"][2].size; i++) {
+				self synergy::add_option(level.syn["camos"][3][i], "" + level.syn["camos"][2][i], &equip_camo, level.syn["camos"][2][i]);
 			}
 
 			break;
@@ -629,8 +676,8 @@ menu_option() { //bf384607
 
 			self synergy::add_option("None", "0", &equip_camo, 0);
 
-			for(i = 0; i < self.syn["camos"][4].size; i++) {
-				self synergy::add_option(self.syn["camos"][5][i], "" + self.syn["camos"][4][i], &equip_camo, self.syn["camos"][4][i]);
+			for(i = 0; i < level.syn["camos"][4].size; i++) {
+				self synergy::add_option(level.syn["camos"][5][i], "" + level.syn["camos"][4][i], &equip_camo, level.syn["camos"][4][i]);
 			}
 
 			break;
@@ -639,8 +686,8 @@ menu_option() { //bf384607
 
 			self synergy::add_option("None", undefined, &take_aat);
 
-			for(i = 0; i < self.syn["aats"][0].size; i++) {
-				self synergy::add_option(self.syn["aats"][1][i], undefined, &give_aat, self.syn["aats"][0][i]);
+			for(i = 0; i < level.syn["aats"][0].size; i++) {
+				self synergy::add_option(level.syn["aats"][1][i], undefined, &give_aat, level.syn["aats"][0][i]);
 			}
 
 			break;
@@ -691,8 +738,8 @@ menu_option() { //bf384607
 		case "Give Weapons":
 			self synergy::set_title(menu);
 
-			for(i = 0; i < self.syn["weapons"]["category"][1].size; i++) {
-				self synergy::add_option(self.syn["weapons"]["category"][1][i], undefined, &synergy::new_menu, self.syn["weapons"]["category"][1][i]);
+			for(i = 0; i < level.syn["weapons"]["category"][1].size; i++) {
+				self synergy::add_option(level.syn["weapons"]["category"][1][i], undefined, &synergy::new_menu, level.syn["weapons"]["category"][1][i]);
 			}
 
 			break;
@@ -907,16 +954,20 @@ menu_option() { //bf384607
 
 // Basic Options
 
-god_mode() { //df7ef5e9
-	self.god_mode = !synergy::return_toggle(self.god_mode);
-	if(self.god_mode) {
-		self iPrintlnBold("God Mode [^2ON^7]");
-		self enableInvulnerability();
+god_mode(target) { //df7ef5e9
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	target.god_mode = !synergy::return_toggle(target.god_mode);
+	if(target.god_mode) {
+		target iPrintlnBold("God Mode [^2ON^7]");
+		target enableInvulnerability();
 		god_mode_loop();
 	} else {
-		self iPrintlnBold("God Mode [^1OFF^7]");
-		self notify("stop_god_mode");
-		self disableInvulnerability();
+		target iPrintlnBold("God Mode [^1OFF^7]");
+		target notify("stop_god_mode");
+		target disableInvulnerability();
 	}
 }
 
@@ -931,24 +982,28 @@ god_mode_loop() { //da01789c
 	}
 }
 
-frag_no_clip() { //b991b337
+frag_no_clip(target) { //b991b337
 	level endon("game_ended");
 	self endon("disconnect");
 
-	if(!isDefined(self.frag_no_clip)) {
-		self.frag_no_clip = true;
-		self iPrintlnBold("Frag No Clip [^2ON^7], Press ^3[{+frag}]^7 to Enter and ^3[{+melee}]^7 to Exit");
-		while (isDefined(self.frag_no_clip)) {
-			if(self fragButtonPressed()) {
-				if(!isDefined(self.frag_no_clip_loop)) {
-					self thread frag_no_clip_loop();
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	if(!isDefined(target.frag_no_clip)) {
+		target.frag_no_clip = true;
+		target iPrintlnBold("Frag No Clip [^2ON^7], Press ^3[{+frag}]^7 to Enter and ^3[{+melee}]^7 to Exit");
+		while (isDefined(target.frag_no_clip)) {
+			if(target fragButtonPressed()) {
+				if(!isDefined(target.frag_no_clip_loop)) {
+					target thread frag_no_clip_loop();
 				}
 			}
 			wait 0.05;
 		}
 	} else {
-		self.frag_no_clip = undefined;
-		self iPrintlnBold("Frag No Clip [^1OFF^7]");
+		target.frag_no_clip = undefined;
+		target iPrintlnBold("Frag No Clip [^1OFF^7]");
 	}
 }
 
@@ -995,14 +1050,18 @@ frag_no_clip_loop() { //ec65b153
 	self.frag_no_clip_loop = undefined;
 }
 
-infinite_ammo() { //8a006f06
-	self.infinite_ammo = !synergy::return_toggle(self.infinite_ammo);
-	if(self.infinite_ammo) {
-		self iPrintlnBold("Infinite Ammo [^2ON^7]");
-		self thread infinite_ammo_loop();
+infinite_ammo(target) { //8a006f06
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	target.infinite_ammo = !synergy::return_toggle(target.infinite_ammo);
+	if(target.infinite_ammo) {
+		target iPrintlnBold("Infinite Ammo [^2ON^7]");
+		target thread infinite_ammo_loop();
 	} else {
-		self iPrintlnBold("Infinite Ammo [^1OFF^7]");
-		self notify("stop_infinite_ammo");
+		target iPrintlnBold("Infinite Ammo [^1OFF^7]");
+		target notify("stop_infinite_ammo");
 	}
 }
 
@@ -1034,14 +1093,18 @@ infinite_ammo_loop() { //f4d0adea
 	}
 }
 
-infinite_shield() { //f636dc3f
-	self.infinite_shield = !synergy::return_toggle(self.infinite_shield);
-	if(self.infinite_shield) {
-		self iPrintlnBold("Infinite Shield [^2ON^7]");
-		self thread infinite_shield_loop();
+infinite_shield(target) { //f636dc3f
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	target.infinite_shield = !synergy::return_toggle(target.infinite_shield);
+	if(target.infinite_shield) {
+		target iPrintlnBold("Infinite Shield [^2ON^7]");
+		target thread infinite_shield_loop();
 	} else {
-		self iPrintlnBold("Infinite Shield [^1OFF^7]");
-		self notify("stop_infinite_shield");
+		target iPrintlnBold("Infinite Shield [^1OFF^7]");
+		target notify("stop_infinite_shield");
 	}
 }
 
@@ -1068,29 +1131,45 @@ take_perk(perk) { //9cba355d
 	}
 }
 
-give_perks() { //5ac66375
-	self thread zm_perks::function_cc24f525(); // Lucy Menu
+give_perks(target) { //5ac66375
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	target thread zm_perks::function_cc24f525(); // Lucy Menu
 }
 
-give_perkaholic() { //85f85c7e
+give_perkaholic(target) { //85f85c7e
+	if(!isDefined(target)) {
+		target = self;
+	}
+
 	give_perks();
-	for(i = 0; i < self.syn["perks"][0].size ; i++) {
-		if(!self hasPerk(self.syn["perks"][0][i])) {
-			self thread zm_perks::wait_give_perk(self.syn["perks"][0][i]);
+	for(i = 0; i < level.syn["perks"][0].size ; i++) {
+		if(!target hasPerk(level.syn["perks"][0][i])) {
+			target thread zm_perks::wait_give_perk(level.syn["perks"][0][i]);
 		}
 	}
 }
 
-take_perkaholic() { //88b48e0a
-	for(i = 0; i < self.syn["perks"][0].size ; i++) {
-		if(self hasPerk(self.syn["perks"][0][i])) {
-			self notify(self.syn["perks"][0][i] + "_stop");
+take_perkaholic(target) { //88b48e0a
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	for(i = 0; i < level.syn["perks"][0].size ; i++) {
+		if(target hasPerk(level.syn["perks"][0][i])) {
+			target notify(level.syn["perks"][0][i] + "_stop");
 		}
 	}
 }
 
-give_self_revive() { //50edb3e5
-	self zm_laststand::function_3a00302e(); // Lucy Menu
+give_self_revive(target) { //50edb3e5
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	target zm_laststand::function_3a00302e(); // Lucy Menu
 }
 
 give_elixir(elixir, type) { //620b4353
@@ -1194,17 +1273,29 @@ set_point_increment(value) { //c9575d65
 	self.point_increment = value;
 }
 
-set_points(value) { //c5e64d3
-	self.score = 0;
-	self zm_score::add_to_player_score(value);
+set_points(value, target) { //c5e64d3
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	target.score = 0;
+	target zm_score::add_to_player_score(value);
 }
 
-add_points(value) { //12f6e7df
-	self zm_score::add_to_player_score(value);
+add_points(value, target) { //12f6e7df
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	target zm_score::add_to_player_score(value);
 }
 
-take_points(value) { //8c736c47
-	self.score = int(self.score - value);
+take_points(value, target) { //8c736c47
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	target.score = int(target.score - value);
 }
 
 // Fun Options
@@ -1221,14 +1312,18 @@ set_gravity(value) {
 	setDvar(#"bg_gravity", value);
 }
 
-third_person() { //ed855e11
-	self.third_person = !synergy::return_toggle(self.third_person);
-	if(self.third_person) {
-		self iPrintlnBold("Third Person [^2ON^7]");
-		self setClientThirdPerson(1);
+third_person(target) { //ed855e11
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	target.third_person = !synergy::return_toggle(target.third_person);
+	if(target.third_person) {
+		target iPrintlnBold("Third Person [^2ON^7]");
+		target setClientThirdPerson(1);
 	} else {
-		self iPrintlnBold("Third Person [^1OFF^7]");
-		self setClientThirdPerson(0);
+		target iPrintlnBold("Third Person [^1OFF^7]");
+		target setClientThirdPerson(0);
 	}
 }
 
@@ -1297,10 +1392,6 @@ clean_name(name) { //675b8c0
 	return new_string;
 }
 
-print_name(target) { //c4da1a2b
-	self iPrintlnBold(target.name);
-}
-
 verify_player(target) { //b5373ddb
 	target.access = "Verified";
 	target thread initialize_verified_menu();
@@ -1339,7 +1430,7 @@ open_doors() { //42505bef
 }
 
 open_narrative_room() { // Atian Menu - 57ba8289
-	if(!self.narrative_open) {
+	if(!isDefined(level.narrative_open) || !level.narrative_open) {
 		self thread open_narrative_room_thread();
 	}
 }
@@ -1366,6 +1457,7 @@ open_narrative_room_thread() { // Atian Menu - 89cd6cce
     var_3400a741 = getEntArray("cr_door_bar", "targetname");
     var_3400a741[0] moveTo(var_3400a741[0].origin + (0, 0, -80), 0.001);
     var_3400a741[1] moveTo(var_3400a741[1].origin + (0, 0, -80), 0.001);
+		level clientfield::set("" + #"narrative_room", 1);
 	} else if(self.map_name == "dead_of_the_night") {
 		level util::clientnotify("show_narrative_dotn");
 	} else if(self.map_name == "alpha_omega") {
@@ -1375,17 +1467,20 @@ open_narrative_room_thread() { // Atian Menu - 89cd6cce
 		door disconnectPaths();
 		blocker = spawn("trigger_box", (-800, -1070, -132), 0, 408, 164, 132);
 		blocker disconnectPaths();
-  }
-	level clientfield::set("" + #"narrative_room", 1);
-	self.narrative_open = true;
+  } else if(self.map_name == "ancient_evil") {
+		level clientfield::set("" + #"narrative_room", 1);
+	}
+	level.narrative_open = true;
 }
 
 power_on() { //a2ad3104
-	if(self.map_name == "blood_of_the_dead") {
-		level thread zm_utility::enable_power_switch(1, 1, "power_house_power_switch", "script_noteworthy");
-		level thread zm_utility::enable_power_switch(1, 1, "building_64_switches", "script_noteworthy");
-	} else {
-		level thread zm_utility::enable_power_switch(1, 1);
+	if(!level flag::get("power_on")) {
+		if(self.map_name == "blood_of_the_dead") {
+			level thread zm_utility::enable_power_switch(1, 1, "power_house_power_switch", "script_noteworthy");
+			level thread zm_utility::enable_power_switch(1, 1, "building_64_switches", "script_noteworthy");
+		} else {
+			level thread zm_utility::enable_power_switch(1, 1);
+		}
 	}
 }
 
@@ -1431,8 +1526,8 @@ shoot_powerups_loop() { //d38fcbee
 
 	for(;;) {
 		while(self attackButtonPressed()) {
-			powerup = self.syn["powerups"][0][randomint(self.syn["powerups"][0].size)];
-			zm_powerups::specific_powerup_drop(powerup, self.origin + anglesToForward(self.angles) * 115);
+			powerup = level.syn["powerups"][0][randomint(level.syn["powerups"][0].size)];
+			zm_powerups::specific_powerup_drop(powerup, get_bullet_trace_position());
 			wait 0.1;
 		}
 		wait 0.05;
@@ -1460,13 +1555,72 @@ give_packed_weapon(pap_level) { //e376eef7
 	self.give_packed_weapon = pap_level;
 }
 
+pack_weapon(target) { //21db2f0
+	if(!isDefined(target)) {
+		target = self;
+	}
+	
+	previous_weapon = target getCurrentWeapon();
+	repack_level = (target zm_pap_util::function_83c29ddb(previous_weapon) + 1);
+	
+	upgrade_weapon(target, previous_weapon, repack_level);
+}
+
+unpack_weapon(target) { //12ab8765
+	if(!isDefined(target)) {
+		target = self;
+	}
+	
+	previous_weapon = target getCurrentWeapon();
+	repack_level = (target zm_pap_util::function_83c29ddb(previous_weapon) - 1);
+	
+	upgrade_weapon(target, previous_weapon, repack_level);
+}
+
+upgrade_weapon(target, previous_weapon, repack_level) { //d7effa50
+	weapon_name = weapon_hash_to_id(weapons::getBaseWeapon(target getCurrentWeapon()));
+	if(weapon_name == "" || !isDefined(weapon_name)) {
+		weapon_name = "" + getWeaponName(target getCurrentWeapon());
+	}
+
+	if(!zm_weapons::is_weapon_upgraded(getWeapon(weapon_name)) && repack_level >= 0 && repack_level < 5) {
+		if(weapon_name == "ray_gun_mk2x") {
+			weapon_name = "ray_gun_mk2x_dw";
+		} else if(weapon_name == "ww_tesla_sniper_t8") {
+			weapon_name = "ww_tesla_sniper_upgraded_t8";
+		} else if(!isInArray(level.syn["weapons"]["blacklisted_weapons"], weapon_name)) {
+			weapon_name = weapon_name + "_upgraded";
+		}
+	}
+
+	weapon = getWeapon(weapon_name);
+
+	target takeWeapon(target getCurrentWeapon());
+	wait 0.1;
+
+	weapon = target zm_weapons::give_build_kit_weapon(weapon);
+
+	if(zm_weapons::is_weapon_upgraded(previous_weapon) && repack_level >= 1) {
+		if(!isInArray(level.syn["weapons"]["blacklisted_weapons"], weapon_name)) {
+			if(zm_weapons::weapon_supports_aat(weapon)) {
+				target thread aat::acquire(weapon);
+				target zm_pap_util::repack_weapon(weapon, repack_level);
+			}
+		}
+	}
+	
+	target.current_weapon = weapon;
+	wait 1;
+	target switchToWeapon(target.current_weapon);
+}
+
 give_weapon(weapon) { //5be7a94b
 	if(isDefined(self.give_packed_weapon) && self.give_packed_weapon >= 1) {
 		if(weapon == "ray_gun_mk2x") {
 			weapon = "ray_gun_mk2x_dw";
 		} else if(weapon == "ww_tesla_sniper_t8") {
 			weapon = "ww_tesla_sniper_upgraded_t8";
-		} else if(!isInArray(self.syn["weapons"]["blacklisted_weapons"], weapon)) {
+		} else if(!isInArray(level.syn["weapons"]["blacklisted_weapons"], weapon)) {
 			weapon = weapon + "_upgraded";
 		}
 	}
@@ -1483,7 +1637,7 @@ give_weapon(weapon) { //5be7a94b
 		self zm_weapons::give_build_kit_weapon(weapon);
 
 		if(isDefined(self.give_packed_weapon) && self.give_packed_weapon >= 2) {
-			if(!isInArray(self.syn["weapons"]["blacklisted_weapons"], weapon)) {
+			if(!isInArray(level.syn["weapons"]["blacklisted_weapons"], weapon)) {
 				self zm_pap_util::repack_weapon(weapon, self.give_packed_weapon);
 			}
 		}
@@ -1530,7 +1684,7 @@ give_mastercraft_weapon(null, mastercraft_index, weapon, offset) { //72d8cec0
 		mastercraft_index = int(mastercraft_index) + offset;
 	}
 
-	self.syn["mastercraft"][weapon.rootWeapon.name] = mastercraft_index;
+	level.syn["mastercraft"][weapon.rootWeapon.name] = mastercraft_index;
 
 	weapon_options = self calcWeaponOptions(0, 0, mastercraft_index);
 
@@ -1559,7 +1713,7 @@ get_weapon_attachments() { //de099fee
 
 	supported_attachments = weapon.supportedAttachments;
 
-	foreach(blacklisted_attachment in self.syn["blacklisted_attachments"]) {
+	foreach(blacklisted_attachment in level.syn["blacklisted_attachments"]) {
 		if(isInArray(supported_attachments, blacklisted_attachment)) {
 			supported_attachments = synergy::remove_from_array(supported_attachments, blacklisted_attachment);
 		}
@@ -1569,9 +1723,9 @@ get_weapon_attachments() { //de099fee
 }
 
 function get_attachment_name(attachment) { //44ecc3e9
-	for(i = 0; i < self.syn["attachments"][0].size; i++) {
-		if(attachment == self.syn["attachments"][0][i]) {
-			return self.syn["attachments"][1][i];
+	for(i = 0; i < level.syn["attachments"][0].size; i++) {
+		if(attachment == level.syn["attachments"][0][i]) {
+			return level.syn["attachments"][1][i];
 		}
 	}
 	return attachment;
@@ -1599,8 +1753,8 @@ equip_attachment(attachment, i) { //224c09c9
 		if(isInArray(attachments, attachment)) {
 			attachments = synergy::remove_from_array(attachments, attachment);
 		} else {
-			if(isInArray(self.syn["optics"], attachment)) {
-				foreach(optic in self.syn["optics"]) {
+			if(isInArray(level.syn["optics"], attachment)) {
+				foreach(optic in level.syn["optics"]) {
 					if(isInArray(attachments, optic)) {
 						attachments = synergy::remove_from_array(attachments, optic);
 					}
@@ -1618,8 +1772,8 @@ equip_attachment(attachment, i) { //224c09c9
 	}
 
 	mastercraft_index = 0;
-	if(isDefined(self.syn["mastercraft"][weapon.rootWeapon.name])) {
-		mastercraft_index = self.syn["mastercraft"][weapon.rootWeapon.name];
+	if(isDefined(level.syn["mastercraft"][weapon.rootWeapon.name])) {
+		mastercraft_index = level.syn["mastercraft"][weapon.rootWeapon.name];
 	}
 
 	self takeWeapon(self getCurrentWeapon());
@@ -1670,22 +1824,7 @@ max_specialist_points() { //1ae20b96
 	}
 }
 
-// Zombie Options
-
-get_zombies() { //81b284e5
-	return getAITeamArray(level.zombie_team);
-}
-
-no_target() { //1a890726
-	self.no_target = !synergy::return_toggle(self.no_target);
-	if(self.no_target) {
-		self iPrintlnBold("No Target [^2ON^7]");
-		self val::set(#"escort_robot", "ignoreme");
-	} else {
-		self iPrintlnBold("No Target [^1OFF^7]");
-		self val::reset(#"escort_robot", "ignoreme");
-	}
-}
+// Round Options
 
 set_round(value) { //e8352140
 	value--;
@@ -1701,22 +1840,22 @@ show_real_round() { //69e13f08
 	self.show_real_round = !synergy::return_toggle(self.show_real_round);
 	if(self.show_real_round) {
 		self iPrintlnBold("Show Real Round [^2ON^7]");
-		self luinotifyevent(#"synergy_extra_text_1", 2, 200002, 1);
-		self luinotifyevent(#"synergy_extra_text_1", 4, 200001, 160, 4, 4);
-		self luinotifyevent(#"synergy_extra_text_1", 3, 200008, 3, 0);
-		self luinotifyevent(#"synergy_extra_text_1", 2, 200010, 1);
-		synergy::set_lui_element_y("extra_text_1", (self.y_offset - 175));
+		self luinotifyevent(#"synergy_extra_text_8", 2, 200002, 1);
+		self luinotifyevent(#"synergy_extra_text_8", 4, 200001, 160, 4, 4);
+		self luinotifyevent(#"synergy_extra_text_8", 3, 200008, 3, 0);
+		self luinotifyevent(#"synergy_extra_text_8", 2, 200010, 1);
+		synergy::set_lui_element_y("extra_text_8", (self.y_offset - 175));
 		self thread show_real_round_loop();
 	} else {
 		self iPrintlnBold("Show Real Round [^1OFF^7]");
 		self notify("stop_show_real_round");
-		self luinotifyevent(#"synergy_extra_text_1", 2, 200002, 0);
-		self luinotifyevent(#"synergy_extra_text_1", 4, 200001, 127, 127, 127);
-		self luinotifyevent(#"synergy_extra_text_1", 3, 200008, 1, 0);
-		self luinotifyevent(#"synergy_extra_text_1", 2, 200010, 0);
-		synergy::set_lui_element_x("extra_text_1", (self.x_offset + 400));
-		synergy::set_lui_element_y("extra_text_1", (self.y_offset - 350));
-		synergy::set_text("extra_text_1", "");
+		self luinotifyevent(#"synergy_extra_text_8", 2, 200002, 0);
+		self luinotifyevent(#"synergy_extra_text_8", 4, 200001, 127, 127, 127);
+		self luinotifyevent(#"synergy_extra_text_8", 3, 200008, 1, 0);
+		self luinotifyevent(#"synergy_extra_text_8", 2, 200010, 0);
+		synergy::set_lui_element_x("extra_text_8", (self.x_offset + 400));
+		synergy::set_lui_element_y("extra_text_8", (self.y_offset - 350));
+		synergy::set_text("extra_text_8", "");
 	}
 }
 
@@ -1729,23 +1868,192 @@ show_real_round_loop() { //9111f303
 		round_number = zm_round_logic::get_round_number();
 
 		if(round_number <= 2) {
-			synergy::set_lui_element_x("extra_text_1", (self.x_offset - 1160));
+			synergy::set_lui_element_x("extra_text_8", (self.x_offset - 1160));
 		} else if(round_number == 4 || round_number == 5) {
-			synergy::set_lui_element_x("extra_text_1", (self.x_offset - 1135));
+			synergy::set_lui_element_x("extra_text_8", (self.x_offset - 1135));
 		} else if(round_number == 3 || round_number < 10) {
-			synergy::set_lui_element_x("extra_text_1", (self.x_offset - 1145));
+			synergy::set_lui_element_x("extra_text_8", (self.x_offset - 1145));
 		} else if(round_number >= 10 && round_number < 100) {
-			synergy::set_lui_element_x("extra_text_1", (self.x_offset - 1150));
+			synergy::set_lui_element_x("extra_text_8", (self.x_offset - 1150));
 		} else {
-			synergy::set_lui_element_x("extra_text_1", (self.x_offset - 1130));
+			synergy::set_lui_element_x("extra_text_8", (self.x_offset - 1130));
 		}
 
-		synergy::set_text("extra_text_1", round_number);
+		synergy::set_text("extra_text_8", round_number);
 
 		level waittill(#"between_round_over", #"end_of_round", #"restart_round", #"start_of_round", #"start_zombie_round_logic");
 	}
 }
 
+
+set_zombie_speed(speed) { //5f4e093d
+	self.syn_zombie_run_speed_loop = false;
+
+	speed = toLower(speed);
+
+	if(speed == "super sprint") {
+		speed = "super_sprint";
+	}
+
+	if(!isDefined(level.run_cycle)) {
+		level.run_cycle = "restore";
+	}
+
+	level.syn_zombie_run_speed = speed;
+	level.run_cycle = speed;
+
+	wait 0.25;
+
+	if(level.run_cycle == "restore") {
+		level.syn_zombie_run_speed = undefined;
+		self thread update_zombie_speed_restore();
+	} else {
+		self.syn_zombie_run_speed_loop = true;
+		self thread update_zombie_speed();
+	}
+}
+
+update_zombie_speed_restore() { //5f3fb350
+  if(level.round_number < 5) {
+    level.run_cycle = "walk";
+  } else {
+    if(level.round_number < 10) {
+      level.run_cycle = "run";
+    } else {
+      level.run_cycle = "sprint";
+    }
+  }
+
+	foreach(zombie in get_zombies()) {
+		zombie.syn_set_speed = undefined;
+		zombie zombie_utility::set_zombie_run_cycle(level.run_cycle);
+	}
+}
+
+update_zombie_speed() { //a08f684e
+	while(self.syn_zombie_run_speed_loop) {
+		foreach(zombie in get_zombies()) {
+			if((!isDefined(zombie.syn_set_speed) || zombie.syn_set_speed != level.syn_zombie_run_speed) && (isDefined(zombie.completed_emerging_into_playable_area) && zombie.completed_emerging_into_playable_area)) {
+				zombie.syn_set_speed = level.syn_zombie_run_speed;
+				zombie zombie_utility::set_zombie_run_cycle(level.syn_zombie_run_speed);
+			}
+		}
+		wait 0.5;
+	}
+}
+
+calculate_health(round_number) { //2a7d7db1
+	zombie_health = level.zombie_vars["zombie_health_start"];
+
+	for(i = 2; i <= round_number; i++) {
+		if(round_number >= 10) {
+			zombie_health = zombie_health + (int(zombie_health * level.zombie_vars["zombie_health_increase_multiplier"]));
+		} else {
+			if(round_number != 1) {
+				zombie_health = int(zombie_health + level.zombie_vars["zombie_health_increase"]);
+			}
+		}
+	}
+
+	if(zombie_health < 0) {
+		zombie_health = abs(zombie_health);
+	}
+
+	if(zombie_health > 11371108) {
+		zombie_health = 11371108;
+	}
+
+	return zombie_health;
+}
+
+set_zombie_health_cap(round) { //22cfcbf9
+	self notify("stop_zombie_health_cap");
+
+	wait 0.5;
+
+	health_cap = calculate_health(round);
+	self thread zombie_health_cap_loop(round, health_cap);
+}
+
+zombie_health_cap_loop(round, health_cap) { //241c9150
+	self endon("stop_zombie_health_cap");
+	level endon("game_ended");
+
+	for(;;) {
+		foreach(zombie in get_zombies()) {
+			if(!isDefined(zombie.syn_set_health) && zombie.maxHealth != health_cap && (zombie.maxHealth > health_cap || zombie.health > health_cap) && (isDefined(zombie.completed_emerging_into_playable_area) && zombie.completed_emerging_into_playable_area)) {
+				zombie.syn_set_health = true;
+				zombie.maxHealth = health_cap;
+				if(zombie.health > zombie.maxHealth) {
+					zombie.health = health_cap;
+				}
+			}
+		}
+		wait 0.5;
+	}
+}
+
+reset_zombie_health_cap() { //ac7ba5df
+	self notify("stop_zombie_health_cap");
+	wait 1;
+
+	level.zombie_health = calculate_health(zm_round_logic::get_round_number());
+
+	foreach(zombie in get_zombies()) {
+		zombie.syn_set_health = undefined;
+		zombie.maxHealth = level.zombie_health;
+		if(zombie.health != zombie.maxHealth) {
+			zombie.health = level.zombie_health;
+		}
+	}
+}
+
+// Zombie Options
+
+get_zombies() { //81b284e5
+	return getAITeamArray(level.zombie_team);
+}
+
+no_target(target) { //1a890726
+	if(!isDefined(target)) {
+		target = self;
+	}
+
+	target.no_target = !synergy::return_toggle(target.no_target);
+	if(target.no_target) {
+		target iPrintlnBold("No Target [^2ON^7]");
+		target val::set(#"escort_robot", "ignoreme");
+	} else {
+		target iPrintlnBold("No Target [^1OFF^7]");
+		target val::reset(#"escort_robot", "ignoreme");
+	}
+}
+
+zombie_counter() { //1fbdadf5
+	if(!isDefined(self.syn_zombie_counter)) {
+		self.syn_zombie_counter = true;
+
+		self luinotifyevent(#"synergy_extra_text_9", 2, 200002, 1);
+		self luinotifyevent(#"synergy_extra_text_9", 3, 200008, 1, 1);
+		self luinotifyevent(#"synergy_extra_text_9", 4, 200001, 195, 195, 195);
+		synergy::set_lui_element_x("extra_text_9", (self.x_offset - 125));
+		synergy::set_lui_element_y("extra_text_9", (self.y_offset - 395));
+
+		while(isDefined(self.syn_zombie_counter)) {
+			count = (zombie_utility::get_current_zombie_count() + level.zombie_total) + level.zombie_respawns;
+			if(isDefined(level.infinite_round) && level.infinite_round) {
+				count = "Infinite";
+			}
+
+			synergy::set_text("extra_text_9", "Zombies Remaining: " + count);
+
+			wait 0.01;
+		}
+	} else {
+		self.syn_zombie_counter = undefined;
+		self luinotifyevent(#"synergy_extra_text_9", 2, 200002, 0);
+	}
+}
 
 spawn_normal_zombie() { //5237db24
 	spawner = array::random(level.zombie_spawners);
@@ -1769,7 +2077,7 @@ kill_all_zombies() { //57f97468
 teleport_zombies() { //819e635b
 	foreach(zombie in get_zombies()) {
 		if(isDefined(zombie)) {
-			zombie forceTeleport(self.origin + anglesToForward(self.angles) * 115);
+			zombie forceTeleport(get_bullet_trace_position());
 		}
 	}
 }
@@ -1903,45 +2211,5 @@ disable_transformations() { //5db4f2f5
 		self iPrintlnBold("Disable Transformations [^1OFF^7]");
 		self.disable_transformations = undefined;
 		level.var_88de5053 = 3;
-	}
-}
-
-set_zombie_speed(speed) { //5f4e093d
-	speed = toLower(speed);
-
-	if(speed == "super sprint") {
-		speed = "super_sprint";
-	}
-
-	if(!isDefined(level.run_cycle)) {
-		level.run_cycle = "restore";
-	}
-	if(level.run_cycle != speed) {
-		level.run_cycle = speed;
-	}
-
-	spawner::remove_global_spawn_function("zombie", &update_zombie_speed);
-	if(level.run_cycle != "restore") {
-		spawner::add_archetype_spawn_function("zombie", &update_zombie_speed);
-		foreach(zombie in get_zombies()) {
-			if(isDefined(zombie)) {
-				zombie thread update_zombie_speed();
-			}
-		}
-	} else {
-		foreach(zombie in get_zombies()) {
-			if(isDefined(zombie)) {
-				zombie zombie_utility::set_zombie_run_cycle_restore_from_override();
-			}
-		}
-	}
-}
-
-update_zombie_speed() { //772907d2
-	if(level.run_cycle == "super_sprint" && !(isDefined(self.completed_emerging_into_playable_area) && self.completed_emerging_into_playable_area)) {
-		self waittill(#"death", #"completed_emerging_into_playable_area");
-	}
-	if(level.run_cycle != "restore") {
-		self zombie_utility::set_zombie_run_cycle(level.run_cycle);
 	}
 }

@@ -1,6 +1,6 @@
 {
     "name": "Synergy",
-    "version": "2.26",
+    "version": "2.30",
     "author": "SyndiShanX",
     "description": "A GSC Mod Menu for Zombies and Multiplayer",
     "data": [
@@ -620,6 +620,24 @@
         {
             "type": "eventstring",
             "name": "synergy_extra_text_7",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_extra_text_8",
+            "mode": [
+                "zm",
+                "mp",
+                "wz"
+            ]
+        },
+        {
+            "type": "eventstring",
+            "name": "synergy_extra_text_9",
             "mode": [
                 "zm",
                 "mp",
