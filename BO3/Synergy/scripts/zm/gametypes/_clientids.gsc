@@ -3330,7 +3330,7 @@ function reset_zombie_health_cap() {
 	foreach(zombie in get_zombies()) {
 		zombie.syn_set_health = undefined;
 		zombie.maxHealth = level.zombie_health;
-		if(zombie.health > zombie.maxHealth) {
+		if(zombie.health != zombie.maxHealth) {
 			zombie.health = level.zombie_health;
 		}
 	}
