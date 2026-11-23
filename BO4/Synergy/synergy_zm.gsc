@@ -540,23 +540,23 @@ menu_option() { //bf384607
 
 					self synergy::add_increment("Set Increment", undefined, &set_point_increment, "set_increment", 100, 100, 10000, 100);
 
-					self synergy::add_increment("Set Points", undefined, &set_points, "set_points", 500, 500, 100000, target.point_increment, target);
-					self synergy::add_increment("Add Points", undefined, &add_points, "add_points", 500, 500, 100000, target.point_increment, target);
-					self synergy::add_increment("Take Points", undefined, &take_points, "take_points", 500, 500, 100000, target.point_increment, target);
+					self synergy::add_increment("Set Points", undefined, &set_points, "set_points", 500, 500, 100000, self.point_increment, target);
+					self synergy::add_increment("Add Points", undefined, &add_points, "add_points", 500, 500, 100000, self.point_increment, target);
+					self synergy::add_increment("Take Points", undefined, &take_points, "take_points", 500, 500, 100000, self.point_increment, target);
 
 					self synergy::add_option("Give Perk Set", undefined, &give_perks, target);
 					self synergy::add_option("Give Perkaholic", undefined, &give_perkaholic, target);
 					self synergy::add_option("Take Perkaholic", undefined, &take_perkaholic, target);
 
-					self synergy::add_toggle("Third Person", undefined, &third_person, self.third_person, target);
+					self synergy::add_toggle("Third Person", undefined, &third_person, target.third_person, target);
 
-					self synergy::add_toggle("No Target", "Zombies won't Target You", &no_target, self.no_target, target);
+					self synergy::add_toggle("No Target", "Zombies won't Target You", &no_target, target.no_target, target);
 
 					self synergy::add_option("Pack-a-Punch Current Weapon", "Held Weapon will be Pack-a-Punched", &pack_weapon, target);
 					self synergy::add_option("Un-Pack-a-Punch Current Weapon", "Held Weapon will be Un-Pack-a-Punched", &unpack_weapon, target);
 				}
 
-				if(!target isHost() && (target.access != "Verified")) {
+				if(!target isHost()) {
 					self synergy::add_option("Verify", "Give the Player Mod Menu Access", &verify_player, target);
 				}
 			} else {
@@ -1393,8 +1393,10 @@ clean_name(name) { //675b8c0
 }
 
 verify_player(target) { //b5373ddb
-	target.access = "Verified";
-	target thread initialize_verified_menu();
+	if(target.access != "Verified") {
+		target.access = "Verified";
+		target thread initialize_verified_menu();
+	}
 }
 
 // Map Options
@@ -1578,40 +1580,42 @@ unpack_weapon(target) { //12ab8765
 }
 
 upgrade_weapon(target, previous_weapon, repack_level) { //d7effa50
-	weapon_name = weapon_hash_to_id(weapons::getBaseWeapon(target getCurrentWeapon()));
-	if(weapon_name == "" || !isDefined(weapon_name)) {
-		weapon_name = "" + getWeaponName(target getCurrentWeapon());
-	}
-
-	if(!zm_weapons::is_weapon_upgraded(getWeapon(weapon_name)) && repack_level >= 0 && repack_level < 5) {
-		if(weapon_name == "ray_gun_mk2x") {
-			weapon_name = "ray_gun_mk2x_dw";
-		} else if(weapon_name == "ww_tesla_sniper_t8") {
-			weapon_name = "ww_tesla_sniper_upgraded_t8";
-		} else if(!isInArray(level.syn["weapons"]["blacklisted_weapons"], weapon_name)) {
-			weapon_name = weapon_name + "_upgraded";
+	if(repack_level < 5) {
+		weapon_name = weapon_hash_to_id(weapons::getBaseWeapon(target getCurrentWeapon()));
+		if(weapon_name == "" || !isDefined(weapon_name)) {
+			weapon_name = "" + getWeaponName(target getCurrentWeapon());
 		}
-	}
-
-	weapon = getWeapon(weapon_name);
-
-	target takeWeapon(target getCurrentWeapon());
-	wait 0.1;
-
-	weapon = target zm_weapons::give_build_kit_weapon(weapon);
-
-	if(zm_weapons::is_weapon_upgraded(previous_weapon) && repack_level >= 1) {
-		if(!isInArray(level.syn["weapons"]["blacklisted_weapons"], weapon_name)) {
-			if(zm_weapons::weapon_supports_aat(weapon)) {
-				target thread aat::acquire(weapon);
-				target zm_pap_util::repack_weapon(weapon, repack_level);
+	
+		if(!zm_weapons::is_weapon_upgraded(getWeapon(weapon_name)) && repack_level >= 0) {
+			if(weapon_name == "ray_gun_mk2x") {
+				weapon_name = "ray_gun_mk2x_dw";
+			} else if(weapon_name == "ww_tesla_sniper_t8") {
+				weapon_name = "ww_tesla_sniper_upgraded_t8";
+			} else if(!isInArray(level.syn["weapons"]["blacklisted_weapons"], weapon_name)) {
+				weapon_name = weapon_name + "_upgraded";
 			}
 		}
-	}
 	
-	target.current_weapon = weapon;
-	wait 1;
-	target switchToWeapon(target.current_weapon);
+		weapon = getWeapon(weapon_name);
+	
+		target takeWeapon(target getCurrentWeapon());
+		wait 0.1;
+	
+		weapon = target zm_weapons::give_build_kit_weapon(weapon);
+	
+		if(zm_weapons::is_weapon_upgraded(previous_weapon) && repack_level >= 1) {
+			if(!isInArray(level.syn["weapons"]["blacklisted_weapons"], weapon_name)) {
+				if(zm_weapons::weapon_supports_aat(weapon)) {
+					target thread aat::acquire(weapon);
+					target zm_pap_util::repack_weapon(weapon, repack_level);
+				}
+			}
+		}
+		
+		target.current_weapon = weapon;
+		wait 1;
+		target switchToWeapon(target.current_weapon);
+	}
 }
 
 give_weapon(weapon) { //5be7a94b
