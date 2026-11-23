@@ -3261,7 +3261,7 @@ function update_zombie_speed_restore() {
 function update_zombie_speed() {
 	while(self.syn_zombie_run_speed_loop) {
 		foreach(zombie in get_zombies()) {
-			if((!isDefined(zombie.syn_set_speed) || zombie.set_speed != level.syn_zombie_run_speed) && (isDefined(zombie.completed_emerging_into_playable_area) && zombie.completed_emerging_into_playable_area)) {
+			if((!isDefined(zombie.syn_set_speed) || zombie.syn_set_speed != level.syn_zombie_run_speed) && (isDefined(zombie.completed_emerging_into_playable_area) && zombie.completed_emerging_into_playable_area)) {
 				zombie.syn_set_speed = level.syn_zombie_run_speed;
 				zombie zombie_utility::set_zombie_run_cycle(level.syn_zombie_run_speed);
 			}
