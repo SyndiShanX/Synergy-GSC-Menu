@@ -2,9 +2,11 @@
 #include scripts\core_common\array_shared;
 #include scripts\core_common\callbacks_shared.gsc;
 #include scripts\core_common\flag_shared;
+#include scripts\core_common\scoreevents_shared;
 #include scripts\core_common\spawner_shared;
 #include scripts\core_common\system_shared.gsc;
 #include scripts\core_common\ai\zombie_utility;
+#include scripts\zm_common\zm_loadout;
 #include scripts\zm_common\zm_pack_a_punch_util;
 #include scripts\zm_common\zm_perks;
 #include scripts\zm_common\zm_score;
@@ -43,6 +45,7 @@ global_initial_variables() { //13b6cd07
 
 	level.point_increment = 250;
 	level.kill_increment = 5;
+	level.classic_points = false;
 
 	level.progression_method = "points";
 
@@ -272,7 +275,7 @@ menu_option() { //bf384607
 	switch(menu) {
 		case "Setup Options":
 			self synergy::set_title(menu);
-			
+
 			if(self.access == "Host") {
 				self synergy::add_array("Progression Method", "Progress is made using either Points or Kills", &set_progression_method, "progression_method", array("Points", "Kills"));
 
@@ -283,6 +286,8 @@ menu_option() { //bf384607
 				if(level.progression_method == "kills") {
 					self synergy::add_increment("Set Kill Increment", "Progress is made every (x * Tier) Kills", &set_kill_increment, "kill_increment", 5, 2, 100, 1);
 				}
+
+				self synergy::add_toggle("Classic Points", "Enables the Classic Points System from BO3", &set_classic_points, level.classic_points);
 
 				self synergy::add_array("Set Zombie Speed", undefined, &set_zombie_speed, "zombie_speed", array("Walk", "Run", "Sprint", "Super Sprint"));
 
@@ -319,14 +324,14 @@ menu_option() { //bf384607
 
 				self synergy::add_option(pack_string + " Weapons (" + pack_price_color + "$15,000 ^7)", undefined, &increment_pack_level);
 			}
-			
+
 			if(level.map_name == "dead_of_the_night" && !self.silver_bullets) {
 				if(self zm_score::can_player_purchase(7500)) {
 					silver_bullets_price_color = "^2";
 				} else {
 					silver_bullets_price_color = "^1";
 				}
-				
+
 				self synergy::add_option("Silver Bullets (" + silver_bullets_price_color + "$7,500 ^7)", undefined, &purchase_silver_bullets);
 			}
 
@@ -397,13 +402,17 @@ start_game() { //ebb653eb
 		player thread start_gun_game();
 		wait 0.5;
 	}
-	
+
 	if(level.point_increment < 50) {
 		level.point_increment = 50;
 	}
 
 	if(level.kill_increment <= 1) {
 		level.kill_increment = 5;
+	}
+
+	if(level.classic_points) {
+		level thread classic_points();
 	}
 }
 
@@ -414,9 +423,9 @@ start_gun_game() { //89c68c96
 	self.previous = array();
 	self.saved_index = array();
 	self.saved_offset = array();
-	
+
 	self.gun_game_started = true;
-	
+
 	wait 0.1;
 
 	self luinotifyevent(#"synergy_element_7", 2, 200002, 1);
@@ -577,7 +586,7 @@ track_nuke_points() { //9b3d26fc
 
 	for(;;) {
 		self waittill("nuke_triggered");
-		
+
 		foreach(player in level.players) {
 			multiplier = zm_score::get_points_multiplier(player);
 			player.gun_game_points += (400 * multiplier);
@@ -1020,7 +1029,13 @@ set_kill_increment(value) { //81ef3cc7
 	level.kill_increment = int(value);
 }
 
+get_zombies() { //81b284e5
+	return getAITeamArray(level.zombie_team);
+}
+
 set_zombie_speed(speed) { //5f4e093d
+	self.syn_zombie_run_speed_loop = false;
+
 	speed = toLower(speed);
 
 	if(speed == "super sprint") {
@@ -1030,32 +1045,84 @@ set_zombie_speed(speed) { //5f4e093d
 	if(!isDefined(level.run_cycle)) {
 		level.run_cycle = "restore";
 	}
-	if(level.run_cycle != speed) {
-		level.run_cycle = speed;
-	}
 
-	spawner::remove_global_spawn_function("zombie", &update_zombie_speed);
-	if(level.run_cycle != "restore") {
-		spawner::add_archetype_spawn_function("zombie", &update_zombie_speed);
-		foreach(zombie in getAITeamArray(level.zombie_team)) {
-			if(isDefined(zombie)) {
-				zombie thread update_zombie_speed();
-			}
-		}
+	level.syn_zombie_run_speed = speed;
+	level.run_cycle = speed;
+
+	wait 0.25;
+
+	if(level.run_cycle == "restore") {
+		level.syn_zombie_run_speed = undefined;
+		self thread update_zombie_speed_restore();
 	} else {
-		foreach(zombie in getAITeamArray(level.zombie_team)) {
-			if(isDefined(zombie)) {
-				zombie zombie_utility::set_zombie_run_cycle_restore_from_override();
-			}
-		}
+		self.syn_zombie_run_speed_loop = true;
+		self thread update_zombie_speed();
 	}
 }
 
-update_zombie_speed() { //772907d2
-	if(level.run_cycle == "super_sprint" && !(isDefined(self.completed_emerging_into_playable_area) && self.completed_emerging_into_playable_area)) {
-		self waittill(#"death", #"completed_emerging_into_playable_area");
+update_zombie_speed_restore() { //5f3fb350
+  if(level.round_number < 5) {
+    level.run_cycle = "walk";
+  } else {
+    if(level.round_number < 10) {
+      level.run_cycle = "run";
+    } else {
+      level.run_cycle = "sprint";
+    }
+  }
+
+	foreach(zombie in get_zombies()) {
+		zombie.syn_set_speed = undefined;
+		zombie zombie_utility::set_zombie_run_cycle(level.run_cycle);
 	}
-	if(level.run_cycle != "restore") {
-		self zombie_utility::set_zombie_run_cycle(level.run_cycle);
+}
+
+update_zombie_speed() { //a08f684e
+	while(self.syn_zombie_run_speed_loop) {
+		foreach(zombie in get_zombies()) {
+			if((!isDefined(zombie.syn_set_speed) || zombie.syn_set_speed != level.syn_zombie_run_speed) && (isDefined(zombie.completed_emerging_into_playable_area) && zombie.completed_emerging_into_playable_area)) {
+				zombie.syn_set_speed = level.syn_zombie_run_speed;
+				zombie zombie_utility::set_zombie_run_cycle(level.syn_zombie_run_speed);
+			}
+		}
+		wait 0.5;
 	}
+}
+
+set_classic_points() { //9da0e702
+	level.classic_points = !synergy::return_toggle(level.classic_points);
+	if(level.classic_points) {
+		self iPrintlnBold("Classic Points [^2ON^7]");
+	} else {
+		self iPrintlnBold("Classic Points [^1OFF^7]");
+	}
+}
+
+classic_points() { // Enhancement Mod - 904b2477
+	level endon(#"end_game", #"game_ended");
+
+	while(true) {
+		level.a_func_score_events[#"damage_points"] = &damage_points;
+		level.a_func_score_events[#"death"] = &death_points;
+
+		wait 1.5;
+	}
+}
+
+damage_points(event, mod, hit_location, zombie_team, damage_weapon) { // Enhancement Mod - 3d065569
+	return 10;
+}
+
+death_points(event, mod, hit_location, zombie_team, damage_weapon) { // Enhancement Mod - 51603a63
+	points = 50;
+	if(mod == "MOD_MELEE" && (!isDefined(damage_weapon) || (!damage_weapon.isRiotShield && !zm_loadout::is_hero_weapon(damage_weapon)))) {
+		scoreevents::processScoreEvent("melee_kill", self, undefined, damage_weapon);
+		points += 70;
+	} else if(hit_location == "head" || hit_location == "helmet" || hit_location == "neck") {
+		scoreevents::processScoreEvent("headshot", self, undefined, damage_weapon);
+		points += 40;
+	} else {
+		scoreevents::processScoreEvent("kill", self, undefined, damage_weapon);
+	}
+	return points;
 }

@@ -141,13 +141,15 @@ initialize_menu() { //15544841
 
 				self luinotifyevent(#"synergy_menu", 7, 100007, (self.x_offset + 296), (self.x_offset + 683), (self.y_offset - 358), (self.y_offset - 317), 0, 19); // Status Border
 				self luinotifyevent(#"synergy_menu", 7, 100008, (self.x_offset + 298), (self.x_offset + 681), (self.y_offset - 356), (self.y_offset - 319), 0, 19); // Status Background
-				self luinotifyevent(#"synergy_menu", 3, 100140, (self.x_offset + 400), (self.y_offset - 350)); // Status Text 1
-				self luinotifyevent(#"synergy_menu", 3, 100141, (self.x_offset + 350), (self.y_offset - 325)); // Status Text 2
-				self luinotifyevent(#"synergy_menu", 3, 100142, (self.x_offset + 350), (self.y_offset - 300)); // Status Text 3
-				self luinotifyevent(#"synergy_menu", 3, 100143, (self.x_offset + 350), (self.y_offset - 275)); // Status Text 4
-				self luinotifyevent(#"synergy_menu", 3, 100144, (self.x_offset + 350), (self.y_offset - 250)); // Status Text 5
-				self luinotifyevent(#"synergy_menu", 3, 100145, (self.x_offset + 350), (self.y_offset - 225)); // Status Text 6
-				self luinotifyevent(#"synergy_menu", 3, 100146, (self.x_offset + 350), (self.y_offset - 200)); // Status Text 7
+				self luinotifyevent(#"synergy_menu", 3, 100140, (self.x_offset + 400), (self.y_offset - 350)); // Extra Text 1
+				self luinotifyevent(#"synergy_menu", 3, 100141, (self.x_offset + 350), (self.y_offset - 325)); // Extra Text 2
+				self luinotifyevent(#"synergy_menu", 3, 100142, (self.x_offset + 350), (self.y_offset - 300)); // Extra Text 3
+				self luinotifyevent(#"synergy_menu", 3, 100143, (self.x_offset + 350), (self.y_offset - 275)); // Extra Text 4
+				self luinotifyevent(#"synergy_menu", 3, 100144, (self.x_offset + 350), (self.y_offset - 250)); // Extra Text 5
+				self luinotifyevent(#"synergy_menu", 3, 100145, (self.x_offset + 350), (self.y_offset - 225)); // Extra Text 6
+				self luinotifyevent(#"synergy_menu", 3, 100146, (self.x_offset + 350), (self.y_offset - 200)); // Extra Text 7
+				self luinotifyevent(#"synergy_menu", 3, 100147, (self.x_offset + 350), (self.y_offset - 175)); // Extra Text 8
+				self luinotifyevent(#"synergy_menu", 3, 100148, (self.x_offset + 350), (self.y_offset - 150)); // Extra Text 9
 
 				util::setClientSysState("synergy_text", "", self);
 
@@ -167,7 +169,7 @@ initialize_menu() { //15544841
 					self luinotifyevent(#"synergy_submenu_icon_" + string(i), 3, 200007, 4, i);
 				}
 
-				for(i = 1; i <= 7; i++) {
+				for(i = 1; i <= 9; i++) {
 					util::setClientSysState("synergy_text", "synergy_extra_text_" + string(i) + "|| ", self);
 
 					self luinotifyevent(#"synergy_extra_text_" + string(i), 3, 200007, 5, i);
@@ -219,8 +221,8 @@ input_manager() { //fb500cd3
 					self notify("open_gun_game_menu");
 				}
 
-				if(self.synergy_enabled || (self.gun_game_enabled && !self.gun_game_started)) {
-					self open_menu();
+				if(self.synergy_enabled || self.gun_game_enabled) {
+					open_menu();
 				}
 
 				while(self adsButtonPressed() && self meleeButtonPressed()) {
@@ -302,6 +304,8 @@ input_manager() { //fb500cd3
 
 				wait 0.05;
 				set_options();
+				wait 0.25;
+				scroll_cursor();
 
 				while(self useButtonPressed()) {
 					wait 0.2;
