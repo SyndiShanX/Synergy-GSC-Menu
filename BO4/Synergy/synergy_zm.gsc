@@ -5,6 +5,7 @@
 #include scripts\core_common\exploder_shared;
 #include scripts\core_common\flag_shared;
 #include scripts\core_common\perks;
+#include scripts\core_common\scoreevents_shared;
 #include scripts\core_common\spawner_shared;
 #include scripts\core_common\struct;
 #include scripts\core_common\system_shared;
@@ -63,6 +64,8 @@ initial_variables() { //ec264b2e
 	self.equip_attachment_in_progress = false;
 
 	if(!isDefined(level.syn_arrays_defined)) {
+		level.original_a_func_score_events[#"damage_points"] = level.a_func_score_events[#"damage_points"];
+		level.original_a_func_score_events[#"death"] = level.a_func_score_events[#"death"];
 
 		// Weapons
 
@@ -439,6 +442,7 @@ menu_option() { //bf384607
 			self synergy::add_toggle("No Target", "Zombies won't Target You", &no_target, self.no_target);
 
 			self synergy::add_toggle("Zombie Counter", undefined, &zombie_counter, self.syn_zombie_counter);
+			self synergy::add_toggle("Classic Points", "Enables the Classic Points System from BO3", &set_classic_points, level.classic_points);
 
 			self synergy::add_option("Spawn Zombie", undefined, &spawn_normal_zombie);
 			self synergy::add_option("Kill All Zombies", undefined, &kill_all_zombies);
@@ -1561,10 +1565,10 @@ pack_weapon(target) { //21db2f0
 	if(!isDefined(target)) {
 		target = self;
 	}
-	
+
 	previous_weapon = target getCurrentWeapon();
 	repack_level = (target zm_pap_util::function_83c29ddb(previous_weapon) + 1);
-	
+
 	upgrade_weapon(target, previous_weapon, repack_level);
 }
 
@@ -1572,10 +1576,10 @@ unpack_weapon(target) { //12ab8765
 	if(!isDefined(target)) {
 		target = self;
 	}
-	
+
 	previous_weapon = target getCurrentWeapon();
 	repack_level = (target zm_pap_util::function_83c29ddb(previous_weapon) - 1);
-	
+
 	upgrade_weapon(target, previous_weapon, repack_level);
 }
 
@@ -1585,7 +1589,7 @@ upgrade_weapon(target, previous_weapon, repack_level) { //d7effa50
 		if(weapon_name == "" || !isDefined(weapon_name)) {
 			weapon_name = "" + getWeaponName(target getCurrentWeapon());
 		}
-	
+
 		if(!zm_weapons::is_weapon_upgraded(getWeapon(weapon_name)) && repack_level >= 0) {
 			if(weapon_name == "ray_gun_mk2x") {
 				weapon_name = "ray_gun_mk2x_dw";
@@ -1595,14 +1599,14 @@ upgrade_weapon(target, previous_weapon, repack_level) { //d7effa50
 				weapon_name = weapon_name + "_upgraded";
 			}
 		}
-	
+
 		weapon = getWeapon(weapon_name);
-	
+
 		target takeWeapon(target getCurrentWeapon());
 		wait 0.1;
-	
+
 		weapon = target zm_weapons::give_build_kit_weapon(weapon);
-	
+
 		if(zm_weapons::is_weapon_upgraded(previous_weapon) && repack_level >= 1) {
 			if(!isInArray(level.syn["weapons"]["blacklisted_weapons"], weapon_name)) {
 				if(zm_weapons::weapon_supports_aat(weapon)) {
@@ -1611,7 +1615,7 @@ upgrade_weapon(target, previous_weapon, repack_level) { //d7effa50
 				}
 			}
 		}
-		
+
 		target.current_weapon = weapon;
 		wait 1;
 		target switchToWeapon(target.current_weapon);
@@ -2057,6 +2061,48 @@ zombie_counter() { //1fbdadf5
 		self.syn_zombie_counter = undefined;
 		self luinotifyevent(#"synergy_extra_text_9", 2, 200002, 0);
 	}
+}
+
+set_classic_points() { //9da0e702
+	level.classic_points = !synergy::return_toggle(level.classic_points);
+	if(level.classic_points) {
+		self iPrintlnBold("Classic Points [^2ON^7]");
+		level thread classic_points();
+	} else {
+		self iPrintlnBold("Classic Points [^1OFF^7]");
+		level notify("stop_classic_points");
+		level.a_func_score_events[#"damage_points"] = level.original_a_func_score_events[#"damage_points"];
+		level.a_func_score_events[#"death"] = level.original_a_func_score_events[#"death"];
+	}
+}
+
+classic_points() { // Enhancement Mod - 904b2477
+	level endon(#"end_game", #"game_ended", #"stop_classic_points");
+
+	while(true) {
+		level.a_func_score_events[#"damage_points"] = &damage_points;
+		level.a_func_score_events[#"death"] = &death_points;
+
+		wait 1.5;
+	}
+}
+
+damage_points(event, mod, hit_location, zombie_team, damage_weapon) { // Enhancement Mod - 3d065569
+	return 10;
+}
+
+death_points(event, mod, hit_location, zombie_team, damage_weapon) { // Enhancement Mod - 51603a63
+	points = 50;
+	if(mod == "MOD_MELEE" && (!isDefined(damage_weapon) || (!damage_weapon.isRiotShield && !zm_loadout::is_hero_weapon(damage_weapon)))) {
+		scoreevents::processScoreEvent("melee_kill", self, undefined, damage_weapon);
+		points += 70;
+	} else if(hit_location == "head" || hit_location == "helmet" || hit_location == "neck") {
+		scoreevents::processScoreEvent("headshot", self, undefined, damage_weapon);
+		points += 40;
+	} else {
+		scoreevents::processScoreEvent("kill", self, undefined, damage_weapon);
+	}
+	return points;
 }
 
 spawn_normal_zombie() { //5237db24
